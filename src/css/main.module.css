@@ -1,0 +1,91 @@
+:root {
+  --mainyellow: #edc92f;
+  --mainred: #d40030;
+  --mainblue: #363d91;
+  --woodybrown: #73361e;
+  --buzzpurple: #b15b9d;
+  --buzzgreen: #90b029;
+  --teddypink: #fe96ba;
+  --teddybrown: #52292f;
+}
+
+.topAdZone {
+  position: fixed;
+  top: -4px;
+  width: 100%;
+  height: 80px;
+  background-color: var(--mainyellow);
+  transition: 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topAd {
+  width: 90%;
+  text-align: center;
+  color: var(--mainblue);
+  font-weight: 600;
+  letter-spacing: -2px;
+}
+
+.topAdx {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+  background-color: rgba(62, 77, 129, 0.3);
+  cursor: pointer;
+}
+
+.disappear {
+  display: none;
+}
+
+.topNavZone {
+  width: 100%;
+  height: 100px;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.topNavLogo {
+  width: 150px;
+  height: 90px;
+}
+
+.topNavLogoImg {
+  width: 100%;
+  height: 100%;
+}
+.topNav {
+  width: 100%;
+  background-color: var(--mainyellow);
+}
+
+.topUl {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.topLi {
+  list-style: none;
+  padding: 5px 15px;
+  margin: 0px 10px;
+  transition: 0.3s;
+  letter-spacing: -1px;
+  font-size: 1.1em;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.topLi:hover {
+  color: var(--mainred);
+  background-color: rgba(255, 250, 249, 0.3);
+}
