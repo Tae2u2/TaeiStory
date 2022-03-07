@@ -2,7 +2,7 @@ import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import PiggyBoss from "./PiggyBoss";
-import Register from "./Register";
+import RegisterUser from "./RegisterUser";
 
 function AppRouter() {
   const isLoggedIn = false;
@@ -16,7 +16,7 @@ function AppRouter() {
         ) : (
           <Route path="/" element={<LoginForm />}></Route>
         )}
-        <Route path="/register" element={<Register />}></Route>
+        <Route path="/register" element={<RegisterUser />}></Route>
       </Routes>
     </Router>
   );

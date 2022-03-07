@@ -21,6 +21,7 @@
     "mybatis-mapper": "^0.6.5",
     "mysql": "^2.18.1",
     "react-cookies": "^0.1.1",
+    "react-hooks-form": "^2.0.1",
     "sweetalert2": "^11.4.4",
     "yarn": "^1.22.17"
   }
