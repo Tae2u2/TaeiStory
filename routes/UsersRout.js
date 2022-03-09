@@ -30,20 +30,6 @@ router.post("/", (req, res, next) => {
             next("route");
           });
         });
-      } else if (type == "sign in") {
-        try {
-          const dbconnect_Module = require("./dbconnect_Module");
-
-          //Mysql 쿼리 호출정보 입력
-          req.body.mapper = "UserMapper"; //mybatis xml 파일명
-          req.body.crud = "select"; //select, insert, update, delete 중에 입력
-          req.body.mapper_id = "selectLoginCheck";
-
-          router.use("/", dbconnect_Module);
-          next("next");
-        } catch (error) {
-          console.log("Module > (user login)dbconnect error : " + error);
-        }
       } else {
         router.use("/", dbconnect_Module);
         next("route");
@@ -55,12 +41,28 @@ router.post("/", (req, res, next) => {
     //이메일 중복체크
     try {
       // Mysql Api 모듈(CRUD)
-      const dbconnect_Module = require("./dbconnect_Module");
+      var dbconnect_Module = require("./dbconnect_Module");
 
       //Mysql 쿼리 호출정보 입력
       req.body.mapper = "UserMapper"; //mybatis xml 파일명
       req.body.crud = "select"; //select, insert, update, delete 중에 입력
       req.body.mapper_id = "selectUserDpliCheck";
+      router.use("/", dbconnect_Module);
+      next("route");
+    } catch (error) {
+      console.log("Module > dbconnect error : " + error);
+    }
+  } else if (type == "signin") {
+    //로그인 조회
+    try {
+      // Mysql Api 모듈(CRUD)
+      var dbconnect_Module = require("./dbconnect_Module");
+
+      //Mysql 쿼리 호출정보 입력
+      req.body.mapper = "UserMapper"; //mybatis xml 파일명
+      req.body.crud = "select"; //select, insert, update, delete 중에 입력
+      req.body.mapper_id = "selectLoginCheck";
+
       router.use("/", dbconnect_Module);
       next("route");
     } catch (error) {

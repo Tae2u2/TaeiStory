@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import $ from "jquery";
 import { useForm } from "react-hook-form";
 
 const RegisterUser = () => {
@@ -14,36 +13,6 @@ const RegisterUser = () => {
   const is_Password = useRef();
   is_Password.current = watch("is_Password");
 
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userPasswordCheck, setUserPasswordCheck] = useState("");
-  const [userName, setUsername] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [isUser, setisUser] = useState(false);
-
-  /* const onChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    switch (name) {
-      case "is_Useremail":
-        setUserEmail(value);
-        break;
-      case "is_Password":
-        setUserPassword(value);
-        break;
-      case "is_Password_check":
-        setUserPasswordCheck(value);
-        break;
-      case "is_Username":
-        return setUsername(value);
-        break;
-      case "is_Userphone":
-        return setPhoneNumber(value);
-        break;
-    }
-  }; */
-
   const onSubmit = async (data) => {
     const userdata = JSON.stringify(data);
     console.log(userdata);
@@ -56,12 +25,12 @@ const RegisterUser = () => {
         body: userdata,
       });
       const checkSuc = await response.text();
-      console.log(checkSuc);
-      if (checkSuc === "OK") {
+      if (checkSuc === "succ") {
         alert("환영합니다!");
-        // navigate("/", { replace: true });
+        navigate("/", { replace: true });
       } else {
-        alert("선화화이팅");
+        alert("죄송합니다.");
+        return false;
       }
     } catch (error) {
       alert("죄송합니다. 다시 시도해주세요!");

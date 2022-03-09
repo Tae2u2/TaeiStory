@@ -1,11 +1,13 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userInfo, setUserInfo] = useState(null);
 
   const onChange = (event) => {
     const {
@@ -20,13 +22,25 @@ const LoginForm = () => {
 
   const onsubmit = (event) => {
     event.preventDefault();
-    if (email === "" || password === "") {
-      alert("이메일아이디와 비밀번호를 입력하세요");
-    } else {
-      axios.post("/api/LoginForm?type=signin", {
-        is_Email: email,
-        is_Password: password,
-      });
+    try {
+      axios
+        .post("/api/LoginForm?type=signin", {
+          is_Email: email,
+          is_Password: password,
+        })
+        .then((response) => {
+          console.log(response.data.json[0]);
+          setUserInfo({
+            username: response.data.json[0].username,
+            useremail: response.data.json[0].useremail,
+            userpassword: response.data.json[0].userpassword,
+            userphone: response.data.json[0].userphone,
+          });
+          console.log(userInfo);
+          navigate("/piggy", { replace: true });
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
 
