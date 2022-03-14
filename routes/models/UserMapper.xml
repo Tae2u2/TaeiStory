@@ -7,7 +7,6 @@
       username
       , useremail
       , userpassword
-      , userphone
       , userflag
       , reg_date
       , update_date
@@ -16,7 +15,6 @@
       #{is_Username}
       , #{is_Useremail}
       , #{is_Password}
-      , #{is_Userphone}
       , 'Y'
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
@@ -36,7 +34,6 @@
     username
     ,useremail
     ,userpassword
-    ,userphone
     ,userflag
     FROM
     react.taeistory_user

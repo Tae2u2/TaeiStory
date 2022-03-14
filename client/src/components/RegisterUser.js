@@ -91,32 +91,19 @@ const RegisterUser = () => {
             <p>입력하신 비밀번호와 같지 않습니다.</p>
           )}
         <br />
-        <label id="name_val">이름</label>
+        <label id="name_val">별명</label>
         <input
           id="name_val"
           type="text"
           name="is_Username"
           {...register("is_Username", { required: true, maxLength: 10 })}
-          placeholder="이름을 입력해주세요."
+          placeholder="별명을 입력해주세요."
         />
         {errors.is_Username && errors.is_Username.type === "required" && (
           <p>필수 입력사항입니다.</p>
         )}
         {errors.is_Username && errors.is_Username.type === "maxLength" && (
           <p>이름을 다시 확인해주세요!</p>
-        )}
-        <br />
-        <label id="phone_val">연락처</label>
-        <input
-          id="phone_val"
-          name="is_Userphone"
-          type="text"
-          {...register("is_Userphone", {
-            minLength: 10,
-          })}
-        />
-        {errors.is_Userphone && (
-          <p>연락처를 바르게 입력해주세요. 숫자만 입력가능합니다.</p>
         )}
         <br />
         <input type="submit" value="회원가입" />

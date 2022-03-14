@@ -74,10 +74,11 @@ router.post("/", (req, res) => {
               res.send({ json });
             }
           } else {
+            //여기
             res.send("succ");
           }
         } else {
-          res.send("error");
+          res.send("result undefined error");
         }
 
         connection.release();

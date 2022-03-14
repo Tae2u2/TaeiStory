@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PiggyMapper">  
+  <insert id="insertPiggy"> 
+    INSERT INTO react.taeistory_piggy
+    (
+      useremail
+      , food
+      , foodExpenses
+      , reg_date
+      , id
+    )
+    VALUES (
+    #{useremail}
+      , #{food}
+      , #{foodExpenses}
+      , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
+      ,#{id}
+      )
+  </insert>
+
+  <select id="selectPiggy">
+  SELECT
+  id
+  ,useremail
+  ,food
+  ,foodExpenses
+  ,reg_date
+  FROM react.taeistory_piggy
+  WHERE useremail = #{is_Email}
+  ORDER BY reg_date DESC
+
+  </select>
+
+  </mapper>
