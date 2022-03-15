@@ -83,7 +83,7 @@ router.post("/", (req, res, next) => {
       });
       res.send({ token1: token1, token2: token2 });
     } catch (error) {
-      res.send(error);
+      res.send("세션스테이트" + error);
     }
   } else if (type == "SessionConfirm") {
     try {
@@ -102,7 +102,7 @@ router.post("/", (req, res, next) => {
         res.send({ token1: "", token2: "" });
       }
     } catch (error) {
-      res.send(error);
+      res.send("세션컨펌에러: " + error);
     }
   } else if (type == "SessionSignin") {
     // 쿠키 정보로 사용자 인증

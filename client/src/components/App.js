@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AppRouter from "./Router";
 import cookie from "react-cookies";
 import axios from "axios";
 
 function App() {
+  const [userInfo, setUserInfo] = useState(null);
   useEffect(() => {
     axios
       .post("/api/LoginForm?type=SessionConfirm", {
@@ -13,7 +14,9 @@ function App() {
       .then((response) => {
         const userid = response.data.token1;
         let password = cookie.load("userpassword");
+        console.log(password);
         if (password !== undefined) {
+          console.log("App.js : " + userInfo);
           axios
             .post("/api/LoginForm?type=SessionSignin", {
               is_Email: userid,
@@ -22,6 +25,13 @@ function App() {
             .then((response) => {
               if (response.data.json[0].useremail === undefined) {
                 noPermission();
+              } else {
+                setUserInfo({
+                  userName: response.data.json[0].username,
+                  userEmail: response.data.json[0].useremail,
+                  userPhone: response.data.json[0].userphone,
+                });
+                console.log("App.js : " + userInfo);
               }
             })
             .catch((error) => {
@@ -29,6 +39,7 @@ function App() {
             });
         }
       });
+    console.log("App.js : " + userInfo);
   }, []);
 
   const noPermission = (e) => {
@@ -46,7 +57,7 @@ function App() {
 
   return (
     <div className="App">
-      <AppRouter />
+      <AppRouter userInfo={userInfo} />
     </div>
   );
 }

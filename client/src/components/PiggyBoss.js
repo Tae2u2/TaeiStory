@@ -3,11 +3,15 @@ import Navigation from "./Navigation";
 import { v4 as uuidv4 } from "uuid";
 import PiggysList from "./PiggysList";
 import cookie from "react-cookies";
+import axios from "axios";
 
 function PiggyBoss({ userInfo }) {
   const [foodExpenses, setFoodExpenses] = useState("");
   const [food, setFood] = useState("");
   const [piggyChanged, setPiggyChanged] = useState(false);
+
+  const [userid, setUserid] = useState("");
+  const [username, setUsername] = useState("");
 
   console.log(userInfo);
   const onChange = (event) => {
@@ -25,7 +29,7 @@ function PiggyBoss({ userInfo }) {
     event.preventDefault();
     const piggyObj = {
       id: uuidv4(),
-      useremail: userInfo.userEmail,
+      useremail: userid,
       food: food,
       foodExpenses: foodExpenses,
     };
@@ -53,11 +57,23 @@ function PiggyBoss({ userInfo }) {
       return false;
     }
   };
+
+  useEffect(() => {
+    axios
+      .post("/api/LoginForm?type=SessionConfirm", {
+        token1: cookie.load("userid"),
+        token2: cookie.load("username"),
+      })
+      .then((response) => {
+        setUserid(response.data.token1);
+        setUsername(response.data.token2);
+      });
+  }, []);
   return (
     <div>
-      <Navigation userInfo={userInfo} />
+      <Navigation username={username} />
       <h3>PiggyBoss</h3>
-      <p>{userInfo.userName}님은 돼지짱입니다.</p>
+      <p>{username}님은 돼지짱입니다.</p>
       <form method="post" onSubmit={onSubmit}>
         <p>돼지짱님 오늘은</p>
         <br />
@@ -76,7 +92,8 @@ function PiggyBoss({ userInfo }) {
       </form>
       <div>
         <PiggysList
-          userInfo={userInfo}
+          userid={userid}
+          username={username}
           food={food}
           foodExpenses={foodExpenses}
           piggyChanged={piggyChanged}

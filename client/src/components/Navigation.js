@@ -1,17 +1,17 @@
 import cookie from "react-cookies";
 
-function Navigation({ userInfo }) {
+function Navigation({ username }) {
   const handleLogout = async () => {
     cookie.remove("userid", { path: "/" });
     cookie.remove("username", { path: "/" });
     cookie.remove("userpassword", { path: "/" });
-    window.location.href = "/login";
+    window.location.href = "/";
   };
   return (
     <nav>
       <ul>
         <li>
-          {userInfo.userName}님, 환영합니다!
+          {username}님, 환영합니다!
           <ul>
             <li>내 정보</li>
             <li>

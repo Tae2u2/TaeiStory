@@ -39,4 +39,17 @@
     react.taeistory_user
     WHERE useremail = #{is_Email}
   </select>
+
+  <select id="selectSessionLoginCheck">
+  SELECT 
+  username 
+  , useremail 
+  , userpassword 
+  , userphone 
+  , userflag 
+  FROM react.taeistory_user
+  WHERE useremail = #{is_Email} AND userpassword = #{is_Token} 
+  </select>
+
+
 </mapper>
