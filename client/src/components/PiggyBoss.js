@@ -8,12 +8,10 @@ import axios from "axios";
 function PiggyBoss({ userInfo }) {
   const [foodExpenses, setFoodExpenses] = useState("");
   const [food, setFood] = useState("");
-  const [piggyChanged, setPiggyChanged] = useState(false);
 
   const [userid, setUserid] = useState("");
   const [username, setUsername] = useState("");
 
-  console.log(userInfo);
   const onChange = (event) => {
     const {
       target: { name, value },
@@ -46,7 +44,8 @@ function PiggyBoss({ userInfo }) {
       const checkSuc = await response.text();
       console.log(checkSuc);
       if (checkSuc === "succ") {
-        setPiggyChanged(true);
+        setFoodExpenses("");
+        setFood("");
         alert("오늘도 대단하십니다.");
       } else {
         alert("죄송합니다.");
@@ -58,21 +57,18 @@ function PiggyBoss({ userInfo }) {
     }
   };
 
-  useEffect(() => {
-    axios
-      .post("/api/LoginForm?type=SessionConfirm", {
-        token1: cookie.load("userid"),
-        token2: cookie.load("username"),
-      })
-      .then((response) => {
-        setUserid(response.data.token1);
-        setUsername(response.data.token2);
-      });
+  useEffect(async () => {
+    const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
+      token1: cookie.load("userid"),
+      token2: cookie.load("username"),
+    });
+    setUserid(response.data.token1);
+    setUsername(response.data.token2);
   }, []);
   return (
     <div>
       <Navigation username={username} />
-      <h3>PiggyBoss</h3>
+      <h3>PiggyBoss{userInfo.userName}</h3>
       <p>{username}님은 돼지짱입니다.</p>
       <form method="post" onSubmit={onSubmit}>
         <p>돼지짱님 오늘은</p>
@@ -91,13 +87,7 @@ function PiggyBoss({ userInfo }) {
         <input type="submit" value="입력" />
       </form>
       <div>
-        <PiggysList
-          userid={userid}
-          username={username}
-          food={food}
-          foodExpenses={foodExpenses}
-          piggyChanged={piggyChanged}
-        />
+        <PiggysList userInfo={userInfo} />
       </div>
     </div>
   );

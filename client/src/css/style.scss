@@ -1,0 +1,85 @@
+// #90b029 : 외계인연두  버즈연두
+// #b15b9d : 버즈보라
+// #fe96ba : 곰인형분홍
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+@mixin for-center-line() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+$wide-color: #90b029;
+$point-color: #b15b9d;
+//@include for-center-line
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.App {
+  font-family: "Noto Sans KR", sans-serif;
+  @include for-center-line;
+  width: 100vw;
+  height: 100vh;
+  background-color: $wide-color;
+}
+
+.login-box {
+  @include for-center-line;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 400px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: 3px 3px 3px #5c5b5b;
+}
+
+.login-h3 {
+  color: $point-color;
+}
+.login-form-box {
+  height: 250px;
+  text-align: center;
+}
+
+.login-input {
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding: 10px 0px 2px 5px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid $point-color;
+}
+
+.for-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-label {
+  padding-top: 6px;
+  margin-right: 7px;
+}
+.login-btn {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 15px 0px;
+  margin-bottom: 30px;
+  border-radius: 50px;
+  background-color: $point-color;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 500;
+  box-shadow: 2px 3px 2px #6e5268;
+  cursor: pointer;
+}
+.login-btn:hover {
+  filter: brightness(1.1);
+}
+.login-btn:active {
+  box-shadow: inset 3px 4px 3px #9c508b, 2px 2px 2px #6e5268;
+}
