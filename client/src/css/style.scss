@@ -26,7 +26,7 @@ $point-color: #b15b9d;
   background-color: $wide-color;
 }
 
-.login-box {
+.user-box {
   @include for-center-line;
   flex-direction: column;
   justify-content: space-around;
@@ -37,15 +37,15 @@ $point-color: #b15b9d;
   box-shadow: 3px 3px 3px #5c5b5b;
 }
 
-.login-h3 {
+.user-h2 {
   color: $point-color;
 }
-.login-form-box {
+.user-form-box {
   height: 250px;
   text-align: center;
 }
 
-.login-input {
+.user-input {
   border: none;
   outline: none;
   font-size: 1em;
@@ -59,11 +59,11 @@ $point-color: #b15b9d;
   justify-content: space-between;
 }
 
-.login-label {
+.user-label {
   padding-top: 6px;
   margin-right: 7px;
 }
-.login-btn {
+.user-btn {
   width: 100%;
   border: none;
   outline: none;
@@ -77,9 +77,9 @@ $point-color: #b15b9d;
   box-shadow: 2px 3px 2px #6e5268;
   cursor: pointer;
 }
-.login-btn:hover {
+.user-btn:hover {
   filter: brightness(1.1);
 }
-.login-btn:active {
+.user-btn:active {
   box-shadow: inset 3px 4px 3px #9c508b, 2px 2px 2px #6e5268;
 }

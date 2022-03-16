@@ -74,17 +74,17 @@ const LoginForm = (props) => {
   };
 
   return (
-    <div className="login-box">
-      <h2 className="login-h3">LOGIN</h2>
-      <div className="login-form-box">
-        <form onSubmit={onsubmit} className="login-form">
+    <div className="user-box">
+      <h2 className="user-h2">LOGIN</h2>
+      <div className="user-form-box">
+        <form onSubmit={onsubmit} className="user-form">
           <div className="for-flex">
-            <label className="login-label" id="email_val">
+            <label className="user-label" id="email_val">
               이메일
             </label>
             <input
               type="text"
-              className="login-input"
+              className="user-input"
               name="email"
               id="email_val"
               value={email}
@@ -94,12 +94,12 @@ const LoginForm = (props) => {
           </div>
           <br />
           <div className="for-flex">
-            <label className="login-label" id="pwd_val">
+            <label className="user-label" id="pwd_val">
               비밀번호
             </label>
             <input
               type="password"
-              className="login-input"
+              className="user-input"
               id="pwd_val"
               name="password"
               value={password}
@@ -108,7 +108,7 @@ const LoginForm = (props) => {
             />
           </div>
           <br />
-          <input className="login-btn" type="submit" value="로그인" />
+          <input className="user-btn" type="submit" value="로그인" />
         </form>
         <span className="go-register">
           <Link to="/register">아직 회원이 아니신가요?</Link>
