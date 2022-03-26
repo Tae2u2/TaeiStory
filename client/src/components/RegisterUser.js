@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const RegisterUser = () => {
   const navigate = useNavigate();
@@ -125,8 +126,16 @@ const RegisterUser = () => {
           )}
         </div>
         <br />
-        <input type="submit" className="user-btn" value="회원가입" />
+        <input
+          type="submit"
+          className="user-btn"
+          style={{ marginBottom: "0px" }}
+          value="회원가입"
+        />
       </form>
+      <span className="go-register">
+        <Link to="/">이미 회원이신가요?</Link>
+      </span>
     </div>
   );
 };

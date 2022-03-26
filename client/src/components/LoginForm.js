@@ -32,15 +32,19 @@ const LoginForm = (props) => {
           is_Email: email,
           is_Password: password,
         });
+        console.log(response);
+
         const userName = response.data.json[0].username;
         const userEmail = response.data.json[0].useremail;
         const userPhone = response.data.json[0].userphone;
+
         setUserInfo({
           userName: userName,
           userEmail: userEmail,
           userPhone: userPhone,
         });
         console.log(userInfo);
+
         const upw = response.data.json[0].userpassword;
         props.setIsLoggedIn(true);
 
