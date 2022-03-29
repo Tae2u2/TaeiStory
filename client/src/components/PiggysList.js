@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const PiggysList = ({ username, userid, piggyArr }) => {
-  console.log(piggyArr);
-
+const PiggysList = ({ username, userid, myfood, mymoney }) => {
   return (
     <div>
-      <h3>List</h3>
-      <div>
-        <ul>
-          <li>
-            내 배열이 왜 계속 사라지는 가{username} : {userid}
-          </li>
-        </ul>
-      </div>
+      <h3>
+        {myfood}를 {mymoney}원에 드셨습니다.
+      </h3>
+      <button>삭제</button>
     </div>
   );
 };
