@@ -43,22 +43,11 @@ function PiggyBoss({ userInfo }) {
         body: piggydata,
       });
       const checkSuc = await response.text();
-      console.log(checkSuc);
+      console.log("섭밋후");
+      console.log(response);
       if (checkSuc === "succ") {
         setFoodExpenses("");
         setFood("");
-
-        const response = await axios.post("api/piggyboss?type=piggylist", {
-          is_Email: userid,
-        });
-
-        console.log("리스트 결과임 ->");
-        console.log(response);
-        console.log(response.data.json);
-        const myArr = response.data.json;
-        setPiggyArr(myArr);
-        console.log(myArr);
-
         alert("오늘도 대단하십니다.");
       } else {
         alert("죄송합니다.");
@@ -77,7 +66,13 @@ function PiggyBoss({ userInfo }) {
     });
     setUserid(response.data.token1);
     setUsername(response.data.token2);
+    const response2 = await axios.post("api/piggyboss?type=piggylist", {
+      is_Email: response.data.token1,
+    });
+
+    setPiggyArr(response2.data.json);
   }, []);
+
   return (
     <div>
       <Navigation username={username} />
@@ -107,7 +102,15 @@ function PiggyBoss({ userInfo }) {
         <input type="submit" value="입력" />
       </form>
       <div>
-        <PiggysList piggyArr={piggyArr} username={username} userid={userid} />
+        {piggyArr.map((item) => (
+          <PiggysList
+            key={item.id}
+            myfood={item.food}
+            mymoney={item.foodExpenses}
+            username={username}
+            userid={userid}
+          />
+        ))}
       </div>
     </div>
   );
