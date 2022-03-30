@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import PiggysList from "./PiggysList";
 import cookie from "react-cookies";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 
 function PiggyBoss({ userInfo }) {
   const [foodExpenses, setFoodExpenses] = useState("");
@@ -12,6 +13,27 @@ function PiggyBoss({ userInfo }) {
   const [userid, setUserid] = useState("");
   const [username, setUsername] = useState("");
   const [piggyArr, setPiggyArr] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const userPerPage = 10;
+  const pagesVisited = pageNumber * userPerPage;
+
+  const displayPiggy = piggyArr
+    .slice(pagesVisited, pagesVisited + userPerPage)
+    .map((item) => {
+      return (
+        <PiggysList
+          key={item.id}
+          id={item.id}
+          myfood={item.food}
+          mymoney={item.foodExpenses}
+          username={username}
+          userid={userid}
+        />
+      );
+    });
+
+  const pageCount = Math.ceil(piggyArr.length / userPerPage);
 
   const onChange = (event) => {
     const {
@@ -22,6 +44,9 @@ function PiggyBoss({ userInfo }) {
     } else if (name === "food") {
       setFood(value);
     }
+  };
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
   };
 
   const onSubmit = async (event) => {
@@ -43,8 +68,6 @@ function PiggyBoss({ userInfo }) {
         body: piggydata,
       });
       const checkSuc = await response.text();
-      console.log("섭밋후");
-      console.log(response);
       if (checkSuc === "succ") {
         setFoodExpenses("");
         setFood("");
@@ -102,15 +125,18 @@ function PiggyBoss({ userInfo }) {
         <input type="submit" value="입력" />
       </form>
       <div>
-        {piggyArr.map((item) => (
-          <PiggysList
-            key={item.id}
-            myfood={item.food}
-            mymoney={item.foodExpenses}
-            username={username}
-            userid={userid}
-          />
-        ))}
+        {displayPiggy}
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"paginationBttns"}
+          previousLinkClassName={"previousBttn"}
+          nextLinkClassName={"nextBttn"}
+          disabledClassName={"disabledBttn"}
+          activeClassName={"activeBttn"}
+        />
       </div>
     </div>
   );

@@ -11,7 +11,6 @@ function AppRouter(props) {
   const [userInfo, setUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
-    console.log("라우터 되고 있어 태이야 울지마");
     try {
       axios
         .post("/api/LoginForm?type=SessionConfirm", {
@@ -45,7 +44,6 @@ function AppRouter(props) {
           }
         });
     } catch (error) {
-      alert("죄송합니다 여기는 라우터입니다");
       noPermission();
     }
   }, []);
