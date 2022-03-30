@@ -11,7 +11,6 @@ const PiggysList = ({ username, userid, myfood, mymoney, id }) => {
       const response = await axios.post("/api/piggyboss?type=delete", {
         is_id: pTarget,
       });
-      setReload(true);
     }
   };
 
