@@ -5,6 +5,8 @@ import PiggysList from "./PiggysList";
 import cookie from "react-cookies";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import "../css/style.css";
+import Piggys from "./Piggys";
 
 function PiggyBoss({ userInfo }) {
   const [foodExpenses, setFoodExpenses] = useState("");
@@ -15,7 +17,7 @@ function PiggyBoss({ userInfo }) {
   const [piggyArr, setPiggyArr] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const userPerPage = 10;
+  const userPerPage = 5;
   const pagesVisited = pageNumber * userPerPage;
 
   const displayPiggy = piggyArr
@@ -97,46 +99,52 @@ function PiggyBoss({ userInfo }) {
   }, []);
 
   return (
-    <div>
+    <div className="im-home">
       <Navigation username={username} />
-      <h3>PiggyBoss</h3>
-      <p>{username}님은 돼지짱입니다.</p>
-      <form method="post" onSubmit={onSubmit}>
-        <p>돼지짱님 오늘은</p>
-        <br />
-        <label id="food">무엇을</label>
-        <input
-          type="text"
-          id="food"
-          value={food}
-          name="food"
-          onChange={onChange}
-        />
-        <br />
-        <label id="foodExpense">얼마치</label>
-        <input
-          type="text"
-          id="foodExpense"
-          name="foodExpense"
-          value={foodExpenses}
-          onChange={onChange}
-        />
-        <p>드셨사옵니까?</p>
-        <input type="submit" value="입력" />
-      </form>
-      <div>
-        {displayPiggy}
-        <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName={"paginationBttns"}
-          previousLinkClassName={"previousBttn"}
-          nextLinkClassName={"nextBttn"}
-          disabledClassName={"disabledBttn"}
-          activeClassName={"activeBttn"}
-        />
+      <div className="for-flex">
+        <div className="im-piggyzone">
+          <h3 className="piggy-h3">{username}님 오늘은</h3>
+          <form method="post" className="piggy-form" onSubmit={onSubmit}>
+            <label id="food">무엇을</label>
+            <input
+              className="piggy-input"
+              placeholder="ex)떡볶이"
+              type="text"
+              id="food"
+              value={food}
+              name="food"
+              onChange={onChange}
+            />
+            <br />
+            <label id="foodExpense">얼마치</label>
+            <input
+              className="piggy-input"
+              type="text"
+              placeholder="ex)14000"
+              id="foodExpense"
+              name="foodExpense"
+              value={foodExpenses}
+              onChange={onChange}
+            />
+            <h3 className="piggy-h3">드셨사옵니까?</h3>
+            <input className="piggy-btn" type="submit" value="입력" />
+          </form>
+          <div>
+            {displayPiggy}
+            <ReactPaginate
+              previousLabel={"◀"}
+              nextLabel={"▶"}
+              pageCount={pageCount}
+              onPageChange={changePage}
+              containerClassName={"paginationBttns"}
+              previousLinkClassName={"previousBttn"}
+              nextLinkClassName={"nextBttn"}
+              disabledClassName={"disabledBttn"}
+              activeClassName={"activeBttn"}
+            />
+          </div>
+        </div>
+        <Piggys />
       </div>
     </div>
   );

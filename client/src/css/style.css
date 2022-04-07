@@ -103,4 +103,164 @@
   -webkit-box-shadow: inset 3px 4px 3px #9c508b, 2px 2px 2px #6e5268;
           box-shadow: inset 3px 4px 3px #9c508b, 2px 2px 2px #6e5268;
 }
+
+/*NAvigation*/
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  background-color: #b15b9d;
+}
+
+.first-ul {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.navi-li {
+  list-style: none;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 15px 10px 15px 10px;
+}
+
+.second-ul {
+  display: none;
+  position: relative;
+}
+
+.second-ul.active {
+  display: block;
+  position: absolute;
+  right: 15px;
+  list-style: none;
+  background-color: #b15b9d;
+  padding: 15px 10px 15px 10px;
+}
+
+/*Piggy*/
+.im-home {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.for-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.im-piggyzone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 30px;
+  margin-left: 30px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 500px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 50px;
+  -webkit-box-shadow: 3px 3px 3px #5c5b5b;
+          box-shadow: 3px 3px 3px #5c5b5b;
+}
+
+/*pagination*/
+.paginationBttns {
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid #b15b9d;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  list-style: none;
+  font-size: 1.2em;
+  margin: 15px 0px;
+}
+
+.previousBttn {
+  color: #b15b9d;
+  padding: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.nextBttn {
+  color: #b15b9d;
+  padding: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.paginationBttns a {
+  cursor: pointer;
+}
+
+.activeBttn {
+  color: #b15b9d;
+}
+
+.paginationBttns a:hover {
+  color: #b15b9d;
+}
+
+/*piggyBoss*/
+.piggy-input {
+  outline-color: #b15b9d;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  border-radius: 20px;
+  border: 1px solid #5c5b5b;
+}
+
+.piggy-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  margin-top: 10px;
+  background-color: #b15b9d;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
 /*# sourceMappingURL=style.css.map */
