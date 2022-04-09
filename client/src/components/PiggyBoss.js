@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navigation from "./Navigation";
 import { v4 as uuidv4 } from "uuid";
 import PiggysList from "./PiggysList";
@@ -9,8 +9,10 @@ import "../css/style.css";
 import Piggys from "./Piggys";
 
 function PiggyBoss({ userInfo }) {
+  const inputRef = useRef();
   const [foodExpenses, setFoodExpenses] = useState("");
   const [food, setFood] = useState("");
+  const [piggyMoney, setPiggyMoney] = useState(0);
 
   const [userid, setUserid] = useState("");
   const [username, setUsername] = useState("");
@@ -53,6 +55,7 @@ function PiggyBoss({ userInfo }) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+
     const piggyObj = {
       id: uuidv4(),
       useremail: userid,
@@ -96,6 +99,15 @@ function PiggyBoss({ userInfo }) {
     });
 
     setPiggyArr(response2.data.json);
+
+    const response3 = await axios.post("api/piggyboss?type=piggyexpenses", {
+      is_Email: response.data.token1,
+    });
+
+    const cost = Object.values(response3.data.json[0]);
+    setPiggyMoney(cost.pop());
+
+    inputRef.current.focus();
   }, []);
 
   return (
@@ -107,6 +119,7 @@ function PiggyBoss({ userInfo }) {
           <form method="post" className="piggy-form" onSubmit={onSubmit}>
             <label id="food">무엇을</label>
             <input
+              ref={inputRef}
               className="piggy-input"
               placeholder="ex)떡볶이"
               type="text"
@@ -144,7 +157,7 @@ function PiggyBoss({ userInfo }) {
             />
           </div>
         </div>
-        <Piggys />
+        <Piggys piggyMoney={piggyMoney} />
       </div>
     </div>
   );

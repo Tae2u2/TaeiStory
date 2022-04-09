@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import cookie from "react-cookies";
 
 const LoginForm = (props) => {
+  const inputRef = useRef();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -75,6 +76,9 @@ const LoginForm = (props) => {
     }
   };
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
   return (
     <div className="user-box">
       <h2 className="user-h2">LOGIN</h2>
@@ -88,6 +92,7 @@ const LoginForm = (props) => {
               type="text"
               className="user-input"
               name="email"
+              ref={inputRef}
               id="email_val"
               value={email}
               onChange={onChange}

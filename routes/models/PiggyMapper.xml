@@ -37,4 +37,13 @@
     WHERE id = #{is_id}
   </delete>
 
+  <select id="piggyExpenses">
+  select 
+  IFNULL(sum(foodExpenses),0) 
+  as sum_of_foodExpenses 
+  from taeistory_piggy 
+  where useremail=#{is_Email};
+
+  </select>
+
   </mapper>
