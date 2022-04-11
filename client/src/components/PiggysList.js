@@ -1,7 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const PiggysList = ({ username, userid, myfood, mymoney, id }) => {
+const PiggysList = ({
+  username,
+  userid,
+  myfood,
+  mymoney,
+  id,
+  setWatch,
+  watch,
+}) => {
   const handleDelete = async (event) => {
     const pTarget = event.target.getAttribute("id");
     const sayYes = window.confirm(
@@ -11,6 +19,11 @@ const PiggysList = ({ username, userid, myfood, mymoney, id }) => {
       const response = await axios.post("/api/piggyboss?type=delete", {
         is_id: pTarget,
       });
+      if (watch) {
+        setWatch(false);
+      } else {
+        setWatch(true);
+      }
     }
   };
 

@@ -13,6 +13,7 @@ function PiggyBoss({ userInfo }) {
   const [foodExpenses, setFoodExpenses] = useState("");
   const [food, setFood] = useState("");
   const [piggyMoney, setPiggyMoney] = useState(0);
+  const [watch, setWatch] = useState(false);
 
   const [userid, setUserid] = useState("");
   const [username, setUsername] = useState("");
@@ -33,6 +34,8 @@ function PiggyBoss({ userInfo }) {
           mymoney={item.foodExpenses}
           username={username}
           userid={userid}
+          setWatch={setWatch}
+          watch={watch}
         />
       );
     });
@@ -76,6 +79,11 @@ function PiggyBoss({ userInfo }) {
       if (checkSuc === "succ") {
         setFoodExpenses("");
         setFood("");
+        if (watch) {
+          setWatch(false);
+        } else {
+          setWatch(true);
+        }
         alert("오늘도 대단하십니다.");
       } else {
         alert("죄송합니다.");
@@ -108,7 +116,7 @@ function PiggyBoss({ userInfo }) {
     setPiggyMoney(cost.pop());
 
     inputRef.current.focus();
-  }, []);
+  }, [watch]);
 
   return (
     <div className="im-home">
