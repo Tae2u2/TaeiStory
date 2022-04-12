@@ -84,7 +84,7 @@ const LoginForm = (props) => {
       <h2 className="user-h2">LOGIN</h2>
       <div className="user-form-box">
         <form onSubmit={onsubmit} className="user-form">
-          <div className="for-flex">
+          <div className="for-flex2">
             <label className="user-label" id="email_val">
               이메일
             </label>
@@ -100,7 +100,7 @@ const LoginForm = (props) => {
             />
           </div>
           <br />
-          <div className="for-flex">
+          <div className="for-flex2">
             <label className="user-label" id="pwd_val">
               비밀번호
             </label>

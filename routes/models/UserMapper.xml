@@ -51,5 +51,10 @@
   WHERE useremail = #{is_Email} AND userpassword = #{is_Token} 
   </select>
 
+  <delete id="deleteUser">
+     DELETE FROM react.taeistory_user
+    WHERE useremail = #{is_id}
+  </delete>
+
 
 </mapper>

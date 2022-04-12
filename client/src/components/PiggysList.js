@@ -28,12 +28,12 @@ const PiggysList = ({
   };
 
   return (
-    <div>
-      <h3>
+    <div className="list-box">
+      <h3 className="list-h3">
         {myfood}를 {mymoney}원에 드셨습니다.
       </h3>
-      <button id={id} onClick={handleDelete}>
-        삭제
+      <button className="delete-btn" id={id} onClick={handleDelete}>
+        ❌
       </button>
     </div>
   );

@@ -120,7 +120,7 @@ function PiggyBoss({ userInfo }) {
 
   return (
     <div className="im-home">
-      <Navigation username={username} />
+      <Navigation username={username} userid={userid} />
       <div className="for-flex">
         <div className="im-piggyzone">
           <h3 className="piggy-h3">{username}님 오늘은</h3>

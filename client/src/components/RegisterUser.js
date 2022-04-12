@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -13,10 +13,19 @@ const RegisterUser = () => {
   } = useForm();
   const is_Password = useRef();
   is_Password.current = watch("is_Password");
+  const [userEmail, setUserEmail] = useState("");
+
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "is_Useremail") {
+      setUserEmail(value);
+    }
+  };
 
   const onSubmit = async (data) => {
     const userdata = JSON.stringify(data);
-    console.log(userdata);
     try {
       const response = await fetch("/api/register?type=signup", {
         method: "POST",
@@ -43,11 +52,12 @@ const RegisterUser = () => {
     <div className="user-box">
       <h2 className="user-h2">회원가입</h2>
       <form method="post" name="frm" onSubmit={handleSubmit(onSubmit)}>
-        <div className="for-flex">
+        <div className="for-flex2">
           <label id="email_val" className="user-label">
             이메일
           </label>
           <input
+            onChange={onChange}
             id="email_val"
             type="text"
             className="user-input"
@@ -58,10 +68,10 @@ const RegisterUser = () => {
             })}
             placeholder="ex)yourEmail@email.com"
           />
-          {errors.is_Useremail && <p>이메일을 다시 확인해주세요!</p>}
         </div>
+        {errors.is_Useremail && <small>이메일을 다시 확인해주세요!</small>}
         <br />
-        <div className="for-flex">
+        <div className="for-flex2">
           <label id="pwd_val" className="user-label">
             비밀번호
           </label>
@@ -73,15 +83,16 @@ const RegisterUser = () => {
             placeholder="비밀번호를 입력해주세요."
             {...register("is_Password", { required: true, minLength: 9 })}
           />
-          {errors.is_Password && errors.is_Password.type === "required" && (
-            <p>필수 입력사항입니다.</p>
-          )}
-          {errors.is_Password && errors.is_Password.type === "minLength" && (
-            <p>영문+숫자 조합 9자 이상으로 만들어야합니다. </p>
-          )}
         </div>
+        {errors.is_Password && errors.is_Password.type === "required" && (
+          <small>필수 입력사항입니다.</small>
+        )}
+        {errors.is_Password && errors.is_Password.type === "minLength" && (
+          <small>영문+숫자 조합 9자 이상으로 만들어야합니다. </small>
+        )}
         <br />
-        <div className="for-flex">
+
+        <div className="for-flex2">
           <label id="pwd_cnf_val" className="user-label">
             비밀번호 확인
           </label>
@@ -96,17 +107,18 @@ const RegisterUser = () => {
               validate: (value) => value === is_Password.current,
             })}
           />
-          {errors.is_Password_check &&
-            errors.is_Password_check.type === "required" && (
-              <p>비밀번호를 확인해주세요!</p>
-            )}
-          {errors.is_Password_check &&
-            errors.is_Password_check.type === "validate" && (
-              <p>입력하신 비밀번호와 같지 않습니다.</p>
-            )}
         </div>
+        {errors.is_Password_check &&
+          errors.is_Password_check.type === "required" && (
+            <small>비밀번호를 확인해주세요!</small>
+          )}
+        {errors.is_Password_check &&
+          errors.is_Password_check.type === "validate" && (
+            <small>입력하신 비밀번호와 같지 않습니다.</small>
+          )}
         <br />
-        <div className="for-flex">
+
+        <div className="for-flex2">
           <label id="name_val" className="user-label">
             별명
           </label>
@@ -118,13 +130,13 @@ const RegisterUser = () => {
             {...register("is_Username", { required: true, maxLength: 10 })}
             placeholder="별명을 입력해주세요."
           />
-          {errors.is_Username && errors.is_Username.type === "required" && (
-            <p>필수 입력사항입니다.</p>
-          )}
-          {errors.is_Username && errors.is_Username.type === "maxLength" && (
-            <p>이름을 다시 확인해주세요!</p>
-          )}
         </div>
+        {errors.is_Username && errors.is_Username.type === "required" && (
+          <small>필수 입력사항입니다.</small>
+        )}
+        {errors.is_Username && errors.is_Username.type === "maxLength" && (
+          <small>이름을 다시 확인해주세요!</small>
+        )}
         <br />
         <input
           type="submit"

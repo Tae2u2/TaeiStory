@@ -119,6 +119,22 @@ router.post("/", (req, res, next) => {
     } catch (error) {
       console.log("Module > dbconnect error : " + error);
     }
+  } else if (type === "deleteUser") {
+    //회원가입 정보 삽입
+    try {
+      // Mysql Api 모듈(CRUD)
+      const dbconnect_Module = require("./dbconnect_Module");
+
+      //Mysql 쿼리 호출정보 입력
+      req.body.mapper = "UserMapper"; //mybatis xml 파일명
+      req.body.crud = "delete"; //select, insert, update, delete 중에 입력
+      req.body.mapper_id = "deleteUser";
+
+      router.use("/", dbconnect_Module);
+      next("route");
+    } catch (error) {
+      console.log("Module > dbconnect error : " + error);
+    }
   }
 });
 
