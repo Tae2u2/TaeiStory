@@ -28,8 +28,9 @@ $point-color: #2f0059;
   width: 100vw;
   height: 100vh;
   background-color: #fff;
+  background-image: url("../images/smallpigWhite.png");
+  background-repeat: repeat;
 }
-
 .user-box {
   @include for-center-line;
   flex-direction: column;
@@ -89,8 +90,28 @@ small{
   filter: brightness(1.2);
 }
 
+.intro-box {
+  @include for-center-line;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 400px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+  transition: 0.4s;
+}
 
+.speech-box{
+  text-align: center;
+}
 
+.fairy{
+  transition: 0.4s;
+}
+.fairy:hover{
+  transform: scale(1.1);
+}
 /*NAvigation*/
 nav{
   display: flex;
@@ -230,21 +251,50 @@ justify-content: flex-start;
 }
 .list-box{
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 .list-h3{
   padding-left: 7px;
   padding-bottom: 10px;
   letter-spacing: -1px;
 }
-.delete-btn{
-background-color: transparent;
-border: none;
-outline: none;
-cursor: pointer;
+
+.piglist-btn{
+  outline: none;
+  width: 33px;
+  height: 33px;
+  background-color: $point-color;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+}
+.piglist-btn:hover{
+  background-color: $wide-color;
+}
+.pig-regdate{
+  color: #5c5b5b;
+}
+.for-flex3{
+  display: flex;
+  justify-content: space-between;
 }
 
 
+
+.im-piggyzone2{
+  @include for-center-line;
+  margin-top: 30px;
+  margin-left: 30px;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 500px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 50px; 
+  box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+  transition: 0.3s;
+}
 .pig-img{
   transition: 0.5s;
 }
@@ -253,6 +303,40 @@ cursor: pointer;
 }
 .pig-level{
   color: orangered;
+}
+
+
+.piggy-modal{
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  width: 360px;
+  height: 100px;
+  background-color: $wide-color;
+  border-radius: 20px;
+  padding: 15px;
+  z-index: 100;
+   label{
+     padding-right: 2px;
+   }
+}
+.pig-modal{
+  padding-top: 20px;
+  padding-left: 15px;
+}
+.modal-form{
+  display: flex;
+}
+.modal-input-div{
+  letter-spacing: -1px;
+}
+
+.modal-input{
+  padding: 7px 2px 2px 7px;
+  border: none;
+  border-radius: 20px;
+  margin: 5px;
+
 }
 
 
@@ -270,6 +354,9 @@ cursor: pointer;
 
 
 @include mobile {
+  .App{
+    background-image: none;
+  }
   .for-flex {
     flex-direction: column-reverse;
   }
@@ -289,10 +376,50 @@ cursor: pointer;
   .pig-p{
     padding-left: 13px;
   }
+  .fairy{
+display: none;
+  }
+  .intro-box{
+    height: 100px;
+  }
+
+  .for-flex3{
+    flex-direction: column;
+  }
+  .pig-mobile{
+    text-align: right;
+    padding-right: 15px;
+  }
+  .im-piggyzone2{
+    width: 330px;
+    height: 300px;
+  }
+  .pig-p{
+    text-align: center;
+  }
+  .piggy-modal{
+    width: 325px;
+  }
 }
 
 @include tablet {
+  .App{
+    background-image: none;
+  }
   .for-flex {
     flex-direction: column-reverse;
   }
+  .fairy{
+    display: none;
+  }
+  .intro-box{
+        height: 100px;
+  }
+  .im-piggyzone2{
+    height: 300px;
+  }
+  .pig-p{
+    text-align: center;
+  }
+
 }

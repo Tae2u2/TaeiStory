@@ -28,8 +28,8 @@ const Piggys = ({ piggyMoney }) => {
   }, [piggyMoney]);
 
   return (
-    <div className="im-piggyzone">
-      <h4>
+    <div className="im-piggyzone2">
+      <h4 className="pig-level-mobile">
         당신의 돼지력 지수 : <span className="pig-level">{level}</span>
       </h4>
       {myPig === 0 ? (

@@ -65,6 +65,20 @@ router.post("/", (req, res, next) => {
     } catch (error) {
       console.log("Module > dbconnect error 피기리스트: " + error);
     }
+  } else if (type === "modifypiggy") {
+    try {
+      // Mysql Api 모듈(CRUD)
+      const dbconnect_Module = require("./dbconnect_Module");
+
+      //Mysql 쿼리 호출정보 입력
+      req.body.mapper = "PiggyMapper"; //mybatis xml 파일명
+      req.body.crud = "update"; //select, insert, update, delete 중에 입력
+      req.body.mapper_id = "modifypiggy";
+      router.use("/", dbconnect_Module);
+      next("route");
+    } catch (error) {
+      console.log("Module > dbconnect error 피기머니: " + error);
+    }
   }
 });
 

@@ -20,6 +20,8 @@
   width: 100vw;
   height: 100vh;
   background-color: #fff;
+  background-image: url("../images/smallpigWhite.png");
+  background-repeat: repeat;
 }
 
 .user-box {
@@ -102,6 +104,46 @@ small {
 .user-btn:hover {
   -webkit-filter: brightness(1.2);
           filter: brightness(1.2);
+}
+
+.intro-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 400px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 50px;
+  -webkit-box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+          box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.speech-box {
+  text-align: center;
+}
+
+.fairy {
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.fairy:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 /*NAvigation*/
@@ -293,9 +335,10 @@ nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .list-h3 {
@@ -304,11 +347,60 @@ nav {
   letter-spacing: -1px;
 }
 
-.delete-btn {
-  background-color: transparent;
-  border: none;
+.piglist-btn {
   outline: none;
+  width: 33px;
+  height: 33px;
+  background-color: #2f0059;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
   cursor: pointer;
+}
+
+.piglist-btn:hover {
+  background-color: #90b029;
+}
+
+.pig-regdate {
+  color: #5c5b5b;
+}
+
+.for-flex3 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.im-piggyzone2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 30px;
+  margin-left: 30px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 500px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 50px;
+  -webkit-box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+          box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .pig-img {
@@ -325,7 +417,51 @@ nav {
   color: orangered;
 }
 
+.piggy-modal {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 360px;
+  height: 100px;
+  background-color: #90b029;
+  border-radius: 20px;
+  padding: 15px;
+  z-index: 100;
+}
+
+.piggy-modal label {
+  padding-right: 2px;
+}
+
+.pig-modal {
+  padding-top: 20px;
+  padding-left: 15px;
+}
+
+.modal-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.modal-input-div {
+  letter-spacing: -1px;
+}
+
+.modal-input {
+  padding: 7px 2px 2px 7px;
+  border: none;
+  border-radius: 20px;
+  margin: 5px;
+}
+
 @media (min-width: 335px) and (max-width: 757px) {
+  .App {
+    background-image: none;
+  }
   .for-flex {
     -webkit-box-orient: vertical;
     -webkit-box-direction: reverse;
@@ -348,14 +484,55 @@ nav {
   .pig-p {
     padding-left: 13px;
   }
+  .fairy {
+    display: none;
+  }
+  .intro-box {
+    height: 100px;
+  }
+  .for-flex3 {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .pig-mobile {
+    text-align: right;
+    padding-right: 15px;
+  }
+  .im-piggyzone2 {
+    width: 330px;
+    height: 300px;
+  }
+  .pig-p {
+    text-align: center;
+  }
+  .piggy-modal {
+    width: 325px;
+  }
 }
 
 @media (min-width: 758px) and (max-width: 1023px) {
+  .App {
+    background-image: none;
+  }
   .for-flex {
     -webkit-box-orient: vertical;
     -webkit-box-direction: reverse;
         -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
+  }
+  .fairy {
+    display: none;
+  }
+  .intro-box {
+    height: 100px;
+  }
+  .im-piggyzone2 {
+    height: 300px;
+  }
+  .pig-p {
+    text-align: center;
   }
 }
 /*# sourceMappingURL=style.css.map */

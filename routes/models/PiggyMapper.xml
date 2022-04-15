@@ -46,4 +46,13 @@
 
   </select>
 
+  <update id="modifypiggy">
+    update taeistory_piggy 
+    SET 
+    food = #{e_food}
+    ,foodExpenses = #{e_foodExpense}
+    ,reg_date = DATE_FORMAT(now(), '%Y%m%d%H%i%s')
+    where id = #{is_id};
+  </update>
+
   </mapper>

@@ -20,7 +20,7 @@ function PiggyBoss({ userInfo }) {
   const [piggyArr, setPiggyArr] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const userPerPage = 5;
+  const userPerPage = 3;
   const pagesVisited = pageNumber * userPerPage;
 
   const displayPiggy = piggyArr
@@ -30,6 +30,7 @@ function PiggyBoss({ userInfo }) {
         <PiggysList
           key={item.id}
           id={item.id}
+          regdate={item.reg_date}
           myfood={item.food}
           mymoney={item.foodExpenses}
           username={username}
@@ -84,7 +85,6 @@ function PiggyBoss({ userInfo }) {
         } else {
           setWatch(true);
         }
-        alert("오늘도 대단하십니다.");
       } else {
         alert("죄송합니다.");
         return false;

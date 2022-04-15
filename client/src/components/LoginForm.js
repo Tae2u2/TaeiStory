@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import axios from "axios";
 import cookie from "react-cookies";
+import Introduce from "./Introduce";
 
 const LoginForm = (props) => {
   const inputRef = useRef();
@@ -79,48 +80,52 @@ const LoginForm = (props) => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
   return (
-    <div className="user-box">
-      <h2 className="user-h2">LOGIN</h2>
-      <div className="user-form-box">
-        <form onSubmit={onsubmit} className="user-form">
-          <div className="for-flex2">
-            <label className="user-label" id="email_val">
-              이메일
-            </label>
-            <input
-              type="text"
-              className="user-input"
-              name="email"
-              ref={inputRef}
-              id="email_val"
-              value={email}
-              onChange={onChange}
-              placeholder="이메일"
-            />
-          </div>
-          <br />
-          <div className="for-flex2">
-            <label className="user-label" id="pwd_val">
-              비밀번호
-            </label>
-            <input
-              type="password"
-              className="user-input"
-              id="pwd_val"
-              name="password"
-              value={password}
-              onChange={onChange}
-              placeholder="비밀번호"
-            />
-          </div>
-          <br />
-          <input className="user-btn" type="submit" value="로그인" />
-        </form>
-        <span className="go-register">
-          <Link to="/register">아직 회원이 아니신가요?</Link>
-        </span>
+    <div className="for-flex">
+      <div className="user-box">
+        <h2 className="user-h2">LOGIN</h2>
+        <div className="user-form-box">
+          <form onSubmit={onsubmit} className="user-form">
+            <div className="for-flex2">
+              <label className="user-label" id="email_val">
+                이메일
+              </label>
+              <input
+                type="text"
+                className="user-input"
+                name="email"
+                ref={inputRef}
+                id="email_val"
+                value={email}
+                onChange={onChange}
+                placeholder="이메일"
+              />
+            </div>
+            <br />
+            <div className="for-flex2">
+              <label className="user-label" id="pwd_val">
+                비밀번호
+              </label>
+              <input
+                type="password"
+                className="user-input"
+                id="pwd_val"
+                name="password"
+                value={password}
+                onChange={onChange}
+                placeholder="비밀번호"
+              />
+            </div>
+            <br />
+            <input className="user-btn" type="submit" value="로그인" />
+          </form>
+          <span className="go-register">
+            <Link to="/register">아직 회원이 아니신가요?</Link>
+          </span>
+        </div>
       </div>
+      <Introduce />
     </div>
   );
 };
