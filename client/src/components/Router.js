@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import cookie from "react-cookies";
 import RegisterUser from "./RegisterUser";
+import AdminPage from "./AdminPage";
 
 function AppRouter(props) {
   const [userInfo, setUserInfo] = useState(null);
@@ -49,7 +50,7 @@ function AppRouter(props) {
   }, []);
 
   const noPermission = (e) => {
-    if (window.location.hash != "nocookie") {
+    if (window.location.hash !== "nocookie") {
       remove_cookie();
       window.location.href = "/";
     }
@@ -72,6 +73,7 @@ function AppRouter(props) {
           element={<PiggyBoss isLoggedIn={isLoggedIn} userInfo={userInfo} />}
         ></Route>
         <Route path="/register" element={<RegisterUser />}></Route>
+        <Route path="/adminpage" element={<AdminPage />}></Route>
       </Routes>
     </Router>
   );

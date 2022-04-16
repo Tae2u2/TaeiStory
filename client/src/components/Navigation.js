@@ -1,6 +1,7 @@
 import { useState } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Navigation({ username, userid }) {
   const [check, setCheck] = useState(false);
@@ -54,7 +55,14 @@ function Navigation({ username, userid }) {
   return (
     <nav>
       <ul className="first-ul">
-        <li className="navi-li">당신은 돼지짱입니까?</li>
+        <li className="navi-li">
+          <Link to="/piggy">당신은 돼지짱입니까?</Link>
+        </li>
+        {userid === "admin@admin" && (
+          <li className="navi-li">
+            <Link to="/adminpage">관리자페이지</Link>
+          </li>
+        )}
         <li className="navi-li" onClick={handleIdBox}>
           {username}님, 환영합니다!
           <ul className={check ? "second-ul active" : "second-ul"}>
@@ -64,9 +72,11 @@ function Navigation({ username, userid }) {
               </button>
             </li>
             <li className="id-box">
-              <button className="id-box-btn" onClick={handleUserDelete}>
-                회원탈퇴
-              </button>
+              {userid !== "admin@admin" && (
+                <button className="id-box-btn" onClick={handleUserDelete}>
+                  회원탈퇴
+                </button>
+              )}
             </li>
           </ul>
         </li>

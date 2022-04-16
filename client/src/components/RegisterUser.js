@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -14,16 +14,6 @@ const RegisterUser = () => {
   } = useForm();
   const is_Password = useRef();
   is_Password.current = watch("is_Password");
-  const [userEmail, setUserEmail] = useState("");
-
-  const onChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    if (name === "is_Useremail") {
-      setUserEmail(value);
-    }
-  };
 
   const onSubmit = async (data) => {
     const userdata = JSON.stringify(data);
@@ -59,7 +49,6 @@ const RegisterUser = () => {
               이메일
             </label>
             <input
-              onChange={onChange}
               id="email_val"
               type="text"
               className="user-input"

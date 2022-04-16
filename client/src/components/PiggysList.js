@@ -1,16 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const PiggysList = ({
-  username,
-  userid,
-  myfood,
-  mymoney,
-  id,
-  regdate,
-  setWatch,
-  watch,
-}) => {
+const PiggysList = ({ myfood, mymoney, id, regdate, setWatch, watch }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [efood, setEfood] = useState(myfood);
   const [efoodExpense, setEfoodExpense] = useState(mymoney);

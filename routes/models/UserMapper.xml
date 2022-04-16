@@ -56,5 +56,10 @@
     WHERE useremail = #{is_id}
   </delete>
 
+    <select id="selectAllList">
+  SELECT
+  *
+  FROM react.taeistory_user
+  </select>
 
 </mapper>

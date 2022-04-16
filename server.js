@@ -1,15 +1,17 @@
 const express = require("express");
 
-const indexRouter = require("./routes/index2");
-const usersRouter = require("./routes/UsersRout");
-const piggyRouter = require("./routes/PiggyRout");
+const indexRout = require("./routes/index2");
+const usersRout = require("./routes/UsersRout");
+const piggyRout = require("./routes/PiggyRout");
+const adminRout = require("./routes/AdminRout");
 
 const app = express();
 
-app.use("/", indexRouter);
-app.use("/api/register", usersRouter);
-app.use("/api/LoginForm", usersRouter);
-app.use("/api/piggyboss", piggyRouter);
+app.use("/", indexRout);
+app.use("/api/register", usersRout);
+app.use("/api/LoginForm", usersRout);
+app.use("/api/piggyboss", piggyRout);
+app.use("/api/admin", adminRout);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Loading on port ${port}`));

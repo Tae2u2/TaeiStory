@@ -120,6 +120,8 @@ const LoginForm = (props) => {
             <br />
             <input className="user-btn" type="submit" value="로그인" />
           </form>
+          <button className="find-pw-btn">비밀번호 찾기</button>
+          <br />
           <span className="go-register">
             <Link to="/register">아직 회원이 아니신가요?</Link>
           </span>

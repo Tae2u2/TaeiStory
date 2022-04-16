@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 * {
   margin: 0px;
@@ -96,14 +97,23 @@ small {
   color: #fff;
   font-size: 1.2em;
   font-weight: 500;
+  letter-spacing: -1px;
   -webkit-box-shadow: 2px 3px 2px #6e5268;
           box-shadow: 2px 3px 2px #6e5268;
   cursor: pointer;
 }
 
 .user-btn:hover {
-  -webkit-filter: brightness(1.2);
-          filter: brightness(1.2);
+  -webkit-filter: brightness(1.6);
+          filter: brightness(1.6);
+}
+
+.find-pw-btn {
+  border: none;
+  outline: none;
+  font-size: 1em;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .intro-box {
@@ -173,6 +183,12 @@ nav {
   border-radius: 20px;
   padding: 15px 10px 15px 10px;
   margin-right: 15px;
+}
+
+.navi-li a {
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
 }
 
 .second-ul {
@@ -265,16 +281,16 @@ nav {
 
 /*pagination*/
 .paginationBttns {
-  width: 100%;
-  height: 40px;
-  border-radius: 20px;
-  border: 1px solid #2f0059;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid #2f0059;
   list-style: none;
   font-size: 1.2em;
   margin: 15px 0px;
@@ -375,6 +391,7 @@ nav {
           justify-content: space-between;
 }
 
+/*piggys*/
 .im-piggyzone2 {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -417,6 +434,7 @@ nav {
   color: orangered;
 }
 
+/*수정모달*/
 .piggy-modal {
   position: absolute;
   display: -webkit-box;
@@ -456,6 +474,43 @@ nav {
   border: none;
   border-radius: 20px;
   margin: 5px;
+}
+
+/*관리자페이지*/
+.admin-page {
+  width: 900px;
+  height: 600px;
+  background-color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  background-color: #fff;
+  border-radius: 50px;
+  -webkit-box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+          box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+}
+
+table th {
+  border: 1px solid #2f0059;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+table td {
+  border: 1px solid #2f0059;
+  padding: 5px 10px;
 }
 
 @media (min-width: 335px) and (max-width: 757px) {
