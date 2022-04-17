@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const PiggysList = ({ myfood, mymoney, id, regdate, setWatch, watch }) => {
+const PiggysList = ({ myfood, mymoney, id, regdate, setReload, reload }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [efood, setEfood] = useState(myfood);
   const [efoodExpense, setEfoodExpense] = useState(mymoney);
@@ -13,10 +13,14 @@ const PiggysList = ({ myfood, mymoney, id, regdate, setWatch, watch }) => {
       const response = await axios.post("/api/piggyboss?type=delete", {
         is_id: pTarget,
       });
-      if (watch) {
-        setWatch(false);
+      if (response.data === "succ") {
+        if (reload) {
+          setReload(false);
+        } else {
+          setReload(true);
+        }
       } else {
-        setWatch(true);
+        alert("죄송합니다. 다시 시도해주세요!");
       }
     }
   };
@@ -44,22 +48,22 @@ const PiggysList = ({ myfood, mymoney, id, regdate, setWatch, watch }) => {
     const eTarget = event.target.getAttribute("id");
     if (efood === myfood && efoodExpense === mymoney) {
       alert("변경된 사항이 없습니다.");
-      return false;
-    }
-
-    const response = await axios.post("/api/piggyboss?type=modifypiggy", {
-      is_id: eTarget,
-      e_food: efood,
-      e_foodExpense: efoodExpense,
-    });
-    console.log(response);
-    setEfood("");
-    setEfoodExpense("");
-    handleOpen();
-    if (watch) {
-      setWatch(false);
     } else {
-      setWatch(true);
+      const response = await axios.post("/api/piggyboss?type=modifypiggy", {
+        is_id: eTarget,
+        e_food: efood,
+        e_foodExpense: efoodExpense,
+      });
+      handleOpen();
+      if (response.data === "succ") {
+        if (reload) {
+          setReload(false);
+        } else {
+          setReload(true);
+        }
+      } else {
+        alert("죄송합니다 다시 시도해주세요.");
+      }
     }
   };
 
@@ -74,7 +78,7 @@ const PiggysList = ({ myfood, mymoney, id, regdate, setWatch, watch }) => {
                 type="text"
                 name="efood"
                 className="modal-input"
-                placeholder={myfood}
+                value={efood}
                 onChange={onChange}
               />
               <br />
@@ -83,7 +87,7 @@ const PiggysList = ({ myfood, mymoney, id, regdate, setWatch, watch }) => {
                 type="text"
                 className="modal-input"
                 name="efoodExpense"
-                placeholder={mymoney}
+                value={efoodExpense}
                 onChange={onChange}
               />
             </div>

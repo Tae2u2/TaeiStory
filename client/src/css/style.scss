@@ -9,6 +9,11 @@
   display: flex;
   justify-content: space-between;
 }
+@mixin bottom-right() {
+  bottom: 1rem;
+  right: 1rem;
+  animation: toast-in-right .7s;
+}
 //@include flex-between
 
 $breakpoint-mobile: 335px;
@@ -376,6 +381,66 @@ table td{
 
 }
 
+
+/*토스트알람*/
+.toast-container{
+  @include bottom-right();
+  position: absolute;
+  font-size: 14px;
+  position: fixed;
+  z-index: 10;
+}
+.toast-notification{
+  @include bottom-right();
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #999;
+  color: #000;
+  opacity: 0.9;
+  transition: .3s ease;
+}
+
+.toast-notification:hover{
+  box-shadow: 0 0 12px #fff;
+  opacity: 1;
+}
+.toast {
+  height: 50px;
+  width: 365px;
+  color: #fff;
+  padding: 20px 15px 10px 10px;
+}
+.toast-title{
+  font-weight: 700;
+  font-size: 16px;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 6px;
+  width: 300px;
+  height: 18px;
+}
+.toast-description{
+  margin: 0;
+  text-align: left;
+}
+.toast-btn{
+  float: right;
+  background: none;
+  border: none;
+  color: #fff;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@keyframes toast-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @mixin mobile {
   @media (min-width: #{$breakpoint-mobile}) and (max-width: #{$breakpoint-tablet - 1px}) {
     @content;
@@ -413,7 +478,7 @@ table td{
     padding-left: 13px;
   }
   .fairy{
-display: none;
+    display: none;
   }
   .intro-box{
     height: 100px;

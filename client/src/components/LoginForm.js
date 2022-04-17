@@ -68,9 +68,7 @@ const LoginForm = (props) => {
           path: "/",
           expires,
         });
-        if (userInfo != null) {
-          navigate("/piggy", { replace: true });
-        }
+        navigate("/piggy", { replace: true });
       } catch (error) {
         alert("죄송합니다. 로그인을 다시 시도해주세요!");
       }
@@ -93,13 +91,13 @@ const LoginForm = (props) => {
               </label>
               <input
                 type="text"
-                className="user-input"
-                name="email"
-                ref={inputRef}
                 id="email_val"
+                name="email"
+                className="user-input"
                 value={email}
-                onChange={onChange}
                 placeholder="이메일"
+                ref={inputRef}
+                onChange={onChange}
               />
             </div>
             <br />
@@ -109,12 +107,12 @@ const LoginForm = (props) => {
               </label>
               <input
                 type="password"
-                className="user-input"
                 id="pwd_val"
                 name="password"
+                className="user-input"
                 value={password}
-                onChange={onChange}
                 placeholder="비밀번호"
+                onChange={onChange}
               />
             </div>
             <br />

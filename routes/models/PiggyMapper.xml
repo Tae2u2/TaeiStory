@@ -13,7 +13,7 @@
     VALUES (
     #{useremail}
       , #{food}
-      , #{foodExpenses}
+      , #{foodExpense}
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
       ,#{id}
       )

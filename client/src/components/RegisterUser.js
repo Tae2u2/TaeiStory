@@ -126,7 +126,7 @@ const RegisterUser = () => {
             <small>필수 입력사항입니다.</small>
           )}
           {errors.is_Username && errors.is_Username.type === "maxLength" && (
-            <small>이름을 다시 확인해주세요!</small>
+            <small>10자 이하로 입력해주세요!</small>
           )}
           <br />
           <input

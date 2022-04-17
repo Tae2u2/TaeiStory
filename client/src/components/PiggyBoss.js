@@ -1,19 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import Navigation from "./Navigation";
-import { v4 as uuidv4 } from "uuid";
-import PiggysList from "./PiggysList";
+import React, { useEffect, useState } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import "../css/style.css";
-import Piggys from "./Piggys";
 
-function PiggyBoss({ userInfo }) {
-  const inputRef = useRef();
-  const [foodExpenses, setFoodExpenses] = useState("");
-  const [food, setFood] = useState("");
+import Navigation from "./Navigation";
+import PiggysList from "./PiggysList";
+import Piggys from "./Piggys";
+import PiggyFactory from "./PiggyFactory";
+
+import "../css/style.css";
+
+function PiggyBoss() {
   const [piggyMoney, setPiggyMoney] = useState(0);
-  const [watch, setWatch] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const [userid, setUserid] = useState("");
   const [username, setUsername] = useState("");
@@ -33,66 +32,15 @@ function PiggyBoss({ userInfo }) {
           regdate={item.reg_date}
           myfood={item.food}
           mymoney={item.foodExpenses}
-          username={username}
-          userid={userid}
-          setWatch={setWatch}
-          watch={watch}
+          setReload={setReload}
+          reload={reload}
         />
       );
     });
 
   const pageCount = Math.ceil(piggyArr.length / userPerPage);
-
-  const onChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    if (name === "foodExpense") {
-      setFoodExpenses(value);
-    } else if (name === "food") {
-      setFood(value);
-    }
-  };
   const changePage = ({ selected }) => {
     setPageNumber(selected);
-  };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    const piggyObj = {
-      id: uuidv4(),
-      useremail: userid,
-      food: food,
-      foodExpenses: foodExpenses,
-    };
-    const piggydata = JSON.stringify(piggyObj);
-    console.log(piggydata);
-    try {
-      const response = await fetch("api/piggyboss?type=inputpiggy", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: piggydata,
-      });
-      const checkSuc = await response.text();
-      if (checkSuc === "succ") {
-        setFoodExpenses("");
-        setFood("");
-        if (watch) {
-          setWatch(false);
-        } else {
-          setWatch(true);
-        }
-      } else {
-        alert("죄송합니다.");
-        return false;
-      }
-    } catch (error) {
-      alert("죄송합니다 다시 시도해주세요!");
-      return false;
-    }
   };
 
   useEffect(async () => {
@@ -102,6 +50,7 @@ function PiggyBoss({ userInfo }) {
     });
     setUserid(response.data.token1);
     setUsername(response.data.token2);
+
     const response2 = await axios.post("api/piggyboss?type=piggylist", {
       is_Email: response.data.token1,
     });
@@ -114,9 +63,7 @@ function PiggyBoss({ userInfo }) {
 
     const cost = Object.values(response3.data.json[0]);
     setPiggyMoney(cost.pop());
-
-    inputRef.current.focus();
-  }, [watch]);
+  }, [, reload]);
 
   return (
     <div className="im-home">
@@ -124,32 +71,7 @@ function PiggyBoss({ userInfo }) {
       <div className="for-flex">
         <div className="im-piggyzone">
           <h3 className="piggy-h3">{username}님 오늘은</h3>
-          <form method="post" className="piggy-form" onSubmit={onSubmit}>
-            <label id="food">무엇을</label>
-            <input
-              ref={inputRef}
-              className="piggy-input"
-              placeholder="ex)떡볶이"
-              type="text"
-              id="food"
-              value={food}
-              name="food"
-              onChange={onChange}
-            />
-            <br />
-            <label id="foodExpense">얼마치</label>
-            <input
-              className="piggy-input"
-              type="text"
-              placeholder="ex)14000"
-              id="foodExpense"
-              name="foodExpense"
-              value={foodExpenses}
-              onChange={onChange}
-            />
-            <h3 className="piggy-h3">드셨사옵니까?</h3>
-            <input className="piggy-btn" type="submit" value="입력" />
-          </form>
+          <PiggyFactory userid={userid} reload={reload} setReload={setReload} />
           <div>
             {displayPiggy}
             <ReactPaginate

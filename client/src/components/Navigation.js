@@ -30,12 +30,16 @@ function Navigation({ username, userid }) {
         const response = await axios.post("/api/LoginForm?type=deleteUser", {
           is_id: userid,
         });
-        alert("그동안 감사했습니다. 안녕히가세요!");
+        if (response.data === "succ") {
+          alert("그동안 감사했습니다. 안녕히가세요!");
 
-        cookie.remove("userid", { path: "/" });
-        cookie.remove("username", { path: "/" });
-        cookie.remove("userpassword", { path: "/" });
-        window.location.href = "/";
+          cookie.remove("userid", { path: "/" });
+          cookie.remove("username", { path: "/" });
+          cookie.remove("userpassword", { path: "/" });
+          window.location.href = "/";
+        } else {
+          alert("죄송합니다 다시 시도해주세요");
+        }
       } else {
         alert("문구를 잘못입력하셨습니다. 다시 시도해주세요.");
       }
