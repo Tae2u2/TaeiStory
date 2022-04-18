@@ -77,7 +77,7 @@ const AdminPage = () => {
     });
 
     setPiggyArr(response2.data.json);
-  }, [reAdmin]);
+  }, [, reAdmin]);
 
   return (
     <div className="im-home">

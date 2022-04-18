@@ -7,19 +7,16 @@ import Introduce from "./Introduce";
 
 const LoginForm = (props) => {
   const inputRef = useRef();
+  const inputPassRef = useRef();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userInfo, setUserInfo] = useState(null);
 
   const onChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    if (name === "email") {
-      setEmail(value);
-    } else if (name === "password") {
-      setPassword(value);
+    if (event.target.name === "email") {
+      setEmail(inputRef.current.value);
+    } else {
+      setPassword(inputPassRef.current.value);
     }
   };
 
@@ -37,13 +34,6 @@ const LoginForm = (props) => {
 
         const userName = response.data.json[0].username;
         const userEmail = response.data.json[0].useremail;
-        const userPhone = response.data.json[0].userphone;
-
-        setUserInfo({
-          userName: userName,
-          userEmail: userEmail,
-          userPhone: userPhone,
-        });
 
         const upw = response.data.json[0].userpassword;
         props.setIsLoggedIn(true);
@@ -110,7 +100,7 @@ const LoginForm = (props) => {
                 id="pwd_val"
                 name="password"
                 className="user-input"
-                value={password}
+                ref={inputPassRef}
                 placeholder="비밀번호"
                 onChange={onChange}
               />

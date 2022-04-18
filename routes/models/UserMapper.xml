@@ -62,4 +62,10 @@
   FROM react.taeistory_user
   </select>
 
+  <select id="onlyoneCheckSelect">
+    SELECT
+      count (*) as num
+      FROM react.taeistory_user
+      WHERE useremail = #{is_Email}
+  </select>
 </mapper>

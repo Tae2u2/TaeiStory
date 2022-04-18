@@ -1,10 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Introduce from "./Introduce";
+import axios from "axios";
 
 const RegisterUser = () => {
+  const inputRef = useRef();
+  const [email, setEmail] = useState(null);
   const navigate = useNavigate();
   const {
     register,
@@ -14,6 +17,23 @@ const RegisterUser = () => {
   } = useForm();
   const is_Password = useRef();
   is_Password.current = watch("is_Password");
+
+  const handleOnlyone = async () => {
+    try {
+      const response = await axios.post("/api/register?type=onlyoneCheck", {
+        is_Email: email,
+      });
+      if (response.data.json[0].num === 0) {
+        alert("가입 가능한 이메일입니다!");
+      } else {
+        alert("이미 가입된 이메일입니다.");
+        return false;
+      }
+    } catch (error) {
+      alert("죄송합니다. 다시 시도해주세요!");
+      return false;
+    }
+  };
 
   const onSubmit = async (data) => {
     const userdata = JSON.stringify(data);
@@ -53,12 +73,20 @@ const RegisterUser = () => {
               type="text"
               className="user-input"
               name="is_Useremail"
+              ref={inputRef}
+              onChange={() => {
+                setEmail(inputRef.current.value);
+              }}
               {...register("is_Useremail", {
                 required: true,
-                pattern: /^\S+@\S+$/i,
+                pattern:
+                  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
               })}
               placeholder="ex)yourEmail@email.com"
             />
+            <button onClick={handleOnlyone} className="onlyone-check-btn">
+              중복확인
+            </button>
           </div>
           {errors.is_Useremail && <small>이메일을 다시 확인해주세요!</small>}
           <br />
@@ -72,14 +100,18 @@ const RegisterUser = () => {
               className="user-input"
               name="is_Password"
               placeholder="비밀번호를 입력해주세요."
-              {...register("is_Password", { required: true, minLength: 9 })}
+              {...register("is_Password", {
+                required: true,
+                minLength: 8,
+                pattern: /\w+^[A-Za-z0-9]{8,16}$/,
+              })}
             />
           </div>
           {errors.is_Password && errors.is_Password.type === "required" && (
             <small>필수 입력사항입니다.</small>
           )}
           {errors.is_Password && errors.is_Password.type === "minLength" && (
-            <small>영문+숫자 조합 9자 이상으로 만들어야합니다. </small>
+            <small>영문+숫자 조합 8자 이상으로 만들어야합니다. </small>
           )}
           <br />
 

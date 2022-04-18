@@ -68,7 +68,7 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         name="foodExpense"
         className="piggy-input"
         placeholder="ex)14000"
-        {...register("foodExpense", { required: true, pattern: /\d+/ })}
+        {...register("foodExpense", { required: true, pattern: /^\d$/ })}
       />
       <br />
       {errors.foodExpense && <small>금액을 숫자로 입력해주세요</small>}
