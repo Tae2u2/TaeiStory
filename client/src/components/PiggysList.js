@@ -1,26 +1,46 @@
 import axios from "axios";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const PiggysList = ({ myfood, mymoney, id, regdate, setReload, reload }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [efood, setEfood] = useState(myfood);
   const [efoodExpense, setEfoodExpense] = useState(mymoney);
 
+  const saveAlert = (flag, positionflag) => {
+    Swal.fire({
+      position: positionflag,
+      icon: "success",
+      title: flag,
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  };
+
   const handleDelete = async (event) => {
     const pTarget = event.target.getAttribute("id");
-    const sayYes = window.confirm("삭제하시겠습니까?");
-    if (sayYes) {
+    const sayYes = await Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#2f0059",
+      cancelButtonColor: "#90b029",
+      confirmButtonText: "예",
+      cancelButtonText: "아니요",
+    });
+    if (sayYes.isConfirmed) {
       const response = await axios.post("/api/piggyboss?type=delete", {
         is_id: pTarget,
       });
       if (response.data === "succ") {
+        saveAlert("삭제 성공!", "center");
         if (reload) {
           setReload(false);
         } else {
           setReload(true);
         }
       } else {
-        alert("죄송합니다. 다시 시도해주세요!");
+        saveAlert("죄송합니다. 다시 시도해주세요!", "center");
       }
     }
   };
@@ -47,7 +67,7 @@ const PiggysList = ({ myfood, mymoney, id, regdate, setReload, reload }) => {
   const handleEdit = async (event) => {
     const eTarget = event.target.getAttribute("id");
     if (efood === myfood && efoodExpense === mymoney) {
-      alert("변경된 사항이 없습니다.");
+      saveAlert("변경사항이 없습니다.", "center");
     } else {
       const response = await axios.post("/api/piggyboss?type=modifypiggy", {
         is_id: eTarget,
@@ -62,7 +82,7 @@ const PiggysList = ({ myfood, mymoney, id, regdate, setReload, reload }) => {
           setReload(true);
         }
       } else {
-        alert("죄송합니다 다시 시도해주세요.");
+        saveAlert("죄송합니다. 다시 시도해주세요!", "center");
       }
     }
   };
@@ -105,7 +125,7 @@ const PiggysList = ({ myfood, mymoney, id, regdate, setReload, reload }) => {
       </small>
       <div className="for-flex3">
         <h3 className="list-h3">
-          {myfood}를 {mymoney}원에 드셨습니다.
+          {myfood} : {mymoney}원에 꿀꿀!
         </h3>
         <div className="pig-mobile">
           <button id={id} className="piglist-btn" onClick={handleOpen}>

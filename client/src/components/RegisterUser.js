@@ -2,8 +2,10 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import Introduce from "./Introduce";
 import axios from "axios";
+import Swal from "sweetalert2";
+
+import Introduce from "./Introduce";
 
 const RegisterUser = () => {
   const inputRef = useRef();
@@ -18,19 +20,29 @@ const RegisterUser = () => {
   const is_Password = useRef();
   is_Password.current = watch("is_Password");
 
+  const saveAlert = (flag, positionflag) => {
+    Swal.fire({
+      position: positionflag,
+      icon: "success",
+      title: flag,
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  };
+
   const handleOnlyone = async () => {
     try {
       const response = await axios.post("/api/register?type=onlyoneCheck", {
         is_Email: email,
       });
       if (response.data.json[0].num === 0) {
-        alert("가입 가능한 이메일입니다!");
+        saveAlert("가입 가능한 이메일입니다.", "center");
       } else {
-        alert("이미 가입된 이메일입니다.");
+        saveAlert("이미 가입된 이메일입니다.", "center");
         return false;
       }
     } catch (error) {
-      alert("죄송합니다. 다시 시도해주세요!");
+      saveAlert("죄송합니다. 다시 시도해주세요.", "center");
       return false;
     }
   };
@@ -47,14 +59,14 @@ const RegisterUser = () => {
       });
       const checkSuc = await response.text();
       if (checkSuc === "succ") {
-        alert("환영합니다!");
+        saveAlert("환영합니다!", "center");
         navigate("/", { replace: true });
       } else {
-        alert("죄송합니다.");
+        saveAlert("죄송합니다. 다시 시도해주세요.", "center");
         return false;
       }
     } catch (error) {
-      alert("죄송합니다. 다시 시도해주세요!");
+      saveAlert("죄송합니다. 다시 시도해주세요.", "center");
       return false;
     }
   };

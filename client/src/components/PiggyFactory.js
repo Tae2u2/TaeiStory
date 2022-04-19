@@ -1,20 +1,30 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const PiggyFactory = ({ userid, reload, setReload }) => {
-  const inputRef = useRef();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const foodinputRef = useRef();
+  const foodExpenseinputRef = useRef();
+  const [food, setfood] = useState("");
+  const [foodExpense, setFoodExpense] = useState("");
 
-  const onSubmit = async (data) => {
+  const saveAlert = (flag, positionflag) => {
+    Swal.fire({
+      position: positionflag,
+      icon: "success",
+      title: flag,
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const piggyObj = {
       id: uuidv4(),
       useremail: userid,
-      ...data,
+      food: food,
+      foodExpense: foodExpense,
     };
     const piggydata = JSON.stringify(piggyObj);
     try {
@@ -27,27 +37,26 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       });
       const checkSuc = await response.text();
       if (checkSuc === "succ") {
+        saveAlert("입력 성공!", "center");
+        setFoodExpense("");
+        setfood("");
         if (reload) {
           setReload(false);
         } else {
           setReload(true);
         }
       } else {
-        alert("죄송합니다.");
+        saveAlert("죄송합니다. 다시 시도해주세요!", "center");
         return false;
       }
     } catch (error) {
-      alert("죄송합니다 다시 시도해주세요!");
+      saveAlert("죄송합니다. 다시 시도해주세요!", "center");
       return false;
     }
   };
 
   return (
-    <form
-      method="post"
-      className="piggy-form"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form method="post" className="piggy-form" onSubmit={handleSubmit}>
       <label id="food">무엇을</label>
       <input
         type="text"
@@ -55,11 +64,12 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         name="food"
         className="piggy-input"
         placeholder="ex)떡볶이"
-        ref={inputRef}
-        {...register("food", { required: true })}
+        required
+        ref={foodinputRef}
+        value={food}
+        requiredtitle="음식을 입력해주세요!"
+        onChange={() => setfood(foodinputRef.current.value)}
       />
-      <br />
-      {errors.food && <small>음식을 입력해주세요</small>}
       <br />
       <label id="foodExpense">얼마치</label>
       <input
@@ -67,11 +77,14 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         id="foodExpense"
         name="foodExpense"
         className="piggy-input"
+        value={foodExpense}
         placeholder="ex)14000"
-        {...register("foodExpense", { required: true, pattern: /^\d$/ })}
+        ref={foodExpenseinputRef}
+        pattern="[0-9]+"
+        required
+        requiredtitle="숫자로 입력해주세요!"
+        onChange={() => setFoodExpense(foodExpenseinputRef.current.value)}
       />
-      <br />
-      {errors.foodExpense && <small>금액을 숫자로 입력해주세요</small>}
       <br />
       <h3 className="piggy-h3">드셨사옵니까?</h3>
       <input className="piggy-btn" type="submit" value="입력" />
