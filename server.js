@@ -7,6 +7,11 @@ const adminRout = require("./routes/AdminRout");
 
 const app = express();
 
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/client/build/index.html");
+});
+app.use(express.static("client/build"));
+
 app.use("/", indexRout);
 app.use("/api/register", usersRout);
 app.use("/api/LoginForm", usersRout);
