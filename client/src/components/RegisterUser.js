@@ -8,8 +8,6 @@ import Swal from "sweetalert2";
 import Introduce from "./Introduce";
 
 const RegisterUser = () => {
-  const inputRef = useRef();
-  const [email, setEmail] = useState(null);
   const navigate = useNavigate();
   const {
     register,
@@ -30,40 +28,41 @@ const RegisterUser = () => {
     });
   };
 
-  const handleOnlyone = async () => {
-    try {
-      const response = await axios.post("/api/register?type=onlyoneCheck", {
-        is_Email: email,
-      });
-      if (response.data.json[0].num === 0) {
-        saveAlert("가입 가능한 이메일입니다.", "center");
-      } else {
-        saveAlert("이미 가입된 이메일입니다.", "center");
-        return false;
-      }
-    } catch (error) {
-      saveAlert("죄송합니다. 다시 시도해주세요.", "center");
-      return false;
-    }
-  };
-
   const onSubmit = async (data) => {
     const userdata = JSON.stringify(data);
     try {
-      const response = await fetch("/api/register?type=signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: userdata,
+      const response = await axios.post("/api/register?type=onlyoneCheck", {
+        is_Email: data.is_Useremail,
       });
-      const checkSuc = await response.text();
-      if (checkSuc === "succ") {
-        saveAlert("환영합니다!", "center");
-        navigate("/", { replace: true });
+      if (response.data.json[0].num === 0) {
+        const response2 = await fetch("/api/register?type=signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: userdata,
+        });
+        const checkSuc = await response2.text();
+        if (checkSuc === "succ") {
+          saveAlert("환영합니다!", "center");
+          navigate("/", { replace: true });
+        } else {
+          saveAlert("죄송합니다. 다시 시도해주세요.", "center");
+          return false;
+        }
       } else {
-        saveAlert("죄송합니다. 다시 시도해주세요.", "center");
-        return false;
+        const sayYes = await Swal.fire({
+          title: "이미 가입된 이메일입니다. 로그인화면으로 이동하시겠습니까?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#2f0059",
+          cancelButtonColor: "#90b029",
+          confirmButtonText: "예",
+          cancelButtonText: "아니요",
+        });
+        if (sayYes.isConfirmed) {
+          navigate("/", { replace: true });
+        }
       }
     } catch (error) {
       saveAlert("죄송합니다. 다시 시도해주세요.", "center");
@@ -75,7 +74,12 @@ const RegisterUser = () => {
     <div className="for-flex">
       <div className="user-box">
         <h2 className="user-h2">회원가입</h2>
-        <form method="post" name="frm" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          method="post"
+          name="frm"
+          encType="multipart/form-data"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="for-flex2">
             <label id="email_val" className="user-label">
               이메일
@@ -85,10 +89,6 @@ const RegisterUser = () => {
               type="text"
               className="user-input"
               name="is_Useremail"
-              ref={inputRef}
-              onChange={() => {
-                setEmail(inputRef.current.value);
-              }}
               {...register("is_Useremail", {
                 required: true,
                 pattern:
@@ -96,11 +96,13 @@ const RegisterUser = () => {
               })}
               placeholder="ex)yourEmail@email.com"
             />
-            <button onClick={handleOnlyone} className="onlyone-check-btn">
-              중복확인
-            </button>
           </div>
-          {errors.is_Useremail && <small>이메일을 다시 확인해주세요!</small>}
+          {errors.is_Useremail && errors.is_Useremail.type === "required" && (
+            <small>필수입력사항입니다.</small>
+          )}
+          {errors.is_Useremail && errors.is_Useremail.type === "pattern" && (
+            <small>이메일을 정확하게 입력해주세요</small>
+          )}
           <br />
           <div className="for-flex2">
             <label id="pwd_val" className="user-label">
@@ -114,16 +116,15 @@ const RegisterUser = () => {
               placeholder="비밀번호를 입력해주세요."
               {...register("is_Password", {
                 required: true,
-                minLength: 8,
-                pattern: /\w+^[A-Za-z0-9]{8,16}$/,
+                pattern: /\w{9,16}$/,
               })}
             />
           </div>
           {errors.is_Password && errors.is_Password.type === "required" && (
             <small>필수 입력사항입니다.</small>
           )}
-          {errors.is_Password && errors.is_Password.type === "minLength" && (
-            <small>영문+숫자 조합 8자 이상으로 만들어야합니다. </small>
+          {errors.is_Password && errors.is_Password.type === "pattern" && (
+            <small>영문+숫자 조합 9자 이상으로 만들어야합니다. </small>
           )}
           <br />
 

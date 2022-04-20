@@ -21,14 +21,6 @@
       )
   </insert>
 
-  <select id="selectUserDpliCheck">
-      SELECT 
-        count(*) as num
-      FROM
-      react.taeistory_user
-      WHERE useremail = #{is_Email}
-  </select>
-
   <select id="selectLoginCheck">
     SELECT
     username
