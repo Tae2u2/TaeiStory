@@ -27,6 +27,14 @@ function Navigation({ username, userid }) {
         '아래 입력창에 "돼지짱 정보를 삭제하겠습니다" 라고 적어주세요!'
       );
       if (confirm2 === "돼지짱 정보를 삭제하겠습니다") {
+        const response2 = await axios.post("/api/piggyboss?type=deleteall", {
+          is_Email: userid,
+        });
+        if (response2.data === "succ") {
+          console.log("삭제됨");
+        } else {
+          console.log("콩쥐야좃대써");
+        }
         const response = await axios.post("/api/LoginForm?type=deleteUser", {
           is_id: userid,
         });

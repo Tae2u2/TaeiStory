@@ -55,5 +55,10 @@
     where id = #{is_id};
   </update>
 
+    <delete id="deleteAllPiggy">
+    DELETE FROM react.taeistory_piggy
+    WHERE useremail = #{is_Email}
+  </delete>
+
 
   </mapper>
