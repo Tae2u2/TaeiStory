@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-
+    "heroku-prebuild": "npm run client-build && npm run server-build && mv ./client/build ./server",
+    "client-build" : "cd client && npm ci && npm run build && cd ../",
+    "server-build" : "npm ci --dev && npm run server && cd ../",
     "client": "cd client && npm run start",
     "server": "node server",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "start": "npm run server"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
