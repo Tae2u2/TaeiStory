@@ -15,7 +15,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname + "/client/build/index.html"));
   });
 }
-
 app.use("/", indexRout);
 app.use("/api/register", usersRout);
 app.use("/api/LoginForm", usersRout);

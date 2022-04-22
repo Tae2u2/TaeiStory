@@ -64,20 +64,23 @@ const AdminPage = () => {
     setPageNumber(selected);
   };
 
-  useEffect(async () => {
-    const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
-      token1: cookie.load("userid"),
-      token2: cookie.load("username"),
-    });
-    setUserid(response.data.token1);
-    setUsername(response.data.token2);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
+        token1: cookie.load("userid"),
+        token2: cookie.load("username"),
+      });
+      setUserid(response.data.token1);
+      setUsername(response.data.token2);
 
-    const response2 = await axios.post("api/admin?type=allList", {
-      is_Email: response.data.token1,
-    });
+      const response2 = await axios.post("api/admin?type=allList", {
+        is_Email: response.data.token1,
+      });
 
-    setPiggyArr(response2.data.json);
-  }, [, reAdmin]);
+      setPiggyArr(response2.data.json);
+    }
+    fetchData();
+  }, [reAdmin]);
 
   return (
     <div className="im-home">

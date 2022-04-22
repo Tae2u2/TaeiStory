@@ -43,27 +43,30 @@ function PiggyBoss() {
     setPageNumber(selected);
   };
 
-  useEffect(async () => {
-    const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
-      token1: cookie.load("userid"),
-      token2: cookie.load("username"),
-    });
-    setUserid(response.data.token1);
-    setUsername(response.data.token2);
+  useEffect(() => {
+    async function axiosData() {
+      const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
+        token1: cookie.load("userid"),
+        token2: cookie.load("username"),
+      });
+      setUserid(response.data.token1);
+      setUsername(response.data.token2);
 
-    const response2 = await axios.post("api/piggyboss?type=piggylist", {
-      is_Email: response.data.token1,
-    });
+      const response2 = await axios.post("api/piggyboss?type=piggylist", {
+        is_Email: response.data.token1,
+      });
 
-    setPiggyArr(response2.data.json);
+      setPiggyArr(response2.data.json);
 
-    const response3 = await axios.post("api/piggyboss?type=piggyexpenses", {
-      is_Email: response.data.token1,
-    });
+      const response3 = await axios.post("api/piggyboss?type=piggyexpenses", {
+        is_Email: response.data.token1,
+      });
 
-    const cost = Object.values(response3.data.json[0]);
-    setPiggyMoney(cost.pop());
-  }, [, reload]);
+      const cost = Object.values(response3.data.json[0]);
+      setPiggyMoney(cost.pop());
+    }
+    axiosData();
+  }, [reload]);
 
   return (
     <div className="im-home">
