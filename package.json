@@ -6,7 +6,8 @@
 
     "client": "cd client && npm run start",
     "server": "node server",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
