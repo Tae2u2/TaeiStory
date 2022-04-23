@@ -6,15 +6,13 @@ const piggyRout = require("./routes/PiggyRout");
 const adminRout = require("./routes/AdminRout");
 
 const app = express();
-const path = require("path");
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+app.use(express.static("build"));
 
-  app.get("/", function (req, res) {
-    res.sendFile(path.resolve(__dirname + "/client/build/index.html"));
-  });
-}
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/build/index.html");
+});
+
 app.use("/", indexRout);
 app.use("/api/register", usersRout);
 app.use("/api/LoginForm", usersRout);

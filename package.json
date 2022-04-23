@@ -1,29 +1,29 @@
 {
-  "name": "nodefolder",
-  "version": "0.0.0",
-  "private": true,
+  "name": "taeistory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "heroku-prebuild": "npm run client-build && npm run server-build && mv ./client/build ./server",
-    "client-build" : "cd client && npm ci && npm run build && cd ../",
-    "server-build" : "npm ci --dev && npm run server && cd ../",
+    "client-build": "cd client && npm ci && npm run build && cd ../",
+    "server-build": "cd server && npm ci && cd ../",
+    "heroku-prebuild": "npm run client-build && npm run server-build && mv ./client/build ./server/src/",
+    "start": "cd server && npm run start",
     "client": "cd client && npm run start",
-    "server": "node server",
+    "server": "cd server && npm run start",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "start": "npm run server"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tae2u2/TaeiStory.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tae2u2/TaeiStory/issues"
+  },
+  "homepage": "https://github.com/Tae2u2/TaeiStory#readme",
   "dependencies": {
-    "bcrypt": "^5.0.1",
-    "body-parser": "^1.19.2",
-    "concurrently": "^7.0.0",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "fs": "^0.0.1-security",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "jsonwebtoken": "^8.5.1",
-    "morgan": "~1.9.1",
-    "mybatis-mapper": "^0.6.5",
-    "mysql": "^2.18.1"
+    "concurrently": "^7.1.0"
   }
 }
