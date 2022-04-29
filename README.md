@@ -147,6 +147,4 @@ React, SCSS, nodeJS, express, MyBatis, VScode, MySQL, AWS, herokuCLI
 
 ## 감사합니다🙌
 
-Notion 이력서:<br />
-https://bubble-account-b8f.notion.site/9b699297ec5c4e7a93a9a0d7d9e26f69
 
