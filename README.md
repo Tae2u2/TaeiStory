@@ -6,6 +6,9 @@ ReactJS + nodeJS 프로젝트 : 당신은 돼지짱입니까?<br />
 ---
 
 링크 :  https://taeistory-piggy.herokuapp.com/ <br />
+test ID : testid1234@naver.com
+<br />
+test PW : testpw1234<br />
 
 ---
 
