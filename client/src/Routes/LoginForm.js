@@ -4,7 +4,9 @@ import { useState, useRef } from "react";
 import axios from "axios";
 import cookie from "react-cookies";
 import Swal from "sweetalert2";
-import Introduce from "./Introduce";
+import "../css/user.scss";
+
+import Introduce from "../components/Introduce";
 
 const LoginForm = (props) => {
   const inputRef = useRef();
@@ -28,61 +30,40 @@ const LoginForm = (props) => {
       return false;
     } else {
       try {
-        const response = await axios.post("/api/register?type=onlyoneCheck", {
+        const response = await axios.post("/api/LoginForm?type=signin", {
           is_Email: email,
+          is_Password: password,
         });
-        if (response.data.json[0].num === 0) {
-          const sayYes = await Swal.fire({
-            title: "가입되지 않은 이메일입니다. 회원가입하시겠습니까?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#2f0059",
-            cancelButtonColor: "#90b029",
-            confirmButtonText: "예",
-            cancelButtonText: "아니요",
-          });
-          if (sayYes.isConfirmed) {
-            navigate("/register", { replace: true });
-          }
-        } else {
-          const response = await axios.post("/api/LoginForm?type=signin", {
-            is_Email: email,
-            is_Password: password,
-          });
 
-          const userName = response.data.json[0].username;
-          const userEmail = response.data.json[0].useremail;
+        const userName = response.data.json[0].username;
+        const userEmail = response.data.json[0].useremail;
 
-          const upw = response.data.json[0].userpassword;
-          props.setIsLoggedIn(true);
+        const upw = response.data.json[0].userpassword;
+        props.setIsLoggedIn(true);
 
-          const expires = new Date();
-          expires.setHours(expires.getHours() + 12);
+        const expires = new Date();
+        expires.setHours(expires.getHours() + 12);
 
-          const response2 = await axios.post(
-            "api/LoginForm?type=SessionState",
-            {
-              is_Email: userEmail,
-              is_UserName: userName,
-            }
-          );
+        const response2 = await axios.post("api/LoginForm?type=SessionState", {
+          is_Email: userEmail,
+          is_UserName: userName,
+        });
 
-          cookie.save("userid", response2.data.token1, {
-            path: "/",
-            expires,
-          });
-          cookie.save("username", response2.data.token2, {
-            path: "/",
-            expires,
-          });
-          cookie.save("userpassword", upw, {
-            path: "/",
-            expires,
-          });
-          navigate("/piggy", { replace: true });
-        }
+        cookie.save("userid", response2.data.token1, {
+          path: "/",
+          expires,
+        });
+        cookie.save("username", response2.data.token2, {
+          path: "/",
+          expires,
+        });
+        cookie.save("userpassword", upw, {
+          path: "/",
+          expires,
+        });
+        navigate("/piggy", { replace: true });
       } catch (error) {
-        saveAlert("죄송합니다. 로그인을 다시 시도해주세요!", "center");
+        saveAlert("id와 비밀번호를 다시 확인해주세요!", "center");
       }
     }
   };
@@ -93,7 +74,7 @@ const LoginForm = (props) => {
       icon: "success",
       title: flag,
       showConfirmButton: false,
-      timer: 1000,
+      timer: 2000,
     });
   };
 
@@ -108,9 +89,7 @@ const LoginForm = (props) => {
         <div className="user-form-box">
           <form onSubmit={onsubmit} className="user-form">
             <div className="for-flex2">
-              <label className="user-label" id="email_val">
-                이메일
-              </label>
+              <label className="user-label">이메일</label>
               <input
                 type="text"
                 id="email_val"
@@ -124,9 +103,7 @@ const LoginForm = (props) => {
             </div>
             <br />
             <div className="for-flex2">
-              <label className="user-label" id="pwd_val">
-                비밀번호
-              </label>
+              <label className="user-label">비밀번호</label>
               <input
                 type="password"
                 id="pwd_val"
@@ -142,7 +119,7 @@ const LoginForm = (props) => {
           </form>
           <br />
           <span className="go-register">
-            <Link to="/register">아직 회원이 아니신가요?</Link>
+            <Link to="/register">아직 회원이 아니시라면 클릭!</Link>
           </span>
         </div>
       </div>

@@ -11,7 +11,12 @@ const Introduce = () => {
         </h4>
       </div>
       <div className="fairy">
-        <img src={require("../images/nolineshy.png")} alt="fairy character" />
+        <img
+          src={require("../images/piggys.png")}
+          alt="저금통 piggys"
+          width="300px"
+          height="240px"
+        />
       </div>
     </div>
   );

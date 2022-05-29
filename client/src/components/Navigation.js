@@ -2,17 +2,23 @@ import { useState } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import logo from "../images/piggys.png";
+import { FaUserCircle } from "react-icons/fa";
 
 function Navigation({ username, userid }) {
   const [check, setCheck] = useState(false);
 
+  const removeCookie = () => {
+    cookie.remove("userid", { path: "/" });
+    cookie.remove("username", { path: "/" });
+    cookie.remove("userpassword", { path: "/" });
+    window.location.href = "/";
+  };
+
   const handleLogout = async () => {
     const sayYes = window.confirm("로그아웃 하시겠습니까?");
     if (sayYes) {
-      cookie.remove("userid", { path: "/" });
-      cookie.remove("username", { path: "/" });
-      cookie.remove("userpassword", { path: "/" });
-      window.location.href = "/";
+      removeCookie();
     } else {
       return false;
     }
@@ -30,10 +36,9 @@ function Navigation({ username, userid }) {
         const response2 = await axios.post("/api/piggyboss?type=deleteall", {
           is_Email: userid,
         });
-        if (response2.data === "succ") {
-          console.log("삭제됨");
-        } else {
-          console.log("콩쥐야좃대써");
+        if (response2.data !== "succ") {
+          alert("죄송합니다. 다시 시도해주세요.");
+          return false;
         }
         const response = await axios.post("/api/LoginForm?type=deleteUser", {
           is_id: userid,
@@ -41,10 +46,7 @@ function Navigation({ username, userid }) {
         if (response.data === "succ") {
           alert("그동안 감사했습니다. 안녕히가세요!");
 
-          cookie.remove("userid", { path: "/" });
-          cookie.remove("username", { path: "/" });
-          cookie.remove("userpassword", { path: "/" });
-          window.location.href = "/";
+          removeCookie();
         } else {
           alert("죄송합니다 다시 시도해주세요");
         }
@@ -67,15 +69,18 @@ function Navigation({ username, userid }) {
   return (
     <nav>
       <ul className="first-ul">
-        <li className="navi-li">
-          <Link to="/piggy">당신은 돼지짱입니까?</Link>
-        </li>
         {userid === "admin@admin" && (
           <li className="navi-li">
             <Link to="/adminpage">관리자페이지</Link>
           </li>
         )}
+        <li className="navi-li">
+          <Link to="/piggy">
+            <img src={logo} width="100px" height="80px" alt="홈으로 이동" />
+          </Link>
+        </li>
         <li className="navi-li" onClick={handleIdBox}>
+          <FaUserCircle />
           {username}님, 환영합니다!
           <ul className={check ? "second-ul active" : "second-ul"}>
             <li className="id-box">

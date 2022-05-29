@@ -3,12 +3,12 @@ import cookie from "react-cookies";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 
-import Navigation from "./Navigation";
-import PiggysList from "./PiggysList";
-import Piggys from "./Piggys";
-import PiggyFactory from "./PiggyFactory";
+import Navigation from "../components/Navigation";
+import PiggysList from "../components/PiggysList";
+import Piggys from "../components/Piggys";
+import PiggyFactory from "../components/PiggyFactory";
 
-import "../css/style.css";
+import "../css/piggy.scss";
 
 function PiggyBoss() {
   const [piggyMoney, setPiggyMoney] = useState(0);

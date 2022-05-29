@@ -1,11 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import "../css/user.scss";
 
-import Introduce from "./Introduce";
+import Introduce from "../components/Introduce";
 
 const RegisterUser = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const RegisterUser = () => {
       icon: "success",
       title: flag,
       showConfirmButton: false,
-      timer: 1000,
+      timer: 1500,
     });
   };
 
@@ -74,16 +75,9 @@ const RegisterUser = () => {
     <div className="for-flex">
       <div className="user-box">
         <h2 className="user-h2">회원가입</h2>
-        <form
-          method="post"
-          name="frm"
-          encType="multipart/form-data"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form method="post" name="frm" onSubmit={handleSubmit(onSubmit)}>
           <div className="for-flex2">
-            <label id="email_val" className="user-label">
-              이메일
-            </label>
+            <label className="user-label">ID</label>
             <input
               id="email_val"
               type="text"
@@ -91,23 +85,20 @@ const RegisterUser = () => {
               name="is_Useremail"
               {...register("is_Useremail", {
                 required: true,
-                pattern:
-                  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
+                pattern: /\w/,
               })}
-              placeholder="ex)yourEmail@email.com"
+              placeholder="아이디를 입력해주세요."
             />
           </div>
           {errors.is_Useremail && errors.is_Useremail.type === "required" && (
             <small>필수입력사항입니다.</small>
           )}
           {errors.is_Useremail && errors.is_Useremail.type === "pattern" && (
-            <small>이메일을 정확하게 입력해주세요</small>
+            <small>영문+숫자 조합으로 입력해주세요.</small>
           )}
           <br />
           <div className="for-flex2">
-            <label id="pwd_val" className="user-label">
-              비밀번호
-            </label>
+            <label className="user-label">비밀번호</label>
             <input
               id="pwd_val"
               type="password"
@@ -129,9 +120,7 @@ const RegisterUser = () => {
           <br />
 
           <div className="for-flex2">
-            <label id="pwd_cnf_val" className="user-label">
-              비밀번호 확인
-            </label>
+            <label className="user-label">비밀번호 확인</label>
             <input
               id="pwd_cnf_val"
               type="password"
@@ -155,9 +144,7 @@ const RegisterUser = () => {
           <br />
 
           <div className="for-flex2">
-            <label id="name_val" className="user-label">
-              별명
-            </label>
+            <label className="user-label">별명</label>
             <input
               id="name_val"
               type="text"

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Navigation from "./Navigation";
+import Navigation from "../components/Navigation";
 import cookie from "react-cookies";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
+import "../css/admin.scss";
 
 const AdminPage = () => {
   const [userid, setUserid] = useState("");

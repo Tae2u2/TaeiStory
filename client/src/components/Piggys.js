@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Piggys = ({ piggyMoney }) => {
-  const [myPig, setMyPig] = useState("pigWhite.png");
+  const [myPig, setMyPig] = useState("basicpig.png");
   const [level, setLevel] = useState(0);
   const [message, setMessage] = useState("Hello");
-  const divRef = useRef();
 
   useEffect(() => {
     const pigs = Math.floor(parseInt(piggyMoney) / 10000);
@@ -32,18 +31,17 @@ const Piggys = ({ piggyMoney }) => {
       <h4 className="pig-level-mobile">
         당신의 돼지력 지수 : <span className="pig-level">{level}</span>
       </h4>
-      {myPig === 0 ? (
-        <div>
-          <img src={require("../images/pigWhite.png")} alt="your pig" />
+      <div>
+        <div className="pig-img">
+          <img
+            src={require("../images/" + myPig)}
+            alt="your pig"
+            width="280px"
+            height="280px"
+          />
         </div>
-      ) : (
-        <div ref={divRef}>
-          <div className="pig-img">
-            <img src={require("../images/" + myPig)} alt="your pig" />
-          </div>
-          <p className="pig-p">{message}</p>
-        </div>
-      )}
+        <p className="pig-p">{message}</p>
+      </div>
     </div>
   );
 };

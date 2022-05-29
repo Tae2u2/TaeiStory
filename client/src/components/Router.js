@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
-import LoginForm from "./LoginForm";
-import PiggyBoss from "./PiggyBoss";
-import RegisterUser from "./RegisterUser";
-import AdminPage from "./AdminPage";
+import LoginForm from "../Routes/LoginForm";
+import PiggyBoss from "../Routes/PiggyBoss";
+import RegisterUser from "../Routes/RegisterUser";
+import AdminPage from "../Routes/AdminPage";
 
 function AppRouter(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -9,19 +9,16 @@
   display: flex;
   justify-content: space-between;
 }
-@mixin bottom-right() {
-  bottom: 1rem;
-  right: 1rem;
-  animation: toast-in-right .7s;
-}
+
 //@include flex-between
 
 $breakpoint-mobile: 335px;
 $breakpoint-tablet: 758px;
 $breakpoint-desktop: 1024px;
 
-$wide-color: #90b029;
+$wide-color: #d2d7f8;
 $point-color: #2f0059;
+$white: #fff;
 //@include for-center-line
 * {
   margin: 0px;
@@ -31,373 +28,11 @@ $point-color: #2f0059;
 .App {
   font-family: "Noto Sans KR", sans-serif;
   @include for-center-line;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: #fff;
-  background-image: url("../images/smallpigWhite.png");
-  background-repeat: repeat;
-}
-.user-box {
-  @include for-center-line;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 400px;
-  height: 500px;
-  background-color: #fff;
-  border-radius: 50px;
-  box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
 }
 
-.user-h2 {
-  color: $point-color;
-}
-.user-form-box {
-  height: 250px;
-  text-align: center;
-}
-
-.user-input {
-  border: none;
-  outline: none;
-  font-size: 1em;
-  padding: 10px 0px 2px 5px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid $point-color;
-}
-
-.for-flex2 {
-  @include flex-between;
-}
-.onlyone-check-btn{
-  border: none;
-  border-radius: 20px;
-  padding: 0px 10px;
-  color: #fff;
-  background-color: $point-color;
-  outline: none;
-  cursor: pointer;
-}
-small{
-  color: orangered;
-  float: right;
-}
-
-.user-label {
-  padding-top: 6px;
-  margin-right: 7px;
-}
-.user-btn {
-  width: 100%;
-  border: none;
-  outline: none;
-  padding: 15px 0px;
-  margin-bottom: 30px;
-  border-radius: 50px;
-  background-color: $point-color;
-  color: #fff;
-  font-size: 1.2em;
-  font-weight: 500;
-  letter-spacing: -1px;
-  box-shadow: 2px 3px 2px #6e5268;
-  cursor: pointer;
-}
-.user-btn:hover {
-  filter: brightness(1.6);
-}
-
-.find-pw-btn{
-  border: none;
-  outline: none;
-  font-size: 1em;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.intro-box {
-  @include for-center-line;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 400px;
-  height: 500px;
-  background-color: #fff;
-  border-radius: 50px;
-  box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
-  transition: 0.4s;
-}
-
-.speech-box{
-  text-align: center;
-}
-
-.fairy{
-  transition: 0.4s;
-}
-.fairy:hover{
-  transform: scale(1.1);
-}
-
-
-/*NAvigation*/
-nav{
-  display: flex;
-  width: 100%;
-  background-color: $point-color;
-}
-
-.first-ul{
-  width: 100%;
-  @include flex-between;
-}
-.navi-li{
-  list-style: none;
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 20px;
-  padding: 15px 10px 15px 10px;
-  margin-right: 15px;
-}
-
-.navi-li a{
-  text-decoration: none;
-  color: #fff;
-  cursor: pointer;
-}
-.second-ul{
-  display: none;
-  position: relative;
-}
-
-.second-ul.active{
-  display: block;
-  position: absolute;
-  right: 15px;
-  list-style: none;
-  color: #fff;
-  font-weight: 500;
-  background-color: $point-color;
-  padding: 15px 20px 15px 20px; 
-}
-.id-box-btn{
-  color: #fff;
-  font-weight: 500;
-  background-color: transparent;
-  border: none;
-  font-size: 1.1em;
-  letter-spacing: -1px;
-  cursor: pointer;
-}
-
-.id-box-btn:last-child{
-  padding-top: 15px;
-}
-
-
-/*Piggy*/
-.im-home{
-  width: 100%;
-  height: 100%;
-  @include for-center-line;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.for-flex{
-  display: flex;
-  transition: 0.3s;
-}
-.im-piggyzone{
-  @include for-center-line;
-  margin-top: 30px;
-  margin-left: 30px;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 500px;
-  height: 600px;
-  background-color: #fff;
-  border-radius: 50px; 
-  box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
-  transition: 0.3s;
-}
-
-/*pagination*/
-.paginationBttns{
-  @include flex-between;
-  width: 100%;
-  height: 40px;
-  border-radius: 20px;
-  border: 1px solid $point-color;
-  list-style: none;
-  font-size: 1.2em;
-  margin: 15px 0px;
-  transition: 0.3s;
-}
-.previousBttn{
- color: $point-color;
- padding: 15px;
- cursor: pointer;
- font-weight: 600;
-}
-.nextBttn{
-  color: $point-color;
-  padding: 15px;
-  cursor: pointer;
-  font-weight: 600;
-}
-.paginationBttns a{
-  cursor: pointer;
-}
-.activeBttn{
-  color: $point-color;
-}
-
-.paginationBttns a:hover{
-  color: $point-color;
-}
-
-
-/*piggyBoss*/
-.piggy-input{
-  outline-color: $point-color;
-  padding: 10px;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  border-radius: 20px;
-  border: 1px solid #5c5b5b;
-}
-
-.piggy-btn{
-  width: 100%;
-  padding: 13px;
-  border-radius: 20px;
-  border: none;
-  outline: none;
-  margin-top: 10px;
-  background-color: $point-color;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 500;
-}
-.list-box{
-  display: flex;
-  flex-direction: column;
-}
-.list-h3{
-  padding-left: 7px;
-  padding-bottom: 10px;
-  letter-spacing: -1px;
-}
-
-.piglist-btn{
-  outline: none;
-  width: 33px;
-  height: 33px;
-  background-color: $point-color;
-  border: none;
-  border-radius: 50%;
-  color: #fff;
-  cursor: pointer;
-}
-.piglist-btn:hover{
-  background-color: $wide-color;
-}
-.pig-regdate{
-  color: #5c5b5b;
-}
-.for-flex3{
-  @include flex-between
-}
-
-
-/*piggys*/
-.im-piggyzone2{
-  @include for-center-line;
-  margin-top: 30px;
-  margin-left: 30px;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 500px;
-  height: 600px;
-  background-color: #fff;
-  border-radius: 50px; 
-  box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
-  transition: 0.3s;
-}
-.pig-img{
-  transition: 0.5s;
-}
-.pig-img:hover{
-  transform: translateY(10px);
-}
-.pig-level{
-  color: orangered;
-}
-
-/*수정모달*/
-.piggy-modal{
-  position: absolute;
-  display: flex;
-  justify-content: space-around;
-  width: 360px;
-  height: 100px;
-  background-color: $wide-color;
-  border-radius: 20px;
-  padding: 15px;
-  z-index: 100;
-   label{
-     padding-right: 2px;
-   }
-}
-.pig-modal{
-  padding-top: 20px;
-  padding-left: 15px;
-}
-.modal-form{
-  display: flex;
-}
-.modal-input-div{
-  letter-spacing: -1px;
-}
-
-.modal-input{
-  padding: 7px 2px 2px 7px;
-  border: none;
-  border-radius: 20px;
-  margin: 5px;
-
-}
-
-/*관리자페이지*/
-.admin-page{
-  width: 900px;
-  height: 600px;
-  background-color: #fff;
-  @include for-center-line;
-  flex-direction: column;
-  justify-content: space-around;
-  background-color: #fff;
-  border-radius: 50px;
-  box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
-}
-
-table th{
-  border: 1px solid #2f0059;
-  padding: 5px 10px;
-  text-align: center;
-}
-table td{
-  border: 1px solid #2f0059;
-  padding: 5px 10px;
-
-}
-
-@keyframes toast-in-right {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
 
 @mixin mobile {
   @media (min-width: #{$breakpoint-mobile}) and (max-width: #{$breakpoint-tablet - 1px}) {
@@ -413,26 +48,29 @@ table td{
 
 
 @include mobile {
-  .App{
-    background-image: none;
-  }
   .for-flex {
     flex-direction: column-reverse;
   }
   .user-box{
     width: 330px;
+    height: fit-content;
   }
   .im-piggyzone{
     width: 330px;
+    height: fit-content;
+    padding-top: 20px;
   }
   .list-h3{
     padding-left: 13px;
+  }
+  .list-box{
+    padding-top: 20px;
   }
   .delete-btn{
     padding-right: 13px;
   }
   .paginationBttns{
-    margin-left: 13px;
+    margin-left: 8px;
     width: 310px;
   }
   .pig-p{
@@ -442,8 +80,8 @@ table td{
     display: none;
   }
   .intro-box{
-    height: 100px;
-    width: 330px;
+    height: fit-content;
+    width: 335px;
   }
 
   .for-flex3{
@@ -454,21 +92,21 @@ table td{
     padding-right: 15px;
   }
   .im-piggyzone2{
-    width: 330px;
-    height: 300px;
+    width: 335px;
+    height: fit-content;
+    padding-top: 15px;
   }
   .pig-p{
     text-align: center;
   }
-  .piggy-modal{
-    width: 325px;
+  .piglist-btn{
+    width: 33px;
+    height: 33px;
   }
+
 }
 
 @include tablet {
-  .App{
-    background-image: none;
-  }
   .for-flex {
     flex-direction: column-reverse;
   }
@@ -476,10 +114,13 @@ table td{
     display: none;
   }
   .intro-box{
-        height: 100px;
+    height: fit-content;
+  }
+  .im-piggyzone{
+    margin-bottom: 20px;
   }
   .im-piggyzone2{
-    height: 300px;
+    height: fit-content;
   }
   .pig-p{
     text-align: center;

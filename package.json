@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Tae2u2/TaeiStory#readme",
   "dependencies": {
-    "concurrently": "^7.1.0"
+    "concurrently": "^7.1.0",
+    "sass": "^1.51.0"
   }
 }
