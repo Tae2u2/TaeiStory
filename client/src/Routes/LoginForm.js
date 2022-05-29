@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
 import axios from "axios";
 import cookie from "react-cookies";
 import Swal from "sweetalert2";
@@ -30,38 +29,59 @@ const LoginForm = (props) => {
       return false;
     } else {
       try {
-        const response = await axios.post("/api/LoginForm?type=signin", {
+        const response = await axios.post("/api/register?type=onlyoneCheck", {
           is_Email: email,
-          is_Password: password,
         });
+        if (response.data.json[0].num === 0) {
+          const sayYes = await Swal.fire({
+            title: "가입되지 않은 이메일입니다. 회원가입하시겠습니까?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#2f0059",
+            cancelButtonColor: "#90b029",
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+          });
+          if (sayYes.isConfirmed) {
+            navigate("/register", { replace: true });
+          }
+        } else {
+          const response = await axios.post("/api/LoginForm?type=signin", {
+            is_Email: email,
+            is_Password: password,
+          });
 
-        const userName = response.data.json[0].username;
-        const userEmail = response.data.json[0].useremail;
+          const userName = response.data.json[0].username;
+          const userEmail = response.data.json[0].useremail;
 
-        const upw = response.data.json[0].userpassword;
-        props.setIsLoggedIn(true);
+          const upw = response.data.json[0].userpassword;
+          props.setIsLoggedIn(true);
 
-        const expires = new Date();
-        expires.setHours(expires.getHours() + 12);
+          const expires = new Date();
+          expires.setHours(expires.getHours() + 12);
 
-        const response2 = await axios.post("api/LoginForm?type=SessionState", {
-          is_Email: userEmail,
-          is_UserName: userName,
-        });
+          const response2 = await axios.post(
+            "api/LoginForm?type=SessionState",
+            {
+              is_Email: userEmail,
+              is_UserName: userName,
+            }
+          );
 
-        cookie.save("userid", response2.data.token1, {
-          path: "/",
-          expires,
-        });
-        cookie.save("username", response2.data.token2, {
-          path: "/",
-          expires,
-        });
-        cookie.save("userpassword", upw, {
-          path: "/",
-          expires,
-        });
-        navigate("/piggy", { replace: true });
+          cookie.save("userid", response2.data.token1, {
+            path: "/",
+            expires,
+          });
+          cookie.save("username", response2.data.token2, {
+            path: "/",
+            expires,
+          });
+          cookie.save("userpassword", upw, {
+            path: "/",
+            expires,
+          });
+          navigate("/piggy", { replace: true });
+        }
       } catch (error) {
         saveAlert("id와 비밀번호를 다시 확인해주세요!", "center");
       }

@@ -26,11 +26,18 @@ const AdminPage = () => {
         const response = await axios.post("/api/LoginForm?type=deleteUser", {
           is_id: eTarget,
         });
-        alert("사용자가 삭제되었습니다.");
-        if (reAdmin) {
-          setReAdmin(false);
+        const response2 = await axios.post("/api/piggyboss?type=deleteall", {
+          is_Email: eTarget,
+        });
+        if (response.data === "succ" && response2.data === "succ") {
+          alert("사용자가 삭제되었습니다.");
+          if (reAdmin) {
+            setReAdmin(false);
+          } else {
+            setReAdmin(true);
+          }
         } else {
-          setReAdmin(true);
+          alert("사용자 삭제 실패");
         }
       } else {
         alert("문구를 잘못입력하셨습니다. 다시 시도해주세요.");
