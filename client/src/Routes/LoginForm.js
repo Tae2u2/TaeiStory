@@ -103,47 +103,37 @@ const LoginForm = (props) => {
   }, []);
 
   return (
-    <div className="for-flex">
-      <div className="user-box">
-        <h2 className="user-h2">LOGIN</h2>
-        <div className="user-form-box">
-          <form onSubmit={onsubmit} className="user-form">
-            <div className="for-flex2">
-              <label className="user-label">이메일</label>
-              <input
-                type="text"
-                id="email_val"
-                name="email"
-                className="user-input"
-                value={email}
-                placeholder="이메일"
-                ref={inputRef}
-                onChange={onChange}
-              />
-            </div>
-            <br />
-            <div className="for-flex2">
-              <label className="user-label">비밀번호</label>
-              <input
-                type="password"
-                id="pwd_val"
-                name="password"
-                className="user-input"
-                ref={inputPassRef}
-                placeholder="비밀번호"
-                onChange={onChange}
-              />
-            </div>
-            <br />
-            <input className="user-btn" type="submit" value="로그인" />
-          </form>
-          <br />
-          <span className="go-register">
-            <Link to="/register">아직 회원이 아니시라면 클릭!</Link>
-          </span>
+    <div className="user-form-box">
+      <form onSubmit={onsubmit} className="user-form">
+        <div className="for-flex2">
+          <label className="user-label">이메일</label>
+          <input
+            type="text"
+            id="email_val"
+            name="email"
+            className="user-input"
+            value={email}
+            placeholder="이메일"
+            ref={inputRef}
+            onChange={onChange}
+          />
         </div>
-      </div>
-      <Introduce />
+        <br />
+        <div className="for-flex2">
+          <label className="user-label">비밀번호</label>
+          <input
+            type="password"
+            id="pwd_val"
+            name="password"
+            className="user-input"
+            ref={inputPassRef}
+            placeholder="비밀번호"
+            onChange={onChange}
+          />
+        </div>
+        <br />
+        <input className="user-btn" type="submit" value="로그인" />
+      </form>
     </div>
   );
 };

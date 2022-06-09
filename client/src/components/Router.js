@@ -5,6 +5,8 @@ import LoginForm from "../Routes/LoginForm";
 import PiggyBoss from "../Routes/PiggyBoss";
 import RegisterUser from "../Routes/RegisterUser";
 import AdminPage from "../Routes/AdminPage";
+import Auth from "Routes/Auth";
+import AuthCheck from "Routes/AuthCheck";
 
 function AppRouter(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,15 +14,15 @@ function AppRouter(props) {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={<LoginForm setIsLoggedIn={setIsLoggedIn} />}
-        ></Route>
+        <Route path="/" element={<Auth />}></Route>
         <Route
           path="/piggy"
           element={<PiggyBoss isLoggedIn={isLoggedIn} />}
         ></Route>
-        <Route path="/register" element={<RegisterUser />}></Route>
+        <Route
+          path="/authcheck"
+          element={<AuthCheck setIsLoggedIn={setIsLoggedIn} />}
+        ></Route>
         <Route path="/adminpage" element={<AdminPage />}></Route>
       </Routes>
     </Router>

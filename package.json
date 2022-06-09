@@ -25,6 +25,7 @@
   "homepage": "https://github.com/Tae2u2/TaeiStory#readme",
   "dependencies": {
     "concurrently": "^7.1.0",
+    "dotenv": "^16.0.1",
     "sass": "^1.51.0"
   }
 }
