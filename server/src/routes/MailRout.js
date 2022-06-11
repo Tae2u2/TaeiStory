@@ -4,10 +4,16 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const env = require("dotenv");
-env.config();
+env.config({ path: __dirname + "/env/.env" });
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+
+function createNumber(min, max) {
+  let number = Math.floor(Math.random() * (max - min + 1)) + min;
+  return number;
+}
+let randomNum = createNumber(10000, 99999);
 
 router.post("/", (req, res, next) => {
   let email = req.body.is_Email;
@@ -23,11 +29,10 @@ router.post("/", (req, res, next) => {
     },
   });
 
-  home_url = "http://localhost:3000";
   let toHtml = "";
   fs.readFile(__dirname + "/template/mail_template.html", function (err, html) {
     toHtml = html.toString();
-    toHtml = toHtml.replace("{replacetext}", home_url + "/authcheck");
+    toHtml = toHtml.replace("{replacetext}", randomNum);
   });
 
   setTimeout(
@@ -36,7 +41,8 @@ router.post("/", (req, res, next) => {
         from: process.env.MAIL_USER,
         to: email,
         subject: "돼지짱 인증메일입니다.",
-        html: toHtml,
+        text: `인증번호는 : ${randomNum} 입니다.
+        돼지짱페이지로 돌아가 입력해주세요!`,
       };
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -44,7 +50,7 @@ router.post("/", (req, res, next) => {
           res.send("error");
         } else {
           console.log("Email sent: " + info.response);
-          res.send("succ");
+          res.send({ randomNum });
         }
       });
     }.bind(this),

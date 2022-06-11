@@ -14,8 +14,7 @@ function PiggyBoss() {
   const [piggyMoney, setPiggyMoney] = useState(0);
   const [reload, setReload] = useState(false);
 
-  const [userid, setUserid] = useState("");
-  const [username, setUsername] = useState("");
+  const [userInfo, setUserInfo] = useState({});
   const [piggyArr, setPiggyArr] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -42,24 +41,32 @@ function PiggyBoss() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-
   useEffect(() => {
     async function axiosData() {
       const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
         token1: cookie.load("userid"),
         token2: cookie.load("username"),
+        token3: cookie.load("userflag"),
       });
-      setUserid(response.data.token1);
-      setUsername(response.data.token2);
+      let id = response.data.token1;
+      let name = response.data.token2;
+      let flag = response.data.token3;
+
+      let userObj = {
+        userId: id,
+        userName: name,
+        userFlag: flag,
+      };
+      setUserInfo(userObj);
 
       const response2 = await axios.post("api/piggyboss?type=piggylist", {
-        is_Email: response.data.token1,
+        is_Email: id,
       });
 
       setPiggyArr(response2.data.json);
 
       const response3 = await axios.post("api/piggyboss?type=piggyexpenses", {
-        is_Email: response.data.token1,
+        is_Email: id,
       });
 
       const cost = Object.values(response3.data.json[0]);
@@ -70,11 +77,15 @@ function PiggyBoss() {
 
   return (
     <div className="im-home">
-      <Navigation username={username} userid={userid} />
+      <Navigation userInfo={userInfo} />
       <div className="for-flex">
         <div className="im-piggyzone">
-          <h3 className="piggy-h3">{username}님 오늘은</h3>
-          <PiggyFactory userid={userid} reload={reload} setReload={setReload} />
+          <h3 className="piggy-h3">{userInfo.userName}님 오늘은</h3>
+          <PiggyFactory
+            userid={userInfo.userId}
+            reload={reload}
+            setReload={setReload}
+          />
           <div>
             {displayPiggy}
             <ReactPaginate

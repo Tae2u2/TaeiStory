@@ -1,4 +1,6 @@
 const express = require("express");
+const env = require("dotenv");
+env.config({ path: __dirname + "/env/.env" });
 
 const indexRout = require("./routes/index2");
 const usersRout = require("./routes/UsersRout");

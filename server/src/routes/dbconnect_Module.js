@@ -4,7 +4,7 @@ const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const env = require("dotenv");
-env.config();
+env.config({ path: __dirname + "/env/.env" });
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -13,11 +13,11 @@ router.use(bodyParser.urlencoded({ extended: true }));
 const pool = mysql.createPool({
   connectionLimit: 66,
   waitForConnections: true,
-  host: process.env.CONNECTION_HOST,
-  port: process.env.CONNECTION_PORT,
-  database: process.env.CONNECTION_DATABASE,
-  user: process.env.CONNECTION_USER,
-  password: process.env.CONNECTION_PASSWORD,
+  host: "tae2data.chtmlzgambqy.us-east-1.rds.amazonaws.com",
+  port: "3306",
+  database: "react",
+  user: "admin",
+  password: process.env.DB_PASS,
 });
 
 router.post("/", (req, res) => {

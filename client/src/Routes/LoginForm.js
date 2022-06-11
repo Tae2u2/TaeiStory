@@ -5,9 +5,7 @@ import cookie from "react-cookies";
 import Swal from "sweetalert2";
 import "../css/user.scss";
 
-import Introduce from "../components/Introduce";
-
-const LoginForm = (props) => {
+const LoginForm = () => {
   const inputRef = useRef();
   const inputPassRef = useRef();
   const navigate = useNavigate();
@@ -33,18 +31,8 @@ const LoginForm = (props) => {
           is_Email: email,
         });
         if (response.data.json[0].num === 0) {
-          const sayYes = await Swal.fire({
-            title: "가입되지 않은 이메일입니다. 회원가입하시겠습니까?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#2f0059",
-            cancelButtonColor: "#90b029",
-            confirmButtonText: "예",
-            cancelButtonText: "아니요",
-          });
-          if (sayYes.isConfirmed) {
-            navigate("/register", { replace: true });
-          }
+          alert("가압되지 않은 계정입니다. 회원가입 해주세요");
+          navigate("/register", { replace: true });
         } else {
           const response = await axios.post("/api/LoginForm?type=signin", {
             is_Email: email,
@@ -55,7 +43,6 @@ const LoginForm = (props) => {
           const userEmail = response.data.json[0].useremail;
 
           const upw = response.data.json[0].userpassword;
-          props.setIsLoggedIn(true);
 
           const expires = new Date();
           expires.setHours(expires.getHours() + 12);
@@ -76,10 +63,15 @@ const LoginForm = (props) => {
             path: "/",
             expires,
           });
+          cookie.save("userflag", response2.data.token3, {
+            path: "/",
+            expires,
+          });
           cookie.save("userpassword", upw, {
             path: "/",
             expires,
           });
+
           navigate("/piggy", { replace: true });
         }
       } catch (error) {
@@ -134,6 +126,9 @@ const LoginForm = (props) => {
         <br />
         <input className="user-btn" type="submit" value="로그인" />
       </form>
+      <Link to="/register">
+        <button>계정생성</button>
+      </Link>
     </div>
   );
 };

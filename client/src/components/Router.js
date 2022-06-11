@@ -1,29 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
-import LoginForm from "../Routes/LoginForm";
 import PiggyBoss from "../Routes/PiggyBoss";
-import RegisterUser from "../Routes/RegisterUser";
 import AdminPage from "../Routes/AdminPage";
-import Auth from "Routes/Auth";
-import AuthCheck from "Routes/AuthCheck";
+import LoginForm from "../Routes/LoginForm";
+import EmailAuth from "../Routes/EmailAuth";
 
-function AppRouter(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+function AppRouter() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Auth />}></Route>
-        <Route
-          path="/piggy"
-          element={<PiggyBoss isLoggedIn={isLoggedIn} />}
-        ></Route>
-        <Route
-          path="/authcheck"
-          element={<AuthCheck setIsLoggedIn={setIsLoggedIn} />}
-        ></Route>
-        <Route path="/adminpage" element={<AdminPage />}></Route>
+        <Route path="/" element={<LoginForm />}></Route>
+        <Route path="/register" element={<EmailAuth />}></Route>
+        <Route path="/piggy" element={<AdminPage />}></Route>
+        <Route path="/admin" element={<PiggyBoss />}></Route>
       </Routes>
     </Router>
   );
