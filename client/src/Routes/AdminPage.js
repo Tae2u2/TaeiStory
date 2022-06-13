@@ -56,7 +56,7 @@ const AdminPage = () => {
           <td>{item.useremail}</td>
           <td>{item.reg_date}</td>
           <td>
-            {item.useremail !== "admin@admin" && (
+            {item.userflag !== "A" && (
               <button id={item.useremail} onClick={handleUserAdmin}>
                 사용자삭제
               </button>

@@ -18,13 +18,16 @@ const EmailAuth = () => {
 
   const handleAuthCheck = async () => {
     console.log(number);
-    if (number === authNum) {
+    console.log(authNum);
+    if (number == authNum) {
       const response = await axios.post("/api/register?type=authuser", {
         is_Useremail: authMail,
       });
-      console.log(response);
+      if (response.data === "succ") {
+        console.log(response);
 
-      setHidden("C");
+        setHidden("C");
+      }
     } else {
       alert("번호를 잘못 입력하셨습니다. 다시 시도해주세요!");
       setHidden("A");
@@ -32,21 +35,23 @@ const EmailAuth = () => {
   };
   return (
     <div>
-      {hidden === "B" ? (
-        <div className={hidden === "C" ? "auth-div erase" : "auth-div"}>
-          <input type="text" onChange={(e) => setAuthNum(e.target.value)} />
-          <button type="button" onClick={handleAuthCheck}>
-            확인
-          </button>
-        </div>
-      ) : (
-        <>
-          <input type="email" onChange={(e) => setAuthMail(e.target.value)} />
-          <button type="button" onClick={handleEmailAuth}>
-            이메일 인증하기
-          </button>
-        </>
-      )}
+      <div className={hidden === "C" ? "auth-div erase" : "auth-div"}>
+        {hidden === "B" ? (
+          <div>
+            <input type="text" onChange={(e) => setAuthNum(e.target.value)} />
+            <button type="button" onClick={handleAuthCheck}>
+              확인
+            </button>
+          </div>
+        ) : (
+          <>
+            <input type="email" onChange={(e) => setAuthMail(e.target.value)} />
+            <button type="button" onClick={handleEmailAuth}>
+              이메일 인증하기
+            </button>
+          </>
+        )}
+      </div>
       {hidden === "C" && <RegisterUser authMail={authMail} />}
     </div>
   );

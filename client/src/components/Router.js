@@ -5,6 +5,7 @@ import PiggyBoss from "../Routes/PiggyBoss";
 import AdminPage from "../Routes/AdminPage";
 import LoginForm from "../Routes/LoginForm";
 import EmailAuth from "../Routes/EmailAuth";
+import Currency from "../Routes/Currency";
 
 function AppRouter() {
   return (
@@ -12,8 +13,9 @@ function AppRouter() {
       <Routes>
         <Route path="/" element={<LoginForm />}></Route>
         <Route path="/register" element={<EmailAuth />}></Route>
-        <Route path="/piggy" element={<AdminPage />}></Route>
-        <Route path="/admin" element={<PiggyBoss />}></Route>
+        <Route path="/piggy" element={<PiggyBoss />}></Route>
+        <Route path="/admin" element={<AdminPage />}></Route>
+        <Route path="/currency" element={<Currency />}></Route>
       </Routes>
     </Router>
   );

@@ -2,21 +2,20 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-const fs = require("fs");
+
 const env = require("dotenv");
 env.config({ path: __dirname + "/env/.env" });
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-function createNumber(min, max) {
-  let number = Math.floor(Math.random() * (max - min + 1)) + min;
-  return number;
-}
-let randomNum = createNumber(10000, 99999);
-
 router.post("/", (req, res, next) => {
   let email = req.body.is_Email;
+  function createNumber(min, max) {
+    let number = Math.floor(Math.random() * (max - min + 1)) + min;
+    return number;
+  }
+  let randomNum = createNumber(10000, 99999);
 
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -27,12 +26,6 @@ router.post("/", (req, res, next) => {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
     },
-  });
-
-  let toHtml = "";
-  fs.readFile(__dirname + "/template/mail_template.html", function (err, html) {
-    toHtml = html.toString();
-    toHtml = toHtml.replace("{replacetext}", randomNum);
   });
 
   setTimeout(

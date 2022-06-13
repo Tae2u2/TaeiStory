@@ -72,6 +72,9 @@ function Navigation({ userInfo }) {
         <li className="navi-li">
           <img src={logo} width="100px" height="80px" alt="홈으로 이동" />
         </li>
+        <Link to="/currency">
+          <li className="navi-li">돼지는 여행중</li>
+        </Link>
         <li className="navi-li" onClick={handleIdBox}>
           <FaUserCircle />
           {userInfo.userName}님, 환영합니다!
