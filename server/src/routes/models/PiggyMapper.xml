@@ -7,6 +7,8 @@
       useremail
       , food
       , foodExpenses
+      , exchangedMoney
+      , tripDate
       , reg_date
       , id
     )
@@ -14,6 +16,8 @@
     #{useremail}
       , #{food}
       , #{foodExpense}
+      , #{exchangedMoney}
+      , #{tripDate}
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
       ,#{id}
       )
@@ -21,11 +25,7 @@
 
   <select id="selectPiggy">
   SELECT
-  id
-  ,useremail
-  ,food
-  ,foodExpenses
-  ,reg_date
+  *
   FROM react.taeistory_piggy
   WHERE useremail = #{is_Email}
   ORDER BY reg_date DESC
@@ -39,8 +39,8 @@
 
   <select id="piggyExpenses">
   select 
-  IFNULL(sum(foodExpenses),0) 
-  as sum_of_foodExpenses 
+  IFNULL(sum(exchangedMoney),0) 
+  as sum_of_exchangedMoney 
   from taeistory_piggy 
   where useremail=#{is_Email};
 
@@ -51,6 +51,8 @@
     SET 
     food = #{e_food}
     ,foodExpenses = #{e_foodExpense}
+    ,exchangedMoney = #{e_exchangedMoney}
+    ,tripDate = #{e_tripDate}
     where id = #{is_id};
   </update>
 

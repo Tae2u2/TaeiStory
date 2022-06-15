@@ -3,16 +3,16 @@ import React, { useEffect, useState } from "react";
 
 const Currency = () => {
   const [countryList, setCountryList] = useState([]);
-  const [krw, setKrw] = useState(1);
+  const [krw, setKrw] = useState(0);
   const [chooseDate, setChooseDate] = useState("latest");
   const [enteredAmount, setEnteredAmount] = useState(0);
-  const [code, setCode] = useState("krw");
-  const [travelingCountry, setTravelingCountry] = useState(null);
+  const [codeName, setCodeName] = useState("KRW");
   const [today, setToday] = useState("");
 
   const getCountryList = async () => {
     const response = await axios.post("/api/currency");
-    setCountryList(response.data.trList);
+    let wildList = [...response.data.trList];
+    setCountryList(wildList.slice(1));
   };
 
   const getToday = () => {
@@ -32,28 +32,34 @@ const Currency = () => {
   };
 
   const getKrwCurrency = async () => {
-    if (chooseDate !== undefined) {
-      const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/${chooseDate}/currencies/${code}.json`;
-      const response = await axios.get(url);
-      if (response.status !== 200) {
-        alert("죄송합니다. 다시 시도해주세요");
-      } else {
-        console.log(response.data);
-        let list = Object.values(response.data);
-        setTravelingCountry(list[1]);
-        console.log(travelingCountry["krw"]);
-        setKrw(travelingCountry["krw"]);
+    console.log(codeName);
+    if (chooseDate !== undefined && codeName !== "") {
+      try {
+        const response = await axios.get(
+          `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/${chooseDate}/currencies/${codeName.toLowerCase()}.json`
+        );
+        if (response.status !== 200) {
+          alert("죄송합니다. 다시 시도해주세요");
+        } else {
+          console.log(response.data);
+          let list = Object.values(response.data);
+          let currencyObj = { ...list[1] };
+          console.log(currencyObj["krw"]);
+          setKrw(currencyObj["krw"]);
+        }
+      } catch (error) {
+        alert("죄송합니다. 다시 시도해주세요!");
       }
     }
     //response.data->{currencycode : 환율} response.data.date ->2022-06-14 타입
   };
 
-  const onSelect = async (e) => {
-    let keyword = e.target.value;
-    if (keyword !== "") {
-      setCode(keyword.toLowerCase()); //USD같은 currencycode
-    } else {
-      setCode("usd");
+  const onSelect = (e) => {
+    console.log(e.target.value);
+    setCodeName(e.target.value); //USD같은 currencycode
+    if (e.target.value === "") {
+      alert("공식화폐가 등록되지 않은 나라는 미국 달러로 표시됩니다.");
+      setCodeName("USD");
     }
   };
   const handleDate = (e) => setChooseDate(e.target.value);
@@ -69,8 +75,7 @@ const Currency = () => {
 
   useEffect(() => {
     getKrwCurrency();
-  }, [code, chooseDate]);
-
+  }, [codeName, chooseDate]);
   return (
     <div className="travel-pig">
       <h4>돼지는 여행중</h4>
@@ -89,7 +94,7 @@ const Currency = () => {
       />
       <label htmlFor="choose-country">여행 중인 나라를 선택해주세요!</label>
       <select name="choose-country" id="country-select" onChange={onSelect}>
-        <option value="">--나라를 선택해주세요--</option>
+        <option value="USD">--나라를 선택해주세요--</option>
         {countryList.map((item, index) => (
           <option key={index} value={item.currencyName}>
             {item.country}
@@ -102,13 +107,13 @@ const Currency = () => {
         예시: 500엔이면 500
       </label>
       <input
-        type="text"
+        type="number"
         name="entered-amount"
         onChange={(e) => setEnteredAmount(e.target.value)}
         value={enteredAmount}
       />
       <label htmlFor="entered-amount">한국 돈으로</label>
-      <input type="text" value={krw * enteredAmount} readOnly />
+      <input type="number" value={Math.round(krw * enteredAmount)} readOnly />
       <p>원 입니다.</p>
       <button onClick={removeAmount}>입력한 금액 0으로 돌리기!</button>
     </div>

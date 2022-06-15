@@ -4,6 +4,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 import Swal from "sweetalert2";
 import "../css/user.scss";
+import FindIdPass from "components/FindIdPass";
 
 const LoginForm = () => {
   const inputRef = useRef();
@@ -129,6 +130,7 @@ const LoginForm = () => {
       <Link to="/register">
         <button>계정생성</button>
       </Link>
+      <FindIdPass />
     </div>
   );
 };
