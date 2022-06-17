@@ -2,7 +2,18 @@ import axios from "axios";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
-const PiggysList = ({ myfood, mymoney, id, regdate, setReload, reload }) => {
+const PiggysList = ({
+  myfood,
+  mymoney,
+  id,
+  regdate,
+  setReload,
+  reload,
+  tripCountry,
+  tripDate,
+  krwMoney,
+  code,
+}) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [efood, setEfood] = useState(myfood);
   const [efoodExpense, setEfoodExpense] = useState(mymoney);
@@ -124,9 +135,18 @@ const PiggysList = ({ myfood, mymoney, id, regdate, setReload, reload }) => {
         {regdate.substr(0, 4)}년{regdate.substr(4, 2)}월{regdate.substr(6, 2)}일
       </small>
       <div className="for-flex3">
+        <h4>{tripCountry} 여행 중!</h4>
+        <span>
+          {myfood} 먹은 날짜 : {tripDate}
+        </span>
         <h3 className="list-h3">
-          {myfood} : {mymoney}원에 꿀꿀!
+          {myfood} 가격 : {mymoney} {code}
         </h3>
+        <h3>
+          {myfood} 한국 환전 가격 : {krwMoney.slice(-6, -3)},
+          {krwMoney.slice(-3)}원
+        </h3>
+
         <div className="pig-mobile">
           <button id={id} className="piglist-btn" onClick={handleOpen}>
             수정

@@ -6,19 +6,25 @@
     (
       useremail
       , food
+      , country
       , foodExpenses
       , exchangedMoney
+      , currencyCode
       , tripDate
       , reg_date
+      , imageURL
       , id
     )
     VALUES (
     #{useremail}
       , #{food}
+      , #{country}
       , #{foodExpense}
       , #{exchangedMoney}
+      , #{currencyCode}
       , #{tripDate}
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
+      , "not yet"
       ,#{id}
       )
   </insert>

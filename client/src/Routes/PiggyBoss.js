@@ -18,7 +18,7 @@ function PiggyBoss() {
   const [piggyArr, setPiggyArr] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const userPerPage = 3;
+  const userPerPage = 10;
   const pagesVisited = pageNumber * userPerPage;
 
   const displayPiggy = piggyArr
@@ -31,6 +31,10 @@ function PiggyBoss() {
           regdate={item.reg_date}
           myfood={item.food}
           mymoney={item.foodExpenses}
+          tripCountry={item.country}
+          tripDate={item.tripDate}
+          krwMoney={item.exchangedMoney}
+          code={item.currencyCode}
           setReload={setReload}
           reload={reload}
         />
