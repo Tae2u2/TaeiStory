@@ -24,7 +24,7 @@
       , #{currencyCode}
       , #{tripDate}
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
-      , "not yet"
+      , #{imageURL}
       ,#{id}
       )
   </insert>

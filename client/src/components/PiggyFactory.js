@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { Base64 } from "js-base64";
 
 const PiggyFactory = ({ userid, reload, setReload }) => {
   const foodinputRef = useRef();
@@ -14,6 +15,8 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
   const [chooseDate, setChooseDate] = useState("latest");
   const [codeName, setCodeName] = useState("KRW");
   const [exchangedMoney, setExchangedMoney] = useState(0);
+  const [attachment, setAttachment] = useState("");
+  const fileInput = useRef(null);
   let today;
 
   const getCountryList = async () => {
@@ -29,17 +32,14 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         this.getMonth() < 9 ? `0${this.getMonth() + 1}` : this.getMonth() + 1;
       const dd =
         this.getDate() < 10 ? `0${this.getDate() - 1}` : this.getDate() - 1;
-
       return `${yyyy}-${mm}-${dd}`;
     };
-
     const date = new Date();
     today = date.yyyymmdd();
     setChooseDate(date.yyyymmdd());
   };
 
   const getKrwCurrency = async () => {
-    console.log(codeName);
     if (chooseDate !== undefined && codeName !== "") {
       try {
         const response = await axios.get(
@@ -48,10 +48,8 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         if (response.status !== 200) {
           alert("죄송합니다. 다시 시도해주세요");
         } else {
-          console.log(response.data);
           let list = Object.values(response.data);
           let currencyObj = { ...list[1] };
-          console.log(currencyObj["krw"]);
           setKrw(currencyObj["krw"]);
         }
       } catch (error) {
@@ -61,7 +59,10 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
   };
 
   const onSelect = (e) => {
-    let myvalue = e.target.value;
+    const {
+      target: { value },
+    } = e;
+    let myvalue = value;
     setCodeName(myvalue.split(",")[0]);
     setCountry(myvalue.split(",")[1]);
     if (e.target.value === "") {
@@ -70,17 +71,54 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       setCountry(myvalue.split(",")[1]);
     }
   };
-  const handleDate = (e) => setChooseDate(e.target.value);
+  const handleDate = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setChooseDate(value);
+  };
+
   const handleMoney = () => {
     setExchangedMoney(krwinputRef.current.value);
   };
+
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
+    };
+    if (Boolean(theFile)) {
+      reader.readAsDataURL(theFile);
+    }
+  };
+
+  const handleClearAttachment = () => {
+    fileInput.current.value = null;
+    setAttachment("");
+  };
   const removeAmount = () => {
-    setFoodExpense(0);
+    setFoodExpense("");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(exchangedMoney);
+    const byteCharacters = window.atob(exchangedMoney.toString());
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "image/gif" });
+    var imageUrl = URL.createObjectURL(blob);
+    console.log(imageUrl);
     const piggyObj = {
       id: uuidv4(),
       useremail: userid,
@@ -90,6 +128,7 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       exchangedMoney: exchangedMoney,
       currencyCode: codeName,
       tripDate: chooseDate,
+      imageURL: imageUrl,
     };
     console.log(piggyObj);
     const piggydata = JSON.stringify(piggyObj);
@@ -105,6 +144,8 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       if (checkSuc === "succ") {
         setFoodExpense("");
         setfood("");
+        handleClearAttachment();
+
         if (reload) {
           setReload(false);
         } else {
@@ -170,6 +211,21 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         requiredtitle="음식을 입력해주세요!"
         onChange={() => setfood(foodinputRef.current.value)}
       />
+      <br />
+      <input
+        type="file"
+        ref={fileInput}
+        accept="image/*"
+        onChange={onFileChange}
+      />
+      <br />
+      {attachment && (
+        <div>
+          <img src={attachment} alt="preview" width="70px" height="70px" />
+          <button onClick={handleClearAttachment}>Clear</button>
+        </div>
+      )}
+
       <br />
       <label htmlFor="foodExpense">
         음식을 먹고 낸 금액을 입력하세요 <br />

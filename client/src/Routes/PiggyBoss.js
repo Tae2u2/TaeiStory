@@ -13,6 +13,7 @@ import "../css/piggy.scss";
 function PiggyBoss() {
   const [piggyMoney, setPiggyMoney] = useState(0);
   const [reload, setReload] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [userInfo, setUserInfo] = useState({});
   const [piggyArr, setPiggyArr] = useState([]);
@@ -34,6 +35,7 @@ function PiggyBoss() {
           tripCountry={item.country}
           tripDate={item.tripDate}
           krwMoney={item.exchangedMoney}
+          attachment={item.imageURL}
           code={item.currencyCode}
           setReload={setReload}
           reload={reload}
@@ -44,6 +46,14 @@ function PiggyBoss() {
   const pageCount = Math.ceil(piggyArr.length / userPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
+  };
+
+  const openFactory = () => {
+    if (open) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
   };
   useEffect(() => {
     async function axiosData() {
@@ -84,28 +94,36 @@ function PiggyBoss() {
       <Navigation userInfo={userInfo} />
       <div className="for-flex">
         <div className="im-piggyzone">
-          <h3 className="piggy-h3">{userInfo.userName}님 오늘은</h3>
-          <PiggyFactory
-            userid={userInfo.userId}
-            reload={reload}
-            setReload={setReload}
-          />
-          <div>
-            {displayPiggy}
-            <ReactPaginate
-              previousLabel={"◀"}
-              nextLabel={"▶"}
-              pageCount={pageCount}
-              onPageChange={changePage}
-              containerClassName={"paginationBttns"}
-              previousLinkClassName={"previousBttn"}
-              nextLinkClassName={"nextBttn"}
-              disabledClassName={"disabledBttn"}
-              activeClassName={"activeBttn"}
-            />
-          </div>
+          {open ? (
+            <div>
+              <span onClick={openFactory}>입력화면 닫기</span>
+              <PiggyFactory
+                userid={userInfo.userId}
+                reload={reload}
+                setReload={setReload}
+              />
+            </div>
+          ) : (
+            <h3 className="piggy-h3" onClick={openFactory}>
+              입력하기
+            </h3>
+          )}
+          <Piggys piggyMoney={piggyMoney} />
         </div>
-        <Piggys piggyMoney={piggyMoney} />
+        <div className="piggy-List">
+          {displayPiggy}
+          <ReactPaginate
+            previousLabel={"◀"}
+            nextLabel={"▶"}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            containerClassName={"paginationBttns"}
+            previousLinkClassName={"previousBttn"}
+            nextLinkClassName={"nextBttn"}
+            disabledClassName={"disabledBttn"}
+            activeClassName={"activeBttn"}
+          />
+        </div>
       </div>
     </div>
   );

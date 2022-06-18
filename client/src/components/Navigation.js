@@ -70,11 +70,10 @@ function Navigation({ userInfo }) {
     <nav>
       <ul className="first-ul">
         <li className="navi-li">
-          <img src={logo} width="100px" height="80px" alt="홈으로 이동" />
+          <img src={logo} width="100px" height="80px" alt="로고" />
+          <span>돼지는 여행중</span>
         </li>
-        <Link to="/currency">
-          <li className="navi-li">돼지는 여행중</li>
-        </Link>
+
         <li className="navi-li" onClick={handleIdBox}>
           <FaUserCircle />
           {userInfo.userName}님, 환영합니다!

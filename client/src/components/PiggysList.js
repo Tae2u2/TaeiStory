@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const PiggysList = ({
@@ -12,11 +12,14 @@ const PiggysList = ({
   tripCountry,
   tripDate,
   krwMoney,
+  attachment,
   code,
 }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [efood, setEfood] = useState(myfood);
   const [efoodExpense, setEfoodExpense] = useState(mymoney);
+  const [imageUrl, setImageUrl] = useState("");
+  const [view, setView] = useState(false);
 
   const saveAlert = (flag, positionflag) => {
     Swal.fire({
@@ -30,30 +33,35 @@ const PiggysList = ({
 
   const handleDelete = async (event) => {
     const pTarget = event.target.getAttribute("id");
-    const sayYes = await Swal.fire({
-      title: "정말 삭제하시겠습니까?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#2f0059",
-      cancelButtonColor: "#90b029",
-      confirmButtonText: "예",
-      cancelButtonText: "아니요",
-    });
-    if (sayYes.isConfirmed) {
+    const sayYes = window.confirm("정말 삭제하시겠습니까?");
+    if (sayYes) {
       const response = await axios.post("/api/piggyboss?type=delete", {
         is_id: pTarget,
       });
       if (response.data === "succ") {
-        saveAlert("삭제 성공!", "center");
         if (reload) {
           setReload(false);
         } else {
           setReload(true);
         }
       } else {
-        saveAlert("죄송합니다. 다시 시도해주세요!", "center");
+        alert("죄송합니다. 다시 시도해주세요!", "center");
       }
     }
+  };
+
+  const handleImage = () => {
+    const byteCharacters = window.btoa(attachment.toString());
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "image/gif" });
+    var imagesUrl = URL.revokeObjectURL(blob);
+    console.log(imagesUrl);
+    setImageUrl(imagesUrl);
+    setView(true);
   };
 
   const handleOpen = () => {
@@ -146,6 +154,12 @@ const PiggysList = ({
           {myfood} 한국 환전 가격 : {krwMoney.slice(-6, -3)},
           {krwMoney.slice(-3)}원
         </h3>
+        <button onClick={handleImage}>이미지</button>
+        {view ?? (
+          <div>
+            <img src={imageUrl} alt="preview" width="150px" />
+          </div>
+        )}
 
         <div className="pig-mobile">
           <button id={id} className="piglist-btn" onClick={handleOpen}>
