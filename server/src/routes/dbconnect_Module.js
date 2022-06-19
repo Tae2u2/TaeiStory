@@ -42,7 +42,7 @@ router.post("/", (req, res) => {
   console.log(
     "* mapper namespce : " + param.mapper + "." + param.mapper_id + " *\n"
   );
-  console.log(query + "\n");
+  //console.log(query + "\n");
   try {
     pool.getConnection(function (err, connection) {
       connection.query(query, function (error, results) {
@@ -51,7 +51,7 @@ router.post("/", (req, res) => {
         }
         var time2 = new Date();
         console.log("## " + time2 + " ##");
-        console.log("## RESULT DATA LIST ## : \n", results);
+        //console.log("## RESULT DATA LIST ## : \n", results);
         if (results != undefined) {
           string = JSON.stringify(results);
           var json = JSON.parse(string);

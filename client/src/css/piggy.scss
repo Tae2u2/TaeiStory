@@ -209,58 +209,25 @@ nav{
     color: orangered;
   }
   
-  /*수정모달*/
-  .piggy-modal{
+  .piggy-edit{
     position: absolute;
-    width: 250px;
-    height: 130px;
-    background-color: style.$wide-color;
-    border-radius: 20px;
-    padding: 10px ;
-    z-index: 100;
-     label{
-       padding-right: 2px;
-     }
-     form{
-       display: flex;
-        flex-direction: column;
-     }
-
-  }
-  .pig-modal{
+    left: 0;
+    top:0;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 5px;
-    padding-left: 15px;
-    input{
-      width: 70px;
-      padding-left: 10px;
-      padding-right: 10px;
-      border-radius: 40px;
-    }
-    button{
-      width: 70px;
-      padding-left: 10px;
-      padding-right: 10px;
-      border-radius: 40px;
-      margin-left: 10px;
-    }
+    height: 100%;
+    @include for-center-line;
+    background-color: #bdbdbd65;
+      form{
+        background-color: #fff;
+        border-radius: 20px
+      }
+      span{
+        width: 150px;
+        height: 150px;
+        background-color: red;
+      }
   }
-  .modal-form{
-    display: flex;
-  }
-  .modal-input-div{
-    letter-spacing: -1px;
-  }
-  
-  .modal-input{
-    padding: 7px 2px 2px 7px;
-    border: none;
-    border-radius: 20px;
-    margin: 5px;
-  
-  }
+
 
   .piggy-List{
     @include for-center-line;

@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { Base64 } from "js-base64";
 
 const PiggyFactory = ({ userid, reload, setReload }) => {
   const foodinputRef = useRef();
@@ -17,46 +16,7 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
   const [exchangedMoney, setExchangedMoney] = useState(0);
   const [attachment, setAttachment] = useState("");
   const fileInput = useRef(null);
-  let today;
-
-  const getCountryList = async () => {
-    const response = await axios.post("/api/currency");
-    let wildList = [...response.data.trList];
-    setCountryList(wildList.slice(1));
-  };
-
-  const getToday = () => {
-    Date.prototype.yyyymmdd = function () {
-      const yyyy = this.getFullYear();
-      const mm =
-        this.getMonth() < 9 ? `0${this.getMonth() + 1}` : this.getMonth() + 1;
-      const dd =
-        this.getDate() < 10 ? `0${this.getDate() - 1}` : this.getDate() - 1;
-      return `${yyyy}-${mm}-${dd}`;
-    };
-    const date = new Date();
-    today = date.yyyymmdd();
-    setChooseDate(date.yyyymmdd());
-  };
-
-  const getKrwCurrency = async () => {
-    if (chooseDate !== undefined && codeName !== "") {
-      try {
-        const response = await axios.get(
-          `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/${chooseDate}/currencies/${codeName.toLowerCase()}.json`
-        );
-        if (response.status !== 200) {
-          alert("죄송합니다. 다시 시도해주세요");
-        } else {
-          let list = Object.values(response.data);
-          let currencyObj = { ...list[1] };
-          setKrw(currencyObj["krw"]);
-        }
-      } catch (error) {
-        alert("죄송합니다. 다시 시도해주세요!");
-      }
-    }
-  };
+  const [today, setToday] = useState("2022-06-01");
 
   const onSelect = (e) => {
     const {
@@ -109,16 +69,6 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(exchangedMoney);
-    const byteCharacters = window.atob(exchangedMoney.toString());
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: "image/gif" });
-    var imageUrl = URL.createObjectURL(blob);
-    console.log(imageUrl);
     const piggyObj = {
       id: uuidv4(),
       useremail: userid,
@@ -128,7 +78,7 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       exchangedMoney: exchangedMoney,
       currencyCode: codeName,
       tripDate: chooseDate,
-      imageURL: imageUrl,
+      imageURL: attachment,
     };
     console.log(piggyObj);
     const piggydata = JSON.stringify(piggyObj);
@@ -146,11 +96,7 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         setfood("");
         handleClearAttachment();
 
-        if (reload) {
-          setReload(false);
-        } else {
-          setReload(true);
-        }
+        setReload(!reload);
       } else {
         alert("죄송합니다. 다시 시도해주세요!", "center");
         return false;
@@ -162,13 +108,67 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
+    const getCountryList = async () => {
+      try {
+        const response = await axios.post("/api/currency", {
+          signal: controller.signal,
+        });
+        let wildList = [...response.data.trList];
+        setCountryList(wildList.slice(1));
+        getToday();
+      } catch (error) {
+        alert("죄송합니다. 다시 시도해주세요!");
+      }
+    };
+    const getToday = () => {
+      Date.prototype.yyyymmdd = function () {
+        const yyyy = this.getFullYear();
+        const mm =
+          this.getMonth() < 9 ? `0${this.getMonth() + 1}` : this.getMonth() + 1;
+        const dd =
+          this.getDate() < 10 ? `0${this.getDate() - 1}` : this.getDate() - 1;
+        return `${yyyy}-${mm}-${dd}`;
+      };
+      const date = new Date();
+      setToday(date.yyyymmdd());
+      setChooseDate(date.yyyymmdd());
+    };
     getCountryList();
-    getToday();
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const getKrwCurrency = async () => {
+      if (chooseDate !== undefined && codeName !== "") {
+        try {
+          const response = await axios.get(
+            `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/${chooseDate}/currencies/${codeName.toLowerCase()}.json`,
+            {
+              signal: controller.signal,
+            }
+          );
+          if (response.status !== 200) {
+            alert("죄송합니다. 다시 시도해주세요");
+          } else {
+            let list = Object.values(response.data);
+            let currencyObj = { ...list[1] };
+            setKrw(currencyObj["krw"]);
+          }
+        } catch (error) {
+          alert("죄송합니다. 다시 시도해주세요!");
+        }
+      }
+    };
     getKrwCurrency();
+    return () => {
+      controller.abort();
+    };
   }, [codeName, chooseDate]);
+
   useEffect(() => {
     handleMoney();
   }, [foodExpense]);
@@ -239,6 +239,7 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         className="piggy-input"
         onChange={() => setFoodExpense(foodExpenseinputRef.current.value)}
         value={foodExpense}
+        required
       />
       <br />
       <label htmlFor="exchangedMoney">한국 돈으로</label>

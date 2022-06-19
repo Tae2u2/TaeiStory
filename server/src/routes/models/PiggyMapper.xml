@@ -59,6 +59,9 @@
     ,foodExpenses = #{e_foodExpense}
     ,exchangedMoney = #{e_exchangedMoney}
     ,tripDate = #{e_tripDate}
+    ,country = #{e_country}
+    ,currencyCode =#{e_currencyCode}
+    ,imageURL=#{e_imageURL}
     where id = #{is_id};
   </update>
 
