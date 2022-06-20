@@ -58,6 +58,8 @@ router.post("/", (req, res, next) => {
   } else if (type === "SessionState") {
     var userid = req.body.is_Email;
     var name = req.body.is_UserName;
+    var flag = req.body.is_UserFlag;
+
     try {
       let token1 = jwt.sign({ email: userid }, secretObj.secret, {
         expiresIn: "12h",
@@ -66,7 +68,11 @@ router.post("/", (req, res, next) => {
       let token2 = jwt.sign({ username: name }, secretObj.secret, {
         expiresIn: "12h",
       });
-      res.send({ token1: token1, token2: token2 });
+      let token3 = jwt.sign({ userflag: flag }, secretObj.secret, {
+        expiresIn: "12h",
+      });
+
+      res.send({ token1: token1, token2: token2, token3: token3 });
     } catch (error) {
       res.send("세션스테이트" + error);
     }
@@ -74,17 +80,25 @@ router.post("/", (req, res, next) => {
     try {
       let token1 = req.body.token1;
       let token2 = req.body.token2;
+      let token3 = req.body.token3;
 
       if (
         token1 != undefined &&
         (token1 != "") & (token2 != undefined) &&
-        token2 != ""
+        (token2 != "") & (token3 != undefined) &&
+        token3 != ""
       ) {
         let decoded1 = jwt.verify(token1, secretObj.secret);
         let decoded2 = jwt.verify(token2, secretObj.secret);
-        res.send({ token1: decoded1.email, token2: decoded2.username });
+        let decoded3 = jwt.verify(token3, secretObj.secret);
+
+        res.send({
+          token1: decoded1.email,
+          token2: decoded2.username,
+          token3: decoded3.userflag,
+        });
       } else {
-        res.send({ token1: "", token2: "" });
+        res.send({ token1: "", token2: "", token3: "" });
       }
     } catch (error) {
       res.send("세션컨펌에러: " + error);
@@ -133,6 +147,49 @@ router.post("/", (req, res, next) => {
 
       router.use("/", dbconnect_Module);
       next("route");
+    } catch (error) {
+      console.log("Module > dbconnect error : " + error);
+    }
+  } else if (type === "authuser") {
+    //회원가입 정보 삽입
+    try {
+      // Mysql Api 모듈(CRUD)
+      const dbconnect_Module = require("./dbconnect_Module");
+
+      //Mysql 쿼리 호출정보 입력
+      req.body.mapper = "UserMapper"; //mybatis xml 파일명
+      req.body.crud = "update"; //select, insert, update, delete 중에 입력
+      req.body.mapper_id = "authUserFlag";
+
+      router.use("/", dbconnect_Module);
+      next("route");
+    } catch (error) {
+      console.log("Module > dbconnect error : " + error);
+    }
+  } else if (type == "pwdmodify") {
+    //비밀번호 재설정
+    try {
+      // Mysql Api 모듈(CRUD)
+      var dbconnect_Module = require("./dbconnect_Module");
+
+      //Mysql 쿼리 호출정보 입력
+      req.body.mapper = "UserMapper"; //mybatis xml 파일명
+      req.body.crud = "update"; //select, insert, update, delete 중에 입력
+      req.body.mapper_id = "updatePwdUser";
+
+      var myPlaintextPassword = req.body.is_Password;
+      if (myPlaintextPassword != "" && myPlaintextPassword != undefined) {
+        bcrypt.genSalt(saltRounds, function (err, salt) {
+          bcrypt.hash(myPlaintextPassword, salt, function (err, hash) {
+            req.body.is_Password = hash;
+            router.use("/", dbconnect_Module);
+            next("route");
+          });
+        });
+      } else {
+        router.use("/", dbconnect_Module);
+        next("route");
+      }
     } catch (error) {
       console.log("Module > dbconnect error : " + error);
     }

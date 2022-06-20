@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import logo from "../images/piggys.png";
 import { FaUserCircle } from "react-icons/fa";
 
-function Navigation({ username, userid }) {
+function Navigation({ userInfo }) {
   const [check, setCheck] = useState(false);
 
   const removeCookie = () => {
@@ -34,14 +34,14 @@ function Navigation({ username, userid }) {
       );
       if (confirm2 === "돼지짱 정보를 삭제하겠습니다") {
         const response2 = await axios.post("/api/piggyboss?type=deleteall", {
-          is_Email: userid,
+          is_Email: userInfo.userId,
         });
         if (response2.data !== "succ") {
           alert("죄송합니다. 다시 시도해주세요.");
           return false;
         }
         const response = await axios.post("/api/LoginForm?type=deleteUser", {
-          is_id: userid,
+          is_id: userInfo.userId,
         });
         if (response.data === "succ") {
           alert("그동안 감사했습니다. 안녕히가세요!");
@@ -69,19 +69,14 @@ function Navigation({ username, userid }) {
   return (
     <nav>
       <ul className="first-ul">
-        {userid === "admin@admin" && (
-          <li className="navi-li">
-            <Link to="/adminpage">관리자페이지</Link>
-          </li>
-        )}
         <li className="navi-li">
-          <Link to="/piggy">
-            <img src={logo} width="100px" height="80px" alt="홈으로 이동" />
-          </Link>
+          <img src={logo} width="100px" height="80px" alt="로고" />
+          <span>돼지는 여행중</span>
         </li>
+
         <li className="navi-li" onClick={handleIdBox}>
           <FaUserCircle />
-          {username}님, 환영합니다!
+          {userInfo.userName}님, 환영합니다!
           <ul className={check ? "second-ul active" : "second-ul"}>
             <li className="id-box">
               <button className="id-box-btn" onClick={handleLogout}>
@@ -89,11 +84,9 @@ function Navigation({ username, userid }) {
               </button>
             </li>
             <li className="id-box">
-              {userid !== "admin@admin" && (
-                <button className="id-box-btn" onClick={handleUserDelete}>
-                  회원탈퇴
-                </button>
-              )}
+              <button className="id-box-btn" onClick={handleUserDelete}>
+                회원탈퇴
+              </button>
             </li>
           </ul>
         </li>

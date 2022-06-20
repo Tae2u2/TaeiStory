@@ -15,7 +15,7 @@
       #{is_Username}
       , #{is_Useremail}
       , #{is_Password}
-      , 'Y'
+      , 'N'
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
       )
@@ -60,4 +60,17 @@
       FROM react.taeistory_user
       WHERE useremail = #{is_Email}
   </select>
+
+  <update id="authUserFlag">
+    UPDATE react.taeistory_user
+    SET
+    userflag = 'Y'
+    WHERE useremail = #{is_Useremail}
+  </update>
+  <update id="updatePwdUser">
+  UPDATE react.taeistory_user
+    SET
+    userpassword = #{is_Password}
+    WHERE useremail = #{is_Useremail}
+  </update>
 </mapper>

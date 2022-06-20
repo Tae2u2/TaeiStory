@@ -1,21 +1,70 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Swal from "sweetalert2";
+import axios from "axios";
 
 const PiggyFactory = ({ userid, reload, setReload }) => {
   const foodinputRef = useRef();
   const foodExpenseinputRef = useRef();
+  const krwinputRef = useRef();
   const [food, setfood] = useState("");
-  const [foodExpense, setFoodExpense] = useState("");
+  const [foodExpense, setFoodExpense] = useState(0);
+  const [countryList, setCountryList] = useState([]);
+  const [country, setCountry] = useState("");
+  const [krw, setKrw] = useState(0);
+  const [chooseDate, setChooseDate] = useState("latest");
+  const [codeName, setCodeName] = useState("KRW");
+  const [exchangedMoney, setExchangedMoney] = useState(0);
+  const [attachment, setAttachment] = useState("");
+  const fileInput = useRef(null);
+  const [today, setToday] = useState("2022-06-01");
 
-  const saveAlert = (flag, positionflag) => {
-    Swal.fire({
-      position: positionflag,
-      icon: "success",
-      title: flag,
-      showConfirmButton: false,
-      timer: 1000,
-    });
+  const onSelect = (e) => {
+    const {
+      target: { value },
+    } = e;
+    let myvalue = value;
+    setCodeName(myvalue.split(",")[0]);
+    setCountry(myvalue.split(",")[1]);
+    if (e.target.value === "") {
+      alert("공식화폐가 등록되지 않은 나라는 미국 달러로 표시됩니다.");
+      setCodeName("USD");
+      setCountry(myvalue.split(",")[1]);
+    }
+  };
+  const handleDate = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setChooseDate(value);
+  };
+
+  const handleMoney = () => {
+    setExchangedMoney(krwinputRef.current.value);
+  };
+
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
+    };
+    if (Boolean(theFile)) {
+      reader.readAsDataURL(theFile);
+    }
+  };
+
+  const handleClearAttachment = () => {
+    fileInput.current.value = null;
+    setAttachment("");
+  };
+  const removeAmount = () => {
+    setFoodExpense("");
   };
 
   const handleSubmit = async (event) => {
@@ -24,8 +73,14 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       id: uuidv4(),
       useremail: userid,
       food: food,
+      country: country,
       foodExpense: foodExpense,
+      exchangedMoney: exchangedMoney,
+      currencyCode: codeName,
+      tripDate: chooseDate,
+      imageURL: attachment,
     };
+    console.log(piggyObj);
     const piggydata = JSON.stringify(piggyObj);
     try {
       const response = await fetch("api/piggyboss?type=inputpiggy", {
@@ -37,33 +92,119 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       });
       const checkSuc = await response.text();
       if (checkSuc === "succ") {
-        saveAlert("입력 성공!", "center");
         setFoodExpense("");
         setfood("");
-        if (reload) {
-          setReload(false);
-        } else {
-          setReload(true);
-        }
+        handleClearAttachment();
+
+        setReload(!reload);
       } else {
-        saveAlert("죄송합니다. 다시 시도해주세요!", "center");
+        alert("죄송합니다. 다시 시도해주세요!", "center");
         return false;
       }
     } catch (error) {
-      saveAlert("죄송합니다. 다시 시도해주세요!", "center");
+      alert("죄송합니다. 다시 시도해주세요!", "center");
       return false;
     }
   };
 
+  useEffect(() => {
+    const controller = new AbortController();
+    const getCountryList = async () => {
+      try {
+        const response = await axios.post("/api/currency", {
+          signal: controller.signal,
+        });
+        let wildList = [...response.data.trList];
+        setCountryList(wildList.slice(1));
+        getToday();
+      } catch (error) {
+        alert("죄송합니다. 다시 시도해주세요!");
+      }
+    };
+    const getToday = () => {
+      Date.prototype.yyyymmdd = function () {
+        const yyyy = this.getFullYear();
+        const mm =
+          this.getMonth() < 9 ? `0${this.getMonth() + 1}` : this.getMonth() + 1;
+        const dd =
+          this.getDate() < 10 ? `0${this.getDate() - 1}` : this.getDate() - 1;
+        return `${yyyy}-${mm}-${dd}`;
+      };
+      const date = new Date();
+      setToday(date.yyyymmdd());
+      setChooseDate(date.yyyymmdd());
+    };
+    getCountryList();
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const getKrwCurrency = async () => {
+      if (chooseDate !== undefined && codeName !== "") {
+        try {
+          const response = await axios.get(
+            `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/${chooseDate}/currencies/${codeName.toLowerCase()}.json`,
+            {
+              signal: controller.signal,
+            }
+          );
+          if (response.status !== 200) {
+            alert("죄송합니다. 다시 시도해주세요");
+          } else {
+            let list = Object.values(response.data);
+            let currencyObj = { ...list[1] };
+            setKrw(currencyObj["krw"]);
+          }
+        } catch (error) {
+          alert("죄송합니다. 다시 시도해주세요!");
+        }
+      }
+    };
+    getKrwCurrency();
+    return () => {
+      controller.abort();
+    };
+  }, [codeName, chooseDate]);
+
+  useEffect(() => {
+    handleMoney();
+  }, [foodExpense]);
+
   return (
     <form method="post" className="piggy-form" onSubmit={handleSubmit}>
-      <label id="food">무엇을</label>
+      <label htmlFor="trip-day">
+        기록하고 싶은 여행날짜를 선택하세요! <br />
+        선택하지 않으시면 오늘 날짜로 기록됩니다.
+      </label>
+      <input
+        type="date"
+        id="trip-date"
+        name="trip-day"
+        value={chooseDate}
+        min="2018-01-01"
+        max={today}
+        onChange={handleDate}
+      />
+      <br />
+      <label htmlFor="choose-country">여행 중인 나라를 선택해주세요!</label>
+      <select id="country-select" onChange={onSelect}>
+        <option value="USD">--나라를 선택해주세요--</option>
+        {countryList.map((item, index) => (
+          <option key={index} value={[item.currencyName, item.country]}>
+            화폐 : {item.currencyName}, 나라이름 : {item.country}
+          </option>
+        ))}
+      </select>
+      <br />
+      <label htmlFor="food">무엇을</label>
       <input
         type="text"
         id="food"
         name="food"
         className="piggy-input"
-        placeholder="ex)떡볶이"
         required
         ref={foodinputRef}
         value={food}
@@ -71,22 +212,50 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         onChange={() => setfood(foodinputRef.current.value)}
       />
       <br />
-      <label id="foodExpense">얼마치</label>
       <input
-        type="text"
-        id="foodExpense"
-        name="foodExpense"
-        className="piggy-input"
-        value={foodExpense}
-        placeholder="ex)14000"
-        ref={foodExpenseinputRef}
-        pattern="[0-9]+"
-        required
-        requiredtitle="숫자로 입력해주세요!"
-        onChange={() => setFoodExpense(foodExpenseinputRef.current.value)}
+        type="file"
+        ref={fileInput}
+        accept="image/*"
+        onChange={onFileChange}
       />
       <br />
-      <h3 className="piggy-h3">드셨사옵니까?</h3>
+      {attachment && (
+        <div>
+          <img src={attachment} alt="preview" width="70px" height="70px" />
+          <button onClick={handleClearAttachment}>Clear</button>
+        </div>
+      )}
+
+      <br />
+      <label htmlFor="foodExpense">
+        음식을 먹고 낸 금액을 입력하세요 <br />
+        예시: 500엔이면 500
+      </label>
+      <input
+        type="number"
+        id="foodExpense"
+        name="foodExpense"
+        ref={foodExpenseinputRef}
+        className="piggy-input"
+        onChange={() => setFoodExpense(foodExpenseinputRef.current.value)}
+        value={foodExpense}
+        required
+      />
+      <br />
+      <label htmlFor="exchangedMoney">한국 돈으로</label>
+      <input
+        type="number"
+        id="exchangedMoney"
+        name="exchangedMoney"
+        ref={krwinputRef}
+        className="piggy-input"
+        value={Math.round(krw * foodExpense)}
+        readOnly
+      />
+      <p>원 입니다.</p>
+      <br />
+      <button onClick={removeAmount}>입력한 금액 0으로 돌리기!</button>
+      <br />
       <input className="piggy-btn" type="submit" value="입력" />
     </form>
   );
