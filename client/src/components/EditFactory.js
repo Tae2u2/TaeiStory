@@ -8,14 +8,20 @@ const EditFactory = ({
   myfood,
   mymoney,
   tripCountry,
+  commentary,
   tripDate,
   krwMoney,
   attachment,
   code,
+  setOpenEdit,
+  openEdit,
 }) => {
   const efoodinputRef = useRef();
   const efoodExpenseinputRef = useRef();
   const krwinputRef = useRef();
+  const fileInput = useRef(null);
+  const ecommentaryRef = useRef();
+
   const [eFood, setEfood] = useState(myfood);
   const [eFoodExpense, setEfoodExpense] = useState(mymoney);
   const [countryList, setCountryList] = useState([]);
@@ -23,9 +29,9 @@ const EditFactory = ({
   const [krw, setKrw] = useState(0);
   const [eChooseDate, setEchooseDate] = useState(tripDate);
   const [eCodeName, setEcodeName] = useState(code);
+  const [eCommentary, setEcommentary] = useState(commentary);
   const [eExchangedMoney, setEexchangedMoney] = useState(krwMoney);
   const [eAttachment, setEattachment] = useState(attachment);
-  const fileInput = useRef(null);
   const [today, setToday] = useState(tripDate);
 
   const onSelect = (e) => {
@@ -83,12 +89,14 @@ const EditFactory = ({
         e_country: eCountry,
         e_exchangedMoney: eExchangedMoney,
         e_currencyCode: eCodeName,
+        e_commentary: eCommentary,
         e_tripDate: eChooseDate,
         e_imageURL: eAttachment,
       });
 
       if (response.data === "succ") {
         setReload(!reload);
+        setOpenEdit(!openEdit);
       } else {
         alert("죄송합니다. 다시 시도해주세요!");
         return false;
@@ -160,14 +168,17 @@ const EditFactory = ({
 
   return (
     <form id={id} method="post" className="piggy-form" onSubmit={handleSubmit}>
+      <h3>변경사항이 없는 내용은 기존 내용이 유지됩니다</h3>
+      <hr />
       <label htmlFor="trip-day">
-        날짜를 변경하시려면 선택하세요! <br />
+        1. 날짜를 변경하시려면 선택하세요! <br />
         선택하지 않으시면 원래 입력된 날짜가 유지됩니다.
       </label>
       <input
         type="date"
         id="trip-date"
         name="trip-day"
+        className="piggy-input"
         value={eChooseDate}
         min="2018-01-01"
         max={today}
@@ -175,7 +186,7 @@ const EditFactory = ({
       />
       <br />
       <label htmlFor="choose-country">
-        여행 중인 나라를 바꾸려면 선택해주세요!
+        2. 여행 중인 나라를 바꾸려면 선택해주세요!
       </label>
       <select id="country-select" onChange={onSelect}>
         <option value="USD">
@@ -188,7 +199,7 @@ const EditFactory = ({
         ))}
       </select>
       <br />
-      <label htmlFor="efood">무엇을</label>
+      <label htmlFor="efood">3. 음식이름 수정</label>
       <input
         type="text"
         id="efood"
@@ -200,8 +211,12 @@ const EditFactory = ({
         onChange={() => setEfood(efoodinputRef.current.value)}
       />
       <br />
+      <label htmlFor="food-image">4. 음식 사진 수정</label>
+      <br />
       <input
         type="file"
+        name="food-image"
+        className="piggy-input"
         ref={fileInput}
         accept="image/*"
         onChange={onFileChange}
@@ -212,10 +227,22 @@ const EditFactory = ({
           <img src={eAttachment} alt="preview" width="70px" height="70px" />
         </div>
       )}
-
+      <br />
+      <label htmlFor="comment">5. 기록 수정</label>
+      <br />
+      <textarea
+        type="textarea"
+        id="commentary"
+        name="comment"
+        ref={ecommentaryRef}
+        className="piggy-input"
+        onChange={() => setEcommentary(ecommentaryRef.current.value)}
+      >
+        {eCommentary}
+      </textarea>
       <br />
       <label htmlFor="efoodExpense">
-        음식을 먹고 낸 금액을 입력하세요 <br />
+        6. 금액 수정 (숫자만 입력해주세요!) <br />
         예시: 500엔이면 500
       </label>
       <input
@@ -229,7 +256,7 @@ const EditFactory = ({
         required
       />
       <br />
-      <label htmlFor="eExchangedMoney">한국 돈으로</label>
+      <label htmlFor="eExchangedMoney">한국 금액 확인</label>
       <input
         type="number"
         id="eExchangedMoney"
@@ -239,9 +266,8 @@ const EditFactory = ({
         value={Math.round(krw * eFoodExpense)}
         readOnly
       />
-      <p>원 입니다.</p>
       <br />
-      <input className="piggy-btn" type="submit" value="입력" />
+      <input className="piggy-btn" type="submit" value="7. 수정 완료" />
     </form>
   );
 };

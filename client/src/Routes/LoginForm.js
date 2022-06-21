@@ -97,9 +97,10 @@ const LoginForm = () => {
 
   return (
     <div className="user-form-box">
+      <h2 className="user-h2">로그인</h2>
       <form onSubmit={onsubmit} className="user-form">
         <div className="for-flex2">
-          <label className="user-label">이메일</label>
+          <label className="user-label3">이메일</label>
           <input
             type="text"
             id="email_val"
@@ -113,7 +114,7 @@ const LoginForm = () => {
         </div>
         <br />
         <div className="for-flex2">
-          <label className="user-label">비밀번호</label>
+          <label className="user-label3">비밀번호</label>
           <input
             type="password"
             id="pwd_val"
@@ -127,10 +128,14 @@ const LoginForm = () => {
         <br />
         <input className="user-btn" type="submit" value="로그인" />
       </form>
-      <Link to="/register">
-        <button>계정생성</button>
-      </Link>
       <FindIdPass />
+      <span>
+        아직 회원이 아니시라면 회원가입을 통해
+        <br /> 돼지짱 회원이 되어주세요!
+      </span>
+      <Link to="/register">
+        <button className="user-btn">회원가입하기</button>
+      </Link>
     </div>
   );
 };

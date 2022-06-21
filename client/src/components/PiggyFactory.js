@@ -2,10 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-const PiggyFactory = ({ userid, reload, setReload }) => {
+const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
   const foodinputRef = useRef();
   const foodExpenseinputRef = useRef();
   const krwinputRef = useRef();
+  const fileInput = useRef(null);
+  const commentaryRef = useRef();
+
   const [food, setfood] = useState("");
   const [foodExpense, setFoodExpense] = useState(0);
   const [countryList, setCountryList] = useState([]);
@@ -15,7 +18,7 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
   const [codeName, setCodeName] = useState("KRW");
   const [exchangedMoney, setExchangedMoney] = useState(0);
   const [attachment, setAttachment] = useState("");
-  const fileInput = useRef(null);
+  const [commentary, setCommentary] = useState("");
   const [today, setToday] = useState("2022-06-01");
 
   const onSelect = (e) => {
@@ -77,6 +80,7 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       foodExpense: foodExpense,
       exchangedMoney: exchangedMoney,
       currencyCode: codeName,
+      commentary: commentary,
       tripDate: chooseDate,
       imageURL: attachment,
     };
@@ -94,8 +98,9 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
       if (checkSuc === "succ") {
         setFoodExpense("");
         setfood("");
+        setCommentary("");
         handleClearAttachment();
-
+        setOpen(!open);
         setReload(!reload);
       } else {
         alert("죄송합니다. 다시 시도해주세요!", "center");
@@ -176,20 +181,22 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
   return (
     <form method="post" className="piggy-form" onSubmit={handleSubmit}>
       <label htmlFor="trip-day">
-        기록하고 싶은 여행날짜를 선택하세요! <br />
+        1. 기록하고 싶은 여행날짜를 선택하세요! <br />
         선택하지 않으시면 오늘 날짜로 기록됩니다.
       </label>
+      <br />
       <input
         type="date"
         id="trip-date"
         name="trip-day"
+        className="piggy-input"
         value={chooseDate}
         min="2018-01-01"
         max={today}
         onChange={handleDate}
       />
       <br />
-      <label htmlFor="choose-country">여행 중인 나라를 선택해주세요!</label>
+      <label htmlFor="choose-country">2. 여행 중인 나라를 선택해주세요!</label>
       <select id="country-select" onChange={onSelect}>
         <option value="USD">--나라를 선택해주세요--</option>
         {countryList.map((item, index) => (
@@ -199,7 +206,8 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         ))}
       </select>
       <br />
-      <label htmlFor="food">무엇을</label>
+      <label htmlFor="food">3. 음식 이름을 기록해주세요</label>
+      <br />
       <input
         type="text"
         id="food"
@@ -212,25 +220,42 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         onChange={() => setfood(foodinputRef.current.value)}
       />
       <br />
+      <label htmlFor="food-image">4. 음식의 사진을 등록해주세요!</label>
+      <br />
       <input
         type="file"
+        name="food-image"
+        className="piggy-input"
         ref={fileInput}
         accept="image/*"
         onChange={onFileChange}
       />
       <br />
       {attachment && (
-        <div>
+        <div className="preview">
           <img src={attachment} alt="preview" width="70px" height="70px" />
-          <button onClick={handleClearAttachment}>Clear</button>
+          <button onClick={handleClearAttachment}>X</button>
         </div>
       )}
+      <br />
+      <label htmlFor="comment">5. 음식에 대해 기록하세요!</label>
+      <br />
+      <textarea
+        id="commentary"
+        name="comment"
+        ref={commentaryRef}
+        className="piggy-input"
+        onChange={() => setCommentary(commentaryRef.current.value)}
+      >
+        {commentary}
+      </textarea>
 
       <br />
       <label htmlFor="foodExpense">
-        음식을 먹고 낸 금액을 입력하세요 <br />
+        6.금액을 숫자로 입력해주세요! <br />
         예시: 500엔이면 500
       </label>
+      <br />
       <input
         type="number"
         id="foodExpense"
@@ -242,7 +267,8 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         required
       />
       <br />
-      <label htmlFor="exchangedMoney">한국 돈으로</label>
+      <label htmlFor="exchangedMoney">한국 돈으로 바뀐 금액입니다.</label>
+      <br />
       <input
         type="number"
         id="exchangedMoney"
@@ -252,11 +278,10 @@ const PiggyFactory = ({ userid, reload, setReload }) => {
         value={Math.round(krw * foodExpense)}
         readOnly
       />
-      <p>원 입니다.</p>
       <br />
-      <button onClick={removeAmount}>입력한 금액 0으로 돌리기!</button>
+      <button onClick={removeAmount}>입력한 금액 0으로 돌리기</button>
       <br />
-      <input className="piggy-btn" type="submit" value="입력" />
+      <input className="piggy-btn" type="submit" value="7. 입력 완료!" />
     </form>
   );
 };

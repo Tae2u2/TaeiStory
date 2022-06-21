@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import EditFactory from "./EditFactory";
+import { FaEllipsisV } from "react-icons/fa";
 
 const PiggysList = ({
   myfood,
@@ -12,10 +13,12 @@ const PiggysList = ({
   tripCountry,
   tripDate,
   krwMoney,
+  commentary,
   attachment,
   code,
 }) => {
   const [openEdit, setOpenEdit] = useState(false);
+  const [list, setList] = useState(false);
 
   const handleDelete = async (event) => {
     const pTarget = event.target.getAttribute("id");
@@ -25,11 +28,7 @@ const PiggysList = ({
         is_id: pTarget,
       });
       if (response.data === "succ") {
-        if (reload) {
-          setReload(false);
-        } else {
-          setReload(true);
-        }
+        setReload(!reload);
       } else {
         alert("죄송합니다. 다시 시도해주세요!", "center");
       }
@@ -46,34 +45,40 @@ const PiggysList = ({
             setReload={setReload}
             myfood={myfood}
             mymoney={mymoney}
+            commentary={commentary}
             tripCountry={tripCountry}
             tripDate={tripDate}
             krwMoney={krwMoney}
             attachment={attachment}
             code={code}
+            setOpenEdit={setOpenEdit}
+            openEdit={openEdit}
           />
         </div>
       )}
       <small className="pig-regdate">
         {regdate.substr(0, 4)}년{regdate.substr(4, 2)}월{regdate.substr(6, 2)}일
       </small>
-      <div className="for-flex3">
-        <h4>{tripCountry} 여행 중!</h4>
-        <span>
-          {myfood} 먹은 날짜 : {tripDate}
-        </span>
-        <h3 className="list-h3">
-          {myfood} 가격 : {mymoney} {code}
-        </h3>
-        <h3>
-          {myfood} 한국 환전 가격 : {krwMoney.slice(-6, -3)},
-          {krwMoney.slice(-3)}원
-        </h3>
-        <div>
-          <img src={attachment} alt="preview" width="250px" />
-        </div>
-
-        <div className="pig-mobile">
+      <h2>{tripCountry} 여행 중!</h2>
+      <div className="list-image">
+        <img src={attachment} alt="preview" width="300px" />
+      </div>
+      <p className="list-h3">
+        {myfood} 먹은 날짜 : {tripDate}
+        <br />
+        {myfood} 가격 : {mymoney} {code}
+        <br />
+        {myfood} 한국 환전 가격 : {krwMoney.slice(-6, -3)},{krwMoney.slice(-3)}
+        원
+        <br />
+        {commentary}
+      </p>
+      <hr />
+      <span onClick={() => setList(!list)}>
+        <FaEllipsisV />
+      </span>
+      {list && (
+        <div className="span-list">
           <button
             id={id}
             className="piglist-btn"
@@ -85,7 +90,7 @@ const PiggysList = ({
             삭제
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -16,9 +16,10 @@ $breakpoint-mobile: 335px;
 $breakpoint-tablet: 758px;
 $breakpoint-desktop: 1024px;
 
-$wide-color: #d2d7f8;
-$point-color: #2f0059;
+$wide-color: #fab102;
+$point-color: #da1a09;
 $white: #fff;
+$black: #000;
 //@include for-center-line
 * {
   margin: 0px;
@@ -48,83 +49,13 @@ $white: #fff;
 
 
 @include mobile {
-  .for-flex {
-    flex-direction: column-reverse;
-  }
-  .user-box{
-    width: 330px;
-    height: fit-content;
-  }
-  .im-piggyzone{
-    width: 330px;
-    height: fit-content;
-    padding-top: 20px;
-  }
-  .list-h3{
-    padding-left: 13px;
-  }
-  .list-box{
-    padding-top: 20px;
-  }
-  .delete-btn{
-    padding-right: 13px;
-  }
-  .paginationBttns{
-    margin-left: 8px;
-    width: 310px;
-  }
-  .pig-p{
-    padding-left: 13px;
-  }
-  .fairy{
-    display: none;
-  }
-  .intro-box{
-    height: fit-content;
-    width: 335px;
-  }
 
-  .for-flex3{
-    flex-direction: column;
-  }
-  .pig-mobile{
-    text-align: right;
-    padding-right: 15px;
-  }
-  .im-piggyzone2{
-    width: 335px;
-    height: fit-content;
-    padding-top: 15px;
-  }
-  .pig-p{
-    text-align: center;
-  }
-  .piglist-btn{
-    width: 33px;
-    height: 33px;
-  }
+
 
 }
 
 @include tablet {
-  .for-flex {
-    flex-direction: column-reverse;
-  }
-  .fairy{
-    display: none;
-  }
-  .intro-box{
-    height: fit-content;
-  }
-  .im-piggyzone{
-    margin-bottom: 20px;
-  }
-  .im-piggyzone2{
-    height: fit-content;
-  }
-  .pig-p{
-    text-align: center;
-  }
+
 
 }
 

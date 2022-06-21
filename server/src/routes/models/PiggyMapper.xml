@@ -10,6 +10,7 @@
       , foodExpenses
       , exchangedMoney
       , currencyCode
+      , commentary
       , tripDate
       , reg_date
       , imageURL
@@ -22,6 +23,7 @@
       , #{foodExpense}
       , #{exchangedMoney}
       , #{currencyCode}
+      , #{commentary}
       , #{tripDate}
       , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
       , #{imageURL}
@@ -61,6 +63,7 @@
     ,tripDate = #{e_tripDate}
     ,country = #{e_country}
     ,currencyCode =#{e_currencyCode}
+    ,commentary=#{e_commentary}
     ,imageURL=#{e_imageURL}
     where id = #{is_id};
   </update>

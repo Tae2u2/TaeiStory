@@ -62,7 +62,12 @@ const RegisterUser = ({ authMail }) => {
 
   return (
     <div>
-      <form method="post" name="frm" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="user-form-box"
+        method="post"
+        name="frm"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="for-flex2">
           <label className="user-label">메일주소</label>
           <input
@@ -109,7 +114,7 @@ const RegisterUser = ({ authMail }) => {
         <br />
 
         <div className="for-flex2">
-          <label className="user-label">비밀번호 확인</label>
+          <label className="user-label2">비밀번호 확인</label>
           <input
             id="pwd_cnf_val"
             type="password"
@@ -157,9 +162,6 @@ const RegisterUser = ({ authMail }) => {
           value="회원가입"
         />
       </form>
-      <Link to="/">
-        <button>로그인</button>
-      </Link>
     </div>
   );
 };

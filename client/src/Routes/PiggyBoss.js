@@ -5,7 +5,6 @@ import ReactPaginate from "react-paginate";
 
 import Navigation from "../components/Navigation";
 import PiggysList from "../components/PiggysList";
-import Piggys from "../components/Piggys";
 import PiggyFactory from "../components/PiggyFactory";
 
 import "../css/piggy.scss";
@@ -34,6 +33,7 @@ function PiggyBoss() {
           mymoney={item.foodExpenses}
           tripCountry={item.country}
           tripDate={item.tripDate}
+          commentary={item.commentary}
           krwMoney={item.exchangedMoney}
           attachment={item.imageURL}
           code={item.currencyCode}
@@ -94,21 +94,25 @@ function PiggyBoss() {
       <Navigation userInfo={userInfo} />
       <div className="for-flex">
         <div className="im-piggyzone">
+          <h2>총 합계 금액 : {piggyMoney}원</h2>
           {open ? (
             <div>
-              <span onClick={openFactory}>입력화면 닫기</span>
               <PiggyFactory
                 userid={userInfo.userId}
                 reload={reload}
                 setReload={setReload}
+                setOpen={setOpen}
+                open={open}
               />
+              <h3 className="piggy-h3" onClick={() => setOpen(!open)}>
+                입력화면 닫기
+              </h3>
             </div>
           ) : (
-            <h3 className="piggy-h3" onClick={openFactory}>
-              입력하기
+            <h3 className="piggy-h3" onClick={() => setOpen(!open)}>
+              입력창 열기
             </h3>
           )}
-          <Piggys piggyMoney={piggyMoney} />
         </div>
         <div className="piggy-List">
           {displayPiggy}

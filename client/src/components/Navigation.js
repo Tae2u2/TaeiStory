@@ -2,7 +2,7 @@ import { useState } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import logo from "../images/piggys.png";
+import logo from "../images/travelPig.png";
 import { FaUserCircle } from "react-icons/fa";
 
 function Navigation({ userInfo }) {
@@ -69,12 +69,15 @@ function Navigation({ userInfo }) {
   return (
     <nav>
       <ul className="first-ul">
+        <li>
+          <img src={logo} width="100px" height="100px" alt="로고" />
+        </li>
         <li className="navi-li">
-          <img src={logo} width="100px" height="80px" alt="로고" />
           <span>돼지는 여행중</span>
         </li>
 
         <li className="navi-li" onClick={handleIdBox}>
+          <h4>{userInfo.userName}님</h4>
           <FaUserCircle />
           {userInfo.userName}님, 환영합니다!
           <ul className={check ? "second-ul active" : "second-ul"}>
