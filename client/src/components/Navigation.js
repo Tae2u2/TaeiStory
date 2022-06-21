@@ -79,6 +79,7 @@ function Navigation({ userInfo }) {
         <li className="navi-li" onClick={handleIdBox}>
           <h4>{userInfo.userName}님</h4>
           <FaUserCircle />
+          {userInfo.userName}님, 환영합니다!
           <ul className={check ? "second-ul active" : "second-ul"}>
             <li className="id-box">
               <button className="id-box-btn" onClick={handleLogout}>

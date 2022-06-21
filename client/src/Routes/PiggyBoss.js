@@ -48,6 +48,13 @@ function PiggyBoss() {
     setPageNumber(selected);
   };
 
+  const openFactory = () => {
+    if (open) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  };
   useEffect(() => {
     async function axiosData() {
       const response = await axios.post("/api/LoginForm?type=SessionConfirm", {

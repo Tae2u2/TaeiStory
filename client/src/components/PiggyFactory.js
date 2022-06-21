@@ -84,6 +84,7 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
       tripDate: chooseDate,
       imageURL: attachment,
     };
+    console.log(piggyObj);
     const piggydata = JSON.stringify(piggyObj);
     try {
       const response = await fetch("api/piggyboss?type=inputpiggy", {
@@ -278,7 +279,6 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
         readOnly
       />
       <br />
-
       <button onClick={removeAmount}>입력한 금액 0으로 돌리기</button>
       <br />
       <input className="piggy-btn" type="submit" value="7. 입력 완료!" />
