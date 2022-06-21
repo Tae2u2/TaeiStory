@@ -84,7 +84,6 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
       tripDate: chooseDate,
       imageURL: attachment,
     };
-    console.log(piggyObj);
     const piggydata = JSON.stringify(piggyObj);
     try {
       const response = await fetch("api/piggyboss?type=inputpiggy", {
@@ -197,6 +196,7 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
       />
       <br />
       <label htmlFor="choose-country">2. 여행 중인 나라를 선택해주세요!</label>
+      <br />
       <select id="country-select" onChange={onSelect}>
         <option value="USD">--나라를 선택해주세요--</option>
         {countryList.map((item, index) => (
