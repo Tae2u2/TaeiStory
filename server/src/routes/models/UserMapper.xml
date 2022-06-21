@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMapper">  
+  <insert id="insertUser"> 
+    INSERT INTO react.taeistory_user
+    (
+      username
+      , useremail
+      , userpassword
+      , userflag
+      , reg_date
+      , update_date
+    )
+    VALUES (
+      #{is_Username}
+      , #{is_Useremail}
+      , #{is_Password}
+      , 'N'
+      , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
+      , DATE_FORMAT(now(), '%Y%m%d%H%i%s')
+      )
+  </insert>
+
+  <select id="selectLoginCheck">
+    SELECT
+    username
+    ,useremail
+    ,userpassword
+    ,userflag
+    FROM
+    react.taeistory_user
+    WHERE useremail = #{is_Email}
+  </select>
+
+  <select id="selectSessionLoginCheck">
+  SELECT 
+  username 
+  , useremail 
+  , userpassword 
+  , userphone 
+  , userflag 
+  FROM react.taeistory_user
+  WHERE useremail = #{is_Email} AND userpassword = #{is_Token} 
+  </select>
+
+  <delete id="deleteUser">
+     DELETE FROM react.taeistory_user
+    WHERE useremail = #{is_id}
+  </delete>
+
+    <select id="selectAllList">
+  SELECT
+  *
+  FROM react.taeistory_user
+  </select>
+
+  <select id="onlyoneCheckSelect">
+    SELECT
+      count (*) as num
+      FROM react.taeistory_user
+      WHERE useremail = #{is_Email}
+  </select>
+
+  <update id="authUserFlag">
+    UPDATE react.taeistory_user
+    SET
+    userflag = 'Y'
+    WHERE useremail = #{is_Useremail}
+  </update>
+  <update id="updatePwdUser">
+  UPDATE react.taeistory_user
+    SET
+    userpassword = #{is_Password}
+    WHERE useremail = #{is_Useremail}
+  </update>
+</mapper>

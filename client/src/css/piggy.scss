@@ -1,0 +1,326 @@
+@use 'style';
+
+@mixin for-center-line() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+@mixin flex-between(){
+    display: flex;
+    justify-content: space-between;
+  }
+@mixin main-color(){
+    background: rgb(250,177,2);
+    background: linear-gradient(99deg, rgba(250,177,2,1) 0%, rgba(218,26,9,1) 100%);
+  }
+//style.$white;
+
+
+/*NAvigation*/
+nav{
+    width: 100%;
+    background-color: style.$wide-color;
+  .first-ul{
+    width: 100%;
+    @include flex-between();
+        .navi-li{
+            list-style: none;
+            font-size: 1.1em;
+            letter-spacing: -1px;
+            padding-right: 20px;
+            cursor: pointer;
+            @include for-center-line();
+            img{
+              margin-left: 20px;
+            }
+            a{
+                text-decoration: none;
+                color: #000;
+                cursor: pointer;
+            }
+            span{
+              background-color: #fff8e1;
+              color: style.$black;
+              padding: 20px;
+              border-radius: 50%;
+              border: 3px double style.$point-color;
+              font-weight: 600;
+            }
+            h4{
+              margin-right: 8px;
+            }
+        }
+    }
+  
+  .second-ul{
+    display: none;
+    position: relative;
+  }
+  
+  .second-ul.active{
+    display: block;
+    position: absolute;
+    transform: translate(20px , 80px);
+    list-style: none;
+    font-weight: 500;
+    background-color: #fff;
+    li{
+      padding: 2px 20px 15px 20px; 
+      border: 1px solid #bdbdbd;      
+    }
+    li:last-child{
+      border-top: none;
+    }
+    li:hover{
+      background-color: style.$wide-color;
+    }
+  }
+  
+  .id-box-btn{
+    font-weight: 500;
+    background-color: transparent;
+    border-bottom: 1px solid style.$wide-color;
+    border: none;
+    font-size: 1em;
+    letter-spacing: -1px;
+    cursor: pointer;
+  }
+  
+  .id-box-btn:last-child{
+    padding-top: 15px;
+  }
+
+}
+
+/*Piggy*/
+.im-home{
+    width: 100%;
+    height: 100%;
+    @include for-center-line;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .for-flex{
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+  }
+  .im-piggyzone{
+    @include for-center-line;
+    margin-top: 30px;
+    padding: 20px 30px;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 600px;
+    height: fit-content;
+    background-color: style.$white;
+    border-radius: 50px; 
+    box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+    transition: 0.3s;
+    h2{
+      margin-bottom: 30px;
+      border-bottom: 2px solid style.$white;
+      transition: 0.3s;
+
+    }
+    h2:hover{
+      border-bottom: 2px solid style.$point-color;
+    }
+    .piggy-h3{
+      @include main-color();
+      width: 100%;
+      padding: 15px 0px;
+      margin-bottom: 20px;
+      text-align: center;
+      border-radius: 20px;
+      color: style.$white;
+      cursor: pointer;
+    }
+
+  }
+  
+  /*pagination*/
+  .paginationBttns{
+    @include flex-between;
+    width: 100%;
+    height: 37px;
+    border-radius: 20px;
+    border: 1px solid style.$wide-color;
+    list-style: none;
+    font-size: 1.2em;
+    margin: 15px 0px;
+    transition: 0.3s;
+
+    a{ cursor: pointer; }
+  }
+
+  .previousBttn{
+   color: #fff;
+   padding: 15px;
+   cursor: pointer;
+   font-weight: 600;
+  }
+  .nextBttn{
+    color: #fff;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .activeBttn{
+    color: #fff;
+  }
+
+  
+  
+  /*piggyBoss*/
+  .piggy-form{
+    label{
+      letter-spacing: -0.7px;
+    }
+    .piggy-sort{
+      display: flex;
+      justify-content: space-around;
+    }
+    .piggy-input{
+      outline-color: style.$wide-color;
+      padding: 10px;
+      margin: 15px;
+      margin-left: 10px;
+      border-radius: 20px;
+      border: 1px solid style.$wide-color;
+    }
+    ::-webkit-file-upload-button{
+      border: none;
+      background-color: style.$wide-color;
+      padding: 5px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    select{
+      outline-color: style.$wide-color;
+      border: 1px solid style.$wide-color;
+      padding: 10px;
+      margin: 15px;
+      border-radius: 20px;
+      width: 330px;
+      option{
+        padding-top:5px;
+        border: 1px solid style.$wide-color;
+      }
+    }
+    button{
+      border: none;
+      margin-left: 20px;
+      background-color: style.$wide-color;
+      padding: 5px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .piggy-btn{
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      font-size: 1.1em;
+      font-weight: 600;
+      background-color: style.$point-color;
+      color: style.$white;
+      cursor: pointer;
+    }
+    .preview{
+      button{
+        border: none;
+        background-color: style.$point-color;
+        color: #fff;
+        padding: 5px 9px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+  }
+  .piggy-List{
+    @include for-center-line;
+    margin-top: 30px;
+    padding: 15px;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 600px;
+    height: fit-content;
+    @include main-color();
+    box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+    border-radius: 20px; 
+    transition: 0.3s;
+    .list-box{
+      width: 100%;
+      margin: 15px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
+      background-color: style.$white;
+      border-radius: 20px;
+    }
+    .list-image{
+      margin-bottom: 15px;
+      img{
+        width: 100%;
+      }
+    }
+    span{
+      text-align: right;
+      cursor: pointer;
+    }
+    .span-list{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      .piglist-btn{
+        border: none;
+        width: 70px;
+        margin-bottom: 10px;
+        background-color: style.$wide-color;
+        padding: 5px 10px;
+        border-radius: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  
+  .piggy-edit{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: fit-content;
+    padding: 40px;
+    @include for-center-line();
+    flex-direction: column;
+    background-color: #bdbdbd8f;
+    h3{
+      letter-spacing: -1px;
+      margin-bottom: 15px;
+    }
+      form{
+        width: 400px;
+        padding: 20px;
+        background-color: #fff;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px
+      }
+      span{
+        width: 400px;
+        padding: 15px 0;
+        @include main-color();
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        text-align: center;
+        color:#fff;
+        font-weight: 600;
+      }
+  }
+
+
