@@ -23,7 +23,6 @@ const EmailAuth = () => {
         is_Useremail: authMail,
       });
       if (response.data === "succ") {
-        console.log(response);
         setHidden("C");
       }
     } else {
