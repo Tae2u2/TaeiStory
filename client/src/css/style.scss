@@ -50,12 +50,22 @@ $black: #000;
 
 @include mobile {
 
-
+ .im-piggyzone{
+  width: 100%;
+ }
+.piggy-List{
+  width: 100%;
+}
 
 }
 
 @include tablet {
-
+  .im-piggyzone{
+    width: 100%;
+   }
+   .piggy-List{
+    width: 100%;
+  }
 
 }
 

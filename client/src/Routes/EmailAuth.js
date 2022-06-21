@@ -18,8 +18,6 @@ const EmailAuth = () => {
   };
 
   const handleAuthCheck = async () => {
-    console.log(number);
-    console.log(authNum);
     if (number == authNum) {
       const response = await axios.post("/api/register?type=authuser", {
         is_Useremail: authMail,
@@ -55,12 +53,6 @@ const EmailAuth = () => {
               className="user-btn"
               onClick={handleAuthCheck}
             >
-    <div>
-      <div className={hidden === "C" ? "auth-div erase" : "auth-div"}>
-        {hidden === "B" ? (
-          <div>
-            <input type="text" onChange={(e) => setAuthNum(e.target.value)} />
-            <button type="button" onClick={handleAuthCheck}>
               확인
             </button>
           </div>
@@ -97,16 +89,6 @@ const EmailAuth = () => {
       <Link to="/">
         <span>로그인 화면으로 돌아가기</span>
       </Link>
-          <>
-            <input type="email" onChange={(e) => setAuthMail(e.target.value)} />
-            <button type="button" onClick={handleEmailAuth}>
-              이메일 인증하기
-            </button>
-          </>
-        )}
-      </div>
-      {hidden === "C" && <RegisterUser authMail={authMail} />}
-
     </div>
   );
 };
