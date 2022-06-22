@@ -63,7 +63,7 @@ const PiggysList = ({
       <div className="list-image">
         <img src={attachment} alt="preview" width="300px" />
       </div>
-      <p className="list-h3">
+      <p className="list-p">
         {myfood} 먹은 날짜 : {tripDate}
         <br />
         {myfood} 가격 : {mymoney} {code}
