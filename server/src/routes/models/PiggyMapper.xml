@@ -51,7 +51,6 @@
   as sum_of_exchangedMoney 
   from taeistory_piggy 
   where useremail=#{is_Email};
-
   </select>
 
   <update id="modifypiggy">

@@ -28,11 +28,6 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
     let myvalue = value;
     setCodeName(myvalue.split(",")[0]);
     setCountry(myvalue.split(",")[1]);
-    if (e.target.value === "") {
-      alert("공식화폐가 등록되지 않은 나라는 미국 달러로 표시됩니다.");
-      setCodeName("USD");
-      setCountry(myvalue.split(",")[1]);
-    }
   };
   const handleDate = (event) => {
     const {
@@ -190,7 +185,7 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
         name="trip-day"
         className="piggy-input"
         value={chooseDate}
-        min="2018-01-01"
+        min="2020-11-22"
         max={today}
         onChange={handleDate}
       />

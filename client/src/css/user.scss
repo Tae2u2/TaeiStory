@@ -19,6 +19,7 @@
 .user-h2 {
     color: style.$black;
     margin-bottom: 50px;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
 .user-form-box {
@@ -34,15 +35,18 @@
       border-bottom: 1px solid style.$black;
     }
     .user-label {
+      font-family: "Noto Sans KR", sans-serif;
       padding-top: 25px;
       margin-right: 7px;
       width: 90px;
     }
     .user-label2{
       padding-top: 5px;
+      font-family: "Noto Sans KR", sans-serif;
     }
     .user-label3{
       padding-top: 5px;
+      font-family: "Noto Sans KR", sans-serif;
 
     }
 
@@ -72,6 +76,7 @@
     @include main-color();
     color: style.$white;
     font-size: 1.2em;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 500;
     letter-spacing: -1px;
     box-shadow: 2px 3px 2px #6e5268;
@@ -79,22 +84,6 @@
   }
   .user-btn:hover {
     filter: brightness(1.2);
-  }
-
-  .intro-box {
-    @include for-center-line;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 400px;
-    height: 500px;
-    background-color: style.$white;
-    border-radius: 50px;
-    box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
-    transition: 0.4s;
-  }
-  
-  .speech-box{
-    text-align: center;
   }
 
   .erase{
@@ -169,5 +158,6 @@
   p{
     letter-spacing: -1px;
     margin-bottom: 10px;
+    font-family: "Noto Sans KR", sans-serif;
   }
 }

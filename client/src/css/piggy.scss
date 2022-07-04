@@ -1,4 +1,8 @@
 @use 'style';
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+
+//font-family: "Noto Sans KR", sans-serif;
 
 @mixin for-center-line() {
     display: flex;
@@ -24,6 +28,7 @@ nav{
     width: 100%;
     @include flex-between();
         .navi-li{
+            font-family: "Noto Sans KR", sans-serif;
             list-style: none;
             font-size: 1.1em;
             letter-spacing: -1px;
@@ -60,7 +65,7 @@ nav{
   .second-ul.active{
     display: block;
     position: absolute;
-    transform: translate(20px , 80px);
+    transform: translate(0px , 105px);
     list-style: none;
     font-weight: 500;
     background-color: #fff;
@@ -78,6 +83,8 @@ nav{
   
   .id-box-btn{
     font-weight: 500;
+    font-family: "Noto Sans KR", sans-serif;
+    color:#000;
     background-color: transparent;
     border-bottom: 1px solid style.$wide-color;
     border: none;
@@ -121,6 +128,7 @@ nav{
       margin-bottom: 30px;
       border-bottom: 2px solid style.$white;
       transition: 0.3s;
+      font-family: "Noto Sans KR", sans-serif;
 
     }
     h2:hover{
@@ -128,6 +136,7 @@ nav{
     }
     .piggy-h3{
       @include main-color();
+      font-family: "Noto Sans KR", sans-serif;
       width: 100%;
       padding: 15px 0px;
       margin-bottom: 20px;
@@ -176,6 +185,7 @@ nav{
   .piggy-form{
     label{
       letter-spacing: -0.7px;
+      font-family: "Noto Sans KR", sans-serif;
     }
     .piggy-sort{
       display: flex;
@@ -210,6 +220,7 @@ nav{
     }
     button{
       border: none;
+      font-family: "Noto Sans KR", sans-serif;
       margin-left: 20px;
       background-color: style.$wide-color;
       padding: 5px 10px;
@@ -224,6 +235,7 @@ nav{
       border-radius: 20px;
       border: none;
       outline: none;
+      font-family: "Noto Sans KR", sans-serif;
       font-size: 1.1em;
       font-weight: 600;
       background-color: style.$point-color;
@@ -262,6 +274,9 @@ nav{
       box-shadow: inset 0px 0px 1px #5c5b5b, 3px 3px 3px #5c5b5b;
       background-color: style.$white;
       border-radius: 20px;
+      p{
+        font-family: "Noto Sans KR", sans-serif;
+      }
     }
     .list-image{
       margin-bottom: 15px;
@@ -302,6 +317,7 @@ nav{
     h3{
       letter-spacing: -1px;
       margin-bottom: 15px;
+      font-family: "Noto Sans KR", sans-serif;
     }
       form{
         width: 400px;
@@ -317,6 +333,7 @@ nav{
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         text-align: center;
+        font-family: "Noto Sans KR", sans-serif;
         color:#fff;
         font-weight: 600;
       }

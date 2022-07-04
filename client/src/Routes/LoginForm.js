@@ -13,14 +13,6 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onChange = (event) => {
-    if (event.target.name === "email") {
-      setEmail(inputRef.current.value);
-    } else {
-      setPassword(inputPassRef.current.value);
-    }
-  };
-
   const onsubmit = async (event) => {
     event.preventDefault();
     if (email === "" || password === "") {
@@ -42,6 +34,7 @@ const LoginForm = () => {
 
           const userName = response.data.json[0].username;
           const userEmail = response.data.json[0].useremail;
+          const userFlag = response.data.json[0].userflag;
 
           const upw = response.data.json[0].userpassword;
 
@@ -53,6 +46,7 @@ const LoginForm = () => {
             {
               is_Email: userEmail,
               is_UserName: userName,
+              is_UserFlag: userFlag,
             }
           );
 
@@ -109,7 +103,7 @@ const LoginForm = () => {
             value={email}
             placeholder="이메일"
             ref={inputRef}
-            onChange={onChange}
+            onChange={() => setEmail(inputRef.current.value)}
           />
         </div>
         <br />
@@ -122,7 +116,7 @@ const LoginForm = () => {
             className="user-input"
             ref={inputPassRef}
             placeholder="비밀번호"
-            onChange={onChange}
+            onChange={() => setPassword(inputPassRef.current.value)}
           />
         </div>
         <br />

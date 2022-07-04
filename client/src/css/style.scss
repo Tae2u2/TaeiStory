@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
 
 @mixin for-center-line() {
   display: flex;
@@ -27,7 +27,6 @@ $black: #000;
   box-sizing: border-box;
 }
 .App {
-  font-family: "Noto Sans KR", sans-serif;
   @include for-center-line;
   width: 100%;
   height: 100vh;
