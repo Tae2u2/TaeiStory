@@ -10,6 +10,7 @@ import PiggyFactory from "../components/PiggyFactory";
 import "../css/piggy.scss";
 
 function PiggyBoss() {
+  const [email, setEmail] = useState("");
   const [piggyMoney, setPiggyMoney] = useState(0);
   const [reload, setReload] = useState(false);
   const [open, setOpen] = useState(false);
@@ -48,6 +49,19 @@ function PiggyBoss() {
     setPageNumber(selected);
   };
 
+  const handlePiggyList = async (userid) => {
+    const response2 = await axios.post("api/piggyboss?type=piggylist", {
+      is_Email: userid,
+    });
+    setPiggyArr(response2.data.json);
+    const response3 = await axios.post("api/piggyboss?type=piggyexpenses", {
+      is_Email: userid,
+    });
+
+    const cost = Object.values(response3.data.json[0]);
+    setPiggyMoney(cost.pop());
+  };
+
   useEffect(() => {
     async function axiosData() {
       const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
@@ -59,33 +73,20 @@ function PiggyBoss() {
       let name = response.data.token2;
       let flag = response.data.token3;
 
+      setEmail(id);
       let userObj = {
         userId: id,
         userName: name,
         userFlag: flag,
       };
       setUserInfo(userObj);
+      handlePiggyList(id);
     }
     axiosData();
   }, []);
 
   useEffect(() => {
-    async function axiosData() {
-      let email = userInfo.userId;
-      const response2 = await axios.post("api/piggyboss?type=piggylist", {
-        is_Email: email,
-      });
-
-      setPiggyArr(response2.data.json);
-
-      const response3 = await axios.post("api/piggyboss?type=piggyexpenses", {
-        is_Email: email,
-      });
-
-      const cost = Object.values(response3.data.json[0]);
-      setPiggyMoney(cost.pop());
-    }
-    axiosData();
+    handlePiggyList(email);
   }, [reload]);
 
   return (
