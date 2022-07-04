@@ -67,10 +67,12 @@
     userflag = 'Y'
     WHERE useremail = #{is_Useremail}
   </update>
+
   <update id="updatePwdUser">
   UPDATE react.taeistory_user
     SET
     userpassword = #{is_Password}
     WHERE useremail = #{is_Useremail}
   </update>
+
 </mapper>

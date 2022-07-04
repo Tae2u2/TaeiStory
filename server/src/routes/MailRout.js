@@ -33,9 +33,9 @@ router.post("/", (req, res, next) => {
       let mailOptions = {
         from: process.env.MAIL_USER,
         to: email,
-        subject: "돼지짱 인증메일입니다.",
+        subject: "[돼지는여행중] 인증메일입니다.",
         text: `인증번호는 : ${randomNum} 입니다.
-        돼지짱페이지로 돌아가 입력해주세요!`,
+        돼지는 여행 중 페이지로 돌아가 입력해주세요!`,
       };
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {

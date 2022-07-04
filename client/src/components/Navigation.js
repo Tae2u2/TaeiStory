@@ -11,6 +11,7 @@ function Navigation({ userInfo }) {
   const removeCookie = () => {
     cookie.remove("userid", { path: "/" });
     cookie.remove("username", { path: "/" });
+    cookie.remove("userflag", { path: "/" });
     cookie.remove("userpassword", { path: "/" });
     window.location.href = "/";
   };
@@ -58,14 +59,6 @@ function Navigation({ userInfo }) {
     }
   };
 
-  const handleIdBox = () => {
-    if (check) {
-      setCheck(false);
-    } else {
-      setCheck(true);
-    }
-  };
-
   return (
     <nav>
       <ul className="first-ul">
@@ -76,7 +69,7 @@ function Navigation({ userInfo }) {
           <span>돼지는 여행중</span>
         </li>
 
-        <li className="navi-li" onClick={handleIdBox}>
+        <li className="navi-li" onClick={() => setCheck(!check)}>
           <h4>{userInfo.userName}님</h4>
           <FaUserCircle />
           <ul className={check ? "second-ul active" : "second-ul"}>
@@ -90,6 +83,13 @@ function Navigation({ userInfo }) {
                 회원탈퇴
               </button>
             </li>
+            {userInfo.userFlag === "A" && (
+              <li className="id-box">
+                <button className="id-box-btn">
+                  <Link to="/admin">관리자페이지</Link>
+                </button>
+              </li>
+            )}
           </ul>
         </li>
       </ul>

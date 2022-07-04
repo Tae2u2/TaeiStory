@@ -4,6 +4,7 @@ env.config({ path: __dirname + "/env/.env" });
 
 const indexRout = require("./routes/index2");
 const usersRout = require("./routes/UsersRout");
+const registerRout = require("./routes/RegisterRout");
 const piggyRout = require("./routes/PiggyRout");
 const adminRout = require("./routes/AdminRout");
 const mailRout = require("./routes/MailRout");
@@ -18,7 +19,7 @@ app.get("/", function (req, res) {
 });
 
 app.use("/", indexRout);
-app.use("/api/register", usersRout);
+app.use("/api/register", registerRout);
 app.use("/api/LoginForm", usersRout);
 app.use("/api/piggyboss", piggyRout);
 app.use("/api/admin", adminRout);

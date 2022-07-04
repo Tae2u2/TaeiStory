@@ -48,13 +48,6 @@ function PiggyBoss() {
     setPageNumber(selected);
   };
 
-  const openFactory = () => {
-    if (open) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
-  };
   useEffect(() => {
     async function axiosData() {
       const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
@@ -72,15 +65,21 @@ function PiggyBoss() {
         userFlag: flag,
       };
       setUserInfo(userObj);
+    }
+    axiosData();
+  }, []);
 
+  useEffect(() => {
+    async function axiosData() {
+      let email = userInfo.userId;
       const response2 = await axios.post("api/piggyboss?type=piggylist", {
-        is_Email: id,
+        is_Email: email,
       });
 
       setPiggyArr(response2.data.json);
 
       const response3 = await axios.post("api/piggyboss?type=piggyexpenses", {
-        is_Email: id,
+        is_Email: email,
       });
 
       const cost = Object.values(response3.data.json[0]);

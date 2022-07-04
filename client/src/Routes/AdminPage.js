@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
-import Navigation from "../components/Navigation";
 import cookie from "react-cookies";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import "../css/admin.scss";
+import { Link } from "react-router-dom";
 
 const AdminPage = () => {
-  const [userid, setUserid] = useState("");
-  const [username, setUsername] = useState("");
   const [piggyArr, setPiggyArr] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [reAdmin, setReAdmin] = useState(false);
 
-  const userPerPage = 5;
+  const userPerPage = 10;
   const pagesVisited = pageNumber * userPerPage;
+
+  const handleLogout = () => {
+    cookie.remove("userid", { path: "/" });
+    cookie.remove("username", { path: "/" });
+    cookie.remove("userflag", { path: "/" });
+    cookie.remove("userpassword", { path: "/" });
+    window.location.href = "/";
+  };
 
   const handleUserAdmin = async (event) => {
     const eTarget = event.target.getAttribute("id");
@@ -74,17 +80,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.post("/api/LoginForm?type=SessionConfirm", {
-        token1: cookie.load("userid"),
-        token2: cookie.load("username"),
-      });
-      setUserid(response.data.token1);
-      setUsername(response.data.token2);
-
-      const response2 = await axios.post("api/admin?type=allList", {
-        is_Email: response.data.token1,
-      });
-
+      const response2 = await axios.post("api/admin?type=allList");
       setPiggyArr(response2.data.json);
     }
     fetchData();
@@ -92,7 +88,12 @@ const AdminPage = () => {
 
   return (
     <div className="im-home">
-      <Navigation username={username} userid={userid} />
+      <span id="admin-span">
+        <Link to="/piggy">메인화면으로 돌아가기</Link>
+      </span>
+      <button id="admin-btn" onClick={handleLogout}>
+        로그아웃하기
+      </button>
       <div className="admin-page">
         <table>
           <thead>

@@ -4,9 +4,9 @@ import RegisterUser from "components/RegisterUser";
 import { Link } from "react-router-dom";
 
 const EmailAuth = () => {
-  const [authNum, setAuthNum] = useState("");
+  const [authNum, setAuthNum] = useState(0);
   const [authMail, setAuthMail] = useState("");
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState(0);
   const [hidden, setHidden] = useState("A");
 
   const handleEmailAuth = async () => {
@@ -18,12 +18,11 @@ const EmailAuth = () => {
   };
 
   const handleAuthCheck = async () => {
-    if (number == authNum) {
+    if (number === authNum) {
       const response = await axios.post("/api/register?type=authuser", {
         is_Useremail: authMail,
       });
       if (response.data === "succ") {
-        console.log(response);
         setHidden("C");
       }
     } else {
