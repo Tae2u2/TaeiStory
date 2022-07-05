@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import axios from "axios";
 
 const EditFactory = ({
@@ -107,16 +107,18 @@ const EditFactory = ({
     }
   };
 
+  const getCountryList = async () => {
+    const response = await axios.post("/api/currency");
+    let wildList = [...response.data.trList];
+    setCountryList(wildList.slice(1));
+  };
+
+  const printList = useMemo(() => {
+    getCountryList();
+  }, []);
+
   useEffect(() => {
     const controller = new AbortController();
-    const getCountryList = async () => {
-      const response = await axios.post("/api/currency", {
-        signal: controller.signal,
-      });
-      let wildList = [...response.data.trList];
-      setCountryList(wildList.slice(1));
-      getToday();
-    };
     const getToday = () => {
       Date.prototype.yyyymmdd = function () {
         const yyyy = this.getFullYear();
@@ -129,7 +131,6 @@ const EditFactory = ({
       const date = new Date();
       setToday(date.yyyymmdd());
     };
-    getCountryList();
     return () => {
       controller.abort();
     };
