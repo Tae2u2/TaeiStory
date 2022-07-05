@@ -61,7 +61,7 @@ const PiggysList = ({
       </small>
       <h2>{tripCountry} 여행 중!</h2>
       <div className="list-image">
-        {attachment !== null && (
+        {attachment !== "" && (
           <img src={attachment} alt="preview" width="300px" />
         )}
       </div>

@@ -128,7 +128,7 @@ const LoginForm = () => {
         <br /> 돼지짱 회원이 되어주세요!
       </span>
       <Link to="/register">
-        <button className="user-btn">회원가입하기</button>
+        <button className="user-btn" value="회원가입하기"></button>
       </Link>
     </div>
   );
