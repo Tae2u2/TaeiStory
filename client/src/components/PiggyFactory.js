@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
@@ -38,6 +38,12 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
 
   const handleMoney = () => {
     setExchangedMoney(krwinputRef.current.value);
+  };
+
+  const getCountryList = async () => {
+    const response = await axios.post("/api/currency");
+    let wildList = [...response.data.trList];
+    setCountryList(wildList.slice(1));
   };
 
   const onFileChange = (event) => {
@@ -106,20 +112,12 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
     }
   };
 
+  const printList = useMemo(() => {
+    getCountryList();
+  }, []);
+
   useEffect(() => {
     const controller = new AbortController();
-    const getCountryList = async () => {
-      try {
-        const response = await axios.post("/api/currency", {
-          signal: controller.signal,
-        });
-        let wildList = [...response.data.trList];
-        setCountryList(wildList.slice(1));
-        getToday();
-      } catch (error) {
-        alert("죄송합니다. 다시 시도해주세요!");
-      }
-    };
     const getToday = () => {
       Date.prototype.yyyymmdd = function () {
         const yyyy = this.getFullYear();
@@ -133,7 +131,7 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
       setToday(date.yyyymmdd());
       setChooseDate(date.yyyymmdd());
     };
-    getCountryList();
+    getToday();
     return () => {
       controller.abort();
     };
@@ -158,7 +156,7 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
             setKrw(currencyObj["krw"]);
           }
         } catch (error) {
-          alert("죄송합니다. 다시 시도해주세요!");
+          return false;
         }
       }
     };
@@ -239,11 +237,10 @@ const PiggyFactory = ({ userid, reload, setReload, setOpen, open }) => {
         id="commentary"
         name="comment"
         ref={commentaryRef}
+        value={commentary}
         className="piggy-input"
         onChange={() => setCommentary(commentaryRef.current.value)}
-      >
-        {commentary}
-      </textarea>
+      ></textarea>
 
       <br />
       <label htmlFor="foodExpense">

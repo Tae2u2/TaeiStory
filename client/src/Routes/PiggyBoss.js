@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import cookie from "react-cookies";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
@@ -54,6 +54,7 @@ function PiggyBoss() {
       is_Email: userid,
     });
     setPiggyArr(response2.data.json);
+
     const response3 = await axios.post("api/piggyboss?type=piggyexpenses", {
       is_Email: userid,
     });
@@ -87,7 +88,7 @@ function PiggyBoss() {
 
   useEffect(() => {
     handlePiggyList(email);
-  }, [reload]);
+  }, [reload, email]);
 
   return (
     <div className="im-home">
