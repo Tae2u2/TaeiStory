@@ -92,6 +92,10 @@ const LoginForm = () => {
   return (
     <div className="user-form-box">
       <h2 className="user-h2">로그인</h2>
+      <h4 className="user-h2">
+        여행 중 사용한 식비를 <br />
+        환전된 금액으로 관리하세요!
+      </h4>
       <form onSubmit={onsubmit} className="user-form">
         <div className="for-flex2">
           <label className="user-label3">이메일</label>
