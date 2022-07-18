@@ -8,7 +8,7 @@ ReactJS + nodeJS 프로젝트 : 돼지는 여행 중<br />
 링크 : https://travel-pig.herokuapp.com/ <br />
 test ID : admin@admin
 <br />
-test PW : test1234<br />
+test PW : rhksflwk1234<br />
 위 계정은 테스트를 위해 만든 것입니다. 탈퇴하지 말아주세요
 <br /><br />
 
