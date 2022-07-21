@@ -10,7 +10,7 @@ const LoginForm = () => {
   const inputRef = useRef();
   const inputPassRef = useRef();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("admin@admin");
   const [password, setPassword] = useState("");
 
   const onsubmit = async (event) => {
@@ -95,6 +95,10 @@ const LoginForm = () => {
       <h4 className="user-h2">
         여행 중 사용한 식비를 <br />
         환전된 금액으로 관리하세요!
+        <br />
+        테스트용 아이디 : admin@admin
+        <br />
+        테스트용 비밀번호 : rhksflwk1234
       </h4>
       <form onSubmit={onsubmit} className="user-form">
         <div className="for-flex2">

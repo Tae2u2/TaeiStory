@@ -78,15 +78,16 @@ function Navigation({ userInfo }) {
                 로그아웃
               </button>
             </li>
-            <li className="id-box">
-              <button className="id-box-btn" onClick={handleUserDelete}>
-                회원탈퇴
-              </button>
-            </li>
-            {userInfo.userFlag === "A" && (
+            {userInfo.userFlag === "A" ? (
               <li className="id-box">
                 <button className="id-box-btn">
                   <Link to="/admin">관리자페이지</Link>
+                </button>
+              </li>
+            ) : (
+              <li className="id-box">
+                <button className="id-box-btn" onClick={handleUserDelete}>
+                  회원탈퇴
                 </button>
               </li>
             )}
